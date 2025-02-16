@@ -4,7 +4,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
+import java.util.Objects;
 
 public class Main extends Application {
     @Override
@@ -12,7 +13,7 @@ public class Main extends Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/main_view.fxml"));
             Scene scene = new Scene(fxmlLoader.load());
-            String css = this.getClass().getResource("css/styles.css").toExternalForm();
+            String css = Objects.requireNonNull(this.getClass().getResource("css/styles.css")).toExternalForm();
             scene.getStylesheets().add(css);
 
             primaryStage.setTitle("Zoomlion");
