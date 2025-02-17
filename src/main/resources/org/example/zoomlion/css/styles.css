@@ -29,22 +29,53 @@
 .technic-item {
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 5px;
+
     -fx-scale-x: 1;
     -fx-scale-y: 1;
+
     -fx-border-color: transparent;
     -fx-border-width: 2px;
+    -fx-border-radius: 5px;
 }
 
 .technic-item:hover {
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
+
     -fx-border-color: #A4CE4E;
+    -fx-border-radius: 5px;
 }
 
 .toolbar{
     -fx-background-color: #333640;
 }
 
+
+.toggle-button {
+    -fx-font-size: 16px; /* Размер шрифта */
+    -fx-pref-width: 100px; /* Ширина кнопки */
+    -fx-pref-height: 40px; /* Высота кнопки */
+    -fx-background-radius: 20px; /* Скругленные углы */
+    -fx-border-radius: 20px;
+    -fx-background-color: white;
+    -fx-text-fill: #333640;
+    -fx-font-weight: bold;
+    -fx-border-color: #333640;
+    -fx-border-width: 2px;
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+.toggle-button:selected {
+    -fx-background-color: #A4CE4E; /* Цвет активной кнопки */
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+/* .toggle-button:hover{
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+} */
 
 
 /* Делаем фон ScrollPane прозрачным */

@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicDetailController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -44,6 +44,22 @@
                   <Insets bottom="10.0" top="10.0" />
                </VBox.margin>
             </HBox>
+
+            <!-- Контейнер для кнопок ТО -->
+            <HBox fx:id="toggleButtonContainer" alignment="CENTER" spacing="10.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin></HBox>
+
+            <!-- Контейнер для таблицы -->
+            <VBox fx:id="tableContainer" visible="false">
+               <TableView fx:id="technicTable" prefHeight="200.0" prefWidth="200.0">
+                  <columns>
+                     <TableColumn prefWidth="75.0" text="C1" />
+                     <TableColumn prefWidth="75.0" text="C2" />
+                  </columns>
+               </TableView>
+            </VBox>
          </children>
       </VBox>
    </children>
