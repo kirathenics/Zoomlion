@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane prefHeight="500.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicDetailController">
+    <VBox alignment="CENTER" spacing="20">
+            <Label fx:id="detailNameLabel" text="Название техники" />
+            <Button onAction="#goBack" text="Назад" />
+    </VBox>
+</AnchorPane>
