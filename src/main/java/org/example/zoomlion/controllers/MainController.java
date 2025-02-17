@@ -26,70 +26,19 @@ public class MainController implements Initializable {
 
     private List<Technic> technicList = new ArrayList<>();
 
-//    @Override
-//    public void initialize(URL url, ResourceBundle resourceBundle) {
-//        technicList.addAll(DAO.loadTechnic());
-//        int column = 0;
-//        int row = 1;
-//
-//        try {
-//            for (Technic technic : technicList) {
-////                FXMLLoader fxmlLoader = new FXMLLoader();
-////                fxmlLoader.setLocation(getClass().getResource("views/technic_item.fxml"));
-//
-////                URL resource = getClass().getClassLoader().getResource("views/technic_item.fxml");
-////
-////                if (resource == null) {
-////                    throw new RuntimeException("FXML file not found: views/technic_item.fxml");
-////                }
-////
-////                fxmlLoader.setLocation(resource);
-//
-////                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("views/technic_item.fxml"));
-//                FXMLLoader fxmlLoader = new FXMLLoader(new File("src/main/resources/org/example/zoomlion/views/technic_item.fxml").toURI().toURL());
-//
-//                AnchorPane anchorPane = fxmlLoader.load();
-//
-//                TechnicItemController technicItemController = fxmlLoader.getController();
-//                technicItemController.setData(technic);
-//
-//                if (column == 3) {
-//                    column = 0;
-//                    row++;
-//                }
-//
-//                technicItemGridPane.add(anchorPane, column++, row);
-//
-//                technicItemGridPane.setMinWidth(Region.USE_COMPUTED_SIZE);
-//                technicItemGridPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
-//                technicItemGridPane.setMaxWidth(Region.USE_PREF_SIZE);
-//
-//                technicItemGridPane.setMinHeight(Region.USE_COMPUTED_SIZE);
-//                technicItemGridPane.setPrefHeight(Region.USE_COMPUTED_SIZE);
-//                technicItemGridPane.setMaxHeight(Region.USE_PREF_SIZE);
-//
-//                GridPane.setMargin(anchorPane, new Insets(10));
-//            }
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         technicList.addAll(DAO.loadTechnic());
 
-        // Добавляем слушатель на изменение ширины ScrollPane
         technicItemScrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> updateGrid((double) newWidth));
 
-        // Первичная загрузка с учетом текущей ширины
         updateGrid(technicItemScrollPane.getWidth());
     }
 
     private void updateGrid(double width) {
-        technicItemGridPane.getChildren().clear(); // Очищаем перед обновлением
+        technicItemGridPane.getChildren().clear();
 
-        int columnCount = (int) Math.max(1, width / 250); // Рассчитываем количество колонок (ширина одного элемента ~ 250px)
+        int columnCount = (int) Math.max(1, width / 250);
         int column = 0, row = 1;
 
         try {
@@ -104,7 +53,7 @@ public class MainController implements Initializable {
                 GridPane.setMargin(anchorPane, new Insets(10));
 
                 column++;
-                if (column >= columnCount) { // Переход на новую строку
+                if (column >= columnCount) {
                     column = 0;
                     row++;
                 }

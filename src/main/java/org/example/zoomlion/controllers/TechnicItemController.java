@@ -19,7 +19,7 @@ public class TechnicItemController {
     public void setData(Technic technic) {
         this.technic = technic;
         nameLabel.setText(technic.getName());
-        Image image = new Image(getClass().getResourceAsStream("/org/example/zoomlion/images/ZTC250V-1.png"));
+        Image image = new Image(getClass().getResourceAsStream("/org/example/zoomlion/images/ZTC250V-1.jpg"));
         imageView.setImage(image);
     }
 }

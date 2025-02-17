@@ -52,7 +52,7 @@
                         </FontAwesomeIconView>
                      <VBox alignment="TOP_CENTER" fillWidth="false">
                         <children>
-                           <FontAwesomeIconView fill="WHITE" glyphName="HOME" size="1.5em">
+                           <FontAwesomeIconView fill="#a4ce4e" glyphName="HOME" size="1.5em">
                               <VBox.margin>
                                  <Insets top="15.0" />
                               </VBox.margin>

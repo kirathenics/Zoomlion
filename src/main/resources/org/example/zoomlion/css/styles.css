@@ -13,16 +13,36 @@
 }
 
 .transparent{
-    -fx-background-color: rgba(0,0,0,0);
+    -fx-background-color: transparent;
 }
 
 .shadow{
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0, 0.0, 0.0, 10.0);
 }
 
-.technic-item{
+/* .technic-item{
     -fx-background-color: #FFFFFF;
     -fx-background-radius: 5px;
+}
+
+.technic-item:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+} */
+
+.technic-item {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 5px;
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+    -fx-border-color: transparent;
+    -fx-border-width: 2px;
+}
+
+.technic-item:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+    -fx-border-color: #A4CE4E;
 }
 
 
