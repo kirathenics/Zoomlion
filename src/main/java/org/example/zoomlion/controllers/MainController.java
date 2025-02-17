@@ -38,7 +38,7 @@ public class MainController implements Initializable {
     private void updateGrid(double width) {
         technicItemGridPane.getChildren().clear();
 
-        int columnCount = (int) Math.max(1, width / 250);
+        int columnCount = (int) Math.max(1, width / 250.0);
         int column = 0, row = 1;
 
         try {

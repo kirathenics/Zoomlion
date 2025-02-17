@@ -6,6 +6,9 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import org.example.zoomlion.models.Technic;
 
+import java.io.InputStream;
+import java.util.Objects;
+
 public class TechnicItemController {
 
     @FXML
@@ -19,7 +22,13 @@ public class TechnicItemController {
     public void setData(Technic technic) {
         this.technic = technic;
         nameLabel.setText(technic.getName());
-        Image image = new Image(getClass().getResourceAsStream("/org/example/zoomlion/images/ZTC250V-1.jpg"));
+
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/zoomlion/images/no-image-2.png")));
+        InputStream imageStream = getClass().getResourceAsStream("/org/example/zoomlion/images/1ZTC250V-1.jpg");
+        if (imageStream != null) {
+            image = new Image(imageStream);
+        }
+
         imageView.setImage(image);
     }
 }
