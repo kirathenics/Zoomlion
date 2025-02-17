@@ -41,6 +41,10 @@
     -fx-border-color: #A4CE4E;
 }
 
+.toolbar{
+    -fx-background-color: #333640;
+}
+
 
 
 /* Делаем фон ScrollPane прозрачным */

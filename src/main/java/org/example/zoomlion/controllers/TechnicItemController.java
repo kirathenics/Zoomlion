@@ -34,7 +34,8 @@ public class TechnicItemController {
         nameLabel.setText(technic.getName());
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/zoomlion/images/no-image-2.png")));
-        InputStream imageStream = getClass().getResourceAsStream("/org/example/zoomlion/images/1ZTC250V-1.jpg");
+        String imagePath = "/org/example/zoomlion/images/" + technic.getImage_path();
+        InputStream imageStream = getClass().getResourceAsStream(imagePath);
         if (imageStream != null) {
             image = new Image(imageStream);
         }
@@ -49,11 +50,9 @@ public class TechnicItemController {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_detail_view.fxml"));
             Parent detailRoot = loader.load();
 
-            // Получаем контроллер новой сцены и передаем данные
             TechnicDetailController controller = loader.getController();
             controller.setTechnic(technic);
 
-            // Открываем новое окно
             Stage stage = new Stage();
             stage.setScene(new Scene(detailRoot));
             stage.setTitle(technic.getName());
