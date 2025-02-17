@@ -52,12 +52,12 @@
                                  <Insets top="15.0" />
                               </VBox.margin>
                            </FontAwesomeIconView>
-                           <FontAwesomeIconView fx:id="settingsSidebarButton" glyphName="GEAR" size="1.5em" styleClass="sidebar-opt">
+                           <FontAwesomeIconView fx:id="settingsSidebarButton" fill="#c1c1c1" glyphName="GEAR" size="1.5em" styleClass="sidebar-opt">
                               <VBox.margin>
                                  <Insets top="15.0" />
                               </VBox.margin>
                            </FontAwesomeIconView>
-                              <FontAwesomeIconView fx:id="aboutSidebarButton" glyphName="QUESTION_CIRCLE_ALT" size="1.7em" styleClass="sidebar-opt">
+                              <FontAwesomeIconView fx:id="aboutSidebarButton" fill="#c1c1c1" glyphName="QUESTION_CIRCLE_ALT" size="1.7em" styleClass="sidebar-opt">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>

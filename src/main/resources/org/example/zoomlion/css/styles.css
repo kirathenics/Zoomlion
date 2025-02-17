@@ -8,7 +8,14 @@
 }
 
 .sidebar-opt{
-    -fx-fill: #C1C1C1;
+    /* -fx-fill: #C1C1C1; */
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.sidebar-opt:hover{
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
 }
 
 .transparent{
