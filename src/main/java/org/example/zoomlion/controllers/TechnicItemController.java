@@ -10,6 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.example.zoomlion.Constants;
 import org.example.zoomlion.models.Technic;
 
 import java.io.IOException;
@@ -33,9 +34,10 @@ public class TechnicItemController {
         this.technic = technic;
         nameLabel.setText(technic.getName());
 
-        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/org/example/zoomlion/images/no-image-2.png")));
-        String imagePath = "/org/example/zoomlion/images/" + technic.getImage_path();
-        InputStream imageStream = getClass().getResourceAsStream(imagePath);
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(Constants.IMAGE_PATH + "no-image.png")));
+
+        String fullPath = Constants.IMAGE_PATH + technic.getImage_path();
+        InputStream imageStream = getClass().getResourceAsStream(fullPath);
         if (imageStream != null) {
             image = new Image(imageStream);
         }
