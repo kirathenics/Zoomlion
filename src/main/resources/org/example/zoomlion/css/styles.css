@@ -5,11 +5,10 @@
 
 .sidebar{
     -fx-background-color: #333640;
-    /* -fx-background-radius: 30px 30px 0px 0px; */
 }
 
 .sidebar-opt{
-    -fx-fill: #C1C1C1
+    -fx-fill: #C1C1C1;
 }
 
 .transparent{

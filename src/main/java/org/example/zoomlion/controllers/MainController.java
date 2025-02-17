@@ -1,5 +1,7 @@
 package org.example.zoomlion.controllers;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
+
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -7,6 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import org.example.zoomlion.DB.DAO;
 import org.example.zoomlion.models.Technic;
 
@@ -19,20 +22,37 @@ import java.util.ResourceBundle;
 public class MainController implements Initializable {
 
     @FXML
+    private FontAwesomeIconView homeSidebarButton;
+
+    @FXML
+    private FontAwesomeIconView settingsSidebarButton;
+
+    @FXML
+    private FontAwesomeIconView aboutSidebarButton;
+
+    @FXML
     private GridPane technicItemGridPane;
 
     @FXML
     private ScrollPane technicItemScrollPane;
+
+    private final String ACTIVE_COLOR = "#A4CE4E";
+    private final String DEFAULT_COLOR = "#C1C1C1";
 
     private List<Technic> technicList = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         technicList.addAll(DAO.loadTechnic());
-
         technicItemScrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> updateGrid((double) newWidth));
 
         updateGrid(technicItemScrollPane.getWidth());
+
+        homeSidebarButton.setOnMouseClicked(event -> setActiveIcon(homeSidebarButton));
+        settingsSidebarButton.setOnMouseClicked(event -> setActiveIcon(settingsSidebarButton));
+        aboutSidebarButton.setOnMouseClicked(event -> setActiveIcon(aboutSidebarButton));
+
+        setActiveIcon(homeSidebarButton);
     }
 
     private void updateGrid(double width) {
@@ -61,5 +81,13 @@ public class MainController implements Initializable {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void setActiveIcon(FontAwesomeIconView activeIcon) {
+        homeSidebarButton.setFill(Color.web(DEFAULT_COLOR));
+        settingsSidebarButton.setFill(Color.web(DEFAULT_COLOR));
+        aboutSidebarButton.setFill(Color.web(DEFAULT_COLOR));
+
+        activeIcon.setFill(Color.web(ACTIVE_COLOR));
     }
 }

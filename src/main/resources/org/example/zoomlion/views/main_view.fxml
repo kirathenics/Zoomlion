@@ -47,17 +47,17 @@
                         </FontAwesomeIconView>
                      <VBox alignment="TOP_CENTER" fillWidth="false">
                         <children>
-                           <FontAwesomeIconView fill="#a4ce4e" glyphName="HOME" size="1.5em">
+                           <FontAwesomeIconView fx:id="homeSidebarButton" fill="#a4ce4e" glyphName="HOME" size="1.5em">
                               <VBox.margin>
                                  <Insets top="15.0" />
                               </VBox.margin>
                            </FontAwesomeIconView>
-                           <FontAwesomeIconView glyphName="GEAR" size="1.5em" styleClass="sidebar-opt">
+                           <FontAwesomeIconView fx:id="settingsSidebarButton" glyphName="GEAR" size="1.5em" styleClass="sidebar-opt">
                               <VBox.margin>
                                  <Insets top="15.0" />
                               </VBox.margin>
                            </FontAwesomeIconView>
-                              <FontAwesomeIconView glyphName="QUESTION_CIRCLE_ALT" size="1.7em" styleClass="sidebar-opt">
+                              <FontAwesomeIconView fx:id="aboutSidebarButton" glyphName="QUESTION_CIRCLE_ALT" size="1.7em" styleClass="sidebar-opt">
                                  <VBox.margin>
                                     <Insets top="15.0" />
                                  </VBox.margin>
