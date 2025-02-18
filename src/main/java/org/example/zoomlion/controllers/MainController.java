@@ -9,9 +9,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Priority;
 import javafx.scene.paint.Color;
-import org.example.zoomlion.DB.DAO;
+import org.example.zoomlion.DB.TechnicDAO;
 import org.example.zoomlion.models.Technic;
 
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        technicList.addAll(DAO.loadTechnic());
+        technicList.addAll(TechnicDAO.loadTechnic());
         technicItemScrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> updateGrid((double) newWidth));
 
         updateGrid(technicItemScrollPane.getWidth());
@@ -64,7 +63,7 @@ public class MainController implements Initializable {
 
         try {
             for (Technic technic : technicList) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_item.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_item_view.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
 
                 TechnicItemController technicItemController = fxmlLoader.getController();

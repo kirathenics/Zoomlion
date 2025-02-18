@@ -46,19 +46,22 @@
             </HBox>
 
             <!-- Контейнер для кнопок ТО -->
-            <HBox fx:id="toggleButtonContainer" alignment="CENTER" spacing="10.0">
-               <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
-               </VBox.margin></HBox>
+<!--            <HBox fx:id="toggleButtonContainer" alignment="CENTER" spacing="10.0">-->
+<!--               <VBox.margin>-->
+<!--                  <Insets bottom="10.0" top="10.0" />-->
+<!--               </VBox.margin></HBox>-->
 
             <!-- Контейнер для таблицы -->
-            <VBox fx:id="tableContainer" visible="false">
-               <TableView fx:id="technicTable" prefHeight="200.0" prefWidth="200.0">
-                  <columns>
-                     <TableColumn prefWidth="75.0" text="C1" />
-                     <TableColumn prefWidth="75.0" text="C2" />
-                  </columns>
-               </TableView>
+<!--            <VBox fx:id="tableContainer" visible="false">-->
+<!--               <TableView fx:id="technicTable" prefHeight="200.0" prefWidth="200.0">-->
+<!--                  <columns>-->
+<!--                     <TableColumn prefWidth="75.0" text="C1" />-->
+<!--                     <TableColumn prefWidth="75.0" text="C2" />-->
+<!--                  </columns>-->
+<!--               </TableView>-->
+<!--            </VBox>-->
+            <VBox fx:id="dynamicContentContainer">
+
             </VBox>
          </children>
       </VBox>
