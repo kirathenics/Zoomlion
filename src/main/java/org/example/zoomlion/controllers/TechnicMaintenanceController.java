@@ -5,7 +5,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.zoomlion.DB.TechnicDAO;
@@ -15,8 +14,6 @@ import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.models.Technic;
 
 import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 //public class TechnicDetailController {
@@ -119,7 +116,7 @@ import java.util.Objects;
 //        @../images/ZTC250V-1.png
 
 
-public class TechnicDetailController {
+public class TechnicMaintenanceController {
 
     @FXML
     private Label nameLabel;
@@ -140,7 +137,7 @@ public class TechnicDetailController {
         nameLabel.setText(technic.getName());
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(Constants.IMAGE_PATH + "no-image.png")));
-        String fullPath = Constants.IMAGE_PATH + technic.getImage_path();
+        String fullPath = Constants.IMAGE_PATH + technic.getImagePath();
         InputStream imageStream = getClass().getResourceAsStream(fullPath);
         if (imageStream != null) {
             image = new Image(imageStream);

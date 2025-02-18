@@ -36,7 +36,7 @@ public class TechnicItemController {
 
         Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(Constants.IMAGE_PATH + "no-image.png")));
 
-        String fullPath = Constants.IMAGE_PATH + technic.getImage_path();
+        String fullPath = Constants.IMAGE_PATH + technic.getImagePath();
         InputStream imageStream = getClass().getResourceAsStream(fullPath);
         if (imageStream != null) {
             image = new Image(imageStream);
@@ -49,10 +49,10 @@ public class TechnicItemController {
 
     private void openDetailScene(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_detail_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_maintenance_view.fxml"));
             Parent detailRoot = loader.load();
 
-            TechnicDetailController controller = loader.getController();
+            TechnicMaintenanceController controller = loader.getController();
             controller.setTechnic(technic);
 
             Stage stage = new Stage();

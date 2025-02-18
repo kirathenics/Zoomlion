@@ -6,14 +6,14 @@ import javafx.beans.property.SimpleStringProperty;
 public class Technic {
     private final SimpleIntegerProperty id;
     private final SimpleStringProperty name;
-    private final SimpleStringProperty image_path;
-    private final SimpleIntegerProperty technic_model_id;
+    private final SimpleStringProperty imagePath;
+    private final SimpleIntegerProperty technicModelId;
 
-    public Technic(int id, String name, String image_path, int technic_model_id) {
+    public Technic(int id, String name, String imagePath, int technicModelId) {
         this.id = new SimpleIntegerProperty(id);
         this.name = new SimpleStringProperty(name);
-        this.image_path = new SimpleStringProperty(image_path);
-        this.technic_model_id = new SimpleIntegerProperty(technic_model_id);
+        this.imagePath = new SimpleStringProperty(imagePath);
+        this.technicModelId = new SimpleIntegerProperty(technicModelId);
     }
 
     public int getId() {
@@ -24,12 +24,12 @@ public class Technic {
         return id;
     }
 
-    public String getImage_path() {
-        return image_path.get();
+    public String getImagePath() {
+        return imagePath.get();
     }
 
-    public SimpleStringProperty image_pathProperty() {
-        return image_path;
+    public SimpleStringProperty imagePathProperty() {
+        return imagePath;
     }
 
     public String getName() {
@@ -40,11 +40,11 @@ public class Technic {
         return name;
     }
 
-    public int getTechnic_model_id() {
-        return technic_model_id.get();
+    public int getTechnicModelId() {
+        return technicModelId.get();
     }
 
-    public SimpleIntegerProperty technic_model_idProperty() {
-        return technic_model_id;
+    public SimpleIntegerProperty technicModelIdProperty() {
+        return technicModelId;
     }
 }
