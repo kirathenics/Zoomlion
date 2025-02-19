@@ -81,6 +81,9 @@ public class CraneUIFactory implements TechnicUIFactory {
             createToggleButtons(mileageToggleButtonContainer, mileageToggleGroup, mergedMileageList);
 
             mainContainer.getChildren().add(mileageToggleButtonContainer);
+
+            TextField textField = new TextField();
+            mileageToggleButtonContainer.getChildren().add(textField);
         }
 
         if (!mileageList.isEmpty()) {
