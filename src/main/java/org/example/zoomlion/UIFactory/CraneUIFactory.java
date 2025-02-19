@@ -10,6 +10,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.zoomlion.DB.MaintenanceDAO;
+import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.models.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -73,7 +74,7 @@ public class CraneUIFactory implements TechnicUIFactory {
         Collections.sort(mergedMileageList);
 
         if (!mergedMileageList.isEmpty()) {
-            mainContainer.getChildren().add(new Label("ТО по пробегу:"));
+            mainContainer.getChildren().add(new Label(Constants.MILEAGE_TO_LABEL));
 
             mileageToggleButtonContainer = new HBox();
             mileageToggleGroup = new ToggleGroup();
@@ -90,16 +91,16 @@ public class CraneUIFactory implements TechnicUIFactory {
             mileageMaintenanceObservableList = FXCollections.observableArrayList();
             mileageMaintenanceTableView.setItems(mileageMaintenanceObservableList);
 
-            TableColumn<MileageMaintenance, String> maintenanceObjectColumn = new TableColumn<>("Объект обслуживания");
+            TableColumn<MileageMaintenance, String> maintenanceObjectColumn = new TableColumn<>(Constants.MAINTENANCE_OBJECT_LABEL);
             maintenanceObjectColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceObject"));
 
-            TableColumn<MileageMaintenance, String> workContentColumn = new TableColumn<>("Содержание работ");
+            TableColumn<MileageMaintenance, String> workContentColumn = new TableColumn<>(Constants.WORK_CONTENTS_LABEL);
             workContentColumn.setCellValueFactory(new PropertyValueFactory<>("workContent"));
 
-            TableColumn<MileageMaintenance, Integer> mileageColumn = new TableColumn<>("Пробег, км");
+            TableColumn<MileageMaintenance, Integer> mileageColumn = new TableColumn<>(Constants.MILEAGE_LABEL);
             mileageColumn.setCellValueFactory(new PropertyValueFactory<>("mileage"));
 
-            TableColumn<MileageMaintenance, String> additionalInfoColumn = new TableColumn<>("Дополнительная информация");
+            TableColumn<MileageMaintenance, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
             additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
             mileageMaintenanceTableView.getColumns().addAll(maintenanceObjectColumn, workContentColumn, mileageColumn, additionalInfoColumn);
@@ -112,7 +113,7 @@ public class CraneUIFactory implements TechnicUIFactory {
                             mileageTableContainer, mileageMaintenanceObservableList,
                             mileageMaintenanceTableView,
                             () -> MaintenanceDAO.getMileageMaintenanceByTechnicId(technic.getId(),
-                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace("ТО-", ""))
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
@@ -131,19 +132,19 @@ public class CraneUIFactory implements TechnicUIFactory {
             mileageLubricationObservableList = FXCollections.observableArrayList();
             mileageLubricationTableView.setItems(mileageLubricationObservableList);
 
-            TableColumn<MileageLubrication, String> lubricationPointColumn = new TableColumn<>("Точка смазки");
+            TableColumn<MileageLubrication, String> lubricationPointColumn = new TableColumn<>(Constants.LUBRICATION_POINT_LABEL);
             lubricationPointColumn.setCellValueFactory(new PropertyValueFactory<>("lubricationPoint"));
 
-            TableColumn<MileageLubrication, String> lubricationMethodColumn = new TableColumn<>("Способ нанесения");
+            TableColumn<MileageLubrication, String> lubricationMethodColumn = new TableColumn<>(Constants.LUBRICATION_METHOD_LABEL);
             lubricationMethodColumn.setCellValueFactory(new PropertyValueFactory<>("lubricationMethod"));
 
-            TableColumn<MileageLubrication, Integer> mileageColumn = new TableColumn<>("Периодичность смазки, км");
+            TableColumn<MileageLubrication, Integer> mileageColumn = new TableColumn<>(Constants.LUBRICATION_MILEAGE_LABEL);
             mileageColumn.setCellValueFactory(new PropertyValueFactory<>("mileage"));
 
-            TableColumn<MileageLubrication, String> lubricantColumn = new TableColumn<>("Наименование смазочных материалов");
+            TableColumn<MileageLubrication, String> lubricantColumn = new TableColumn<>(Constants.LUBRICANT_LABEL);
             lubricantColumn.setCellValueFactory(new PropertyValueFactory<>("lubricant"));
 
-            TableColumn<MileageLubrication, String> additionalInfoColumn = new TableColumn<>("Дополнительная информация");
+            TableColumn<MileageLubrication, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
             additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
             mileageLubricationTableView.getColumns().addAll(lubricationPointColumn, lubricationMethodColumn, mileageColumn, lubricantColumn, additionalInfoColumn);
@@ -156,7 +157,7 @@ public class CraneUIFactory implements TechnicUIFactory {
                             mileageLubricationTableContainer, mileageLubricationObservableList,
                             mileageLubricationTableView,
                             () -> MaintenanceDAO.getMileageLubricationByTechnicId(technic.getId(),
-                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace("ТО-", ""))
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
@@ -181,7 +182,7 @@ public class CraneUIFactory implements TechnicUIFactory {
         Collections.sort(mergedWorkHoursList);
 
         if (!mergedWorkHoursList.isEmpty()) {
-            mainContainer.getChildren().add(new Label("ТО по наработанным часам:"));
+            mainContainer.getChildren().add(new Label(Constants.WORK_HOURS_TO_LABEL));
 
             workHoursToggleButtonContainer = new HBox();
             workHoursToggleGroup = new ToggleGroup();
@@ -198,16 +199,16 @@ public class CraneUIFactory implements TechnicUIFactory {
             workHoursMaintenanceObservableList = FXCollections.observableArrayList();
             workHoursMaintenanceTableView.setItems(workHoursMaintenanceObservableList);
 
-            TableColumn<WorkHoursMaintenance, String> maintenanceObjectColumn = new TableColumn<>("Объект обслуживания");
+            TableColumn<WorkHoursMaintenance, String> maintenanceObjectColumn = new TableColumn<>(Constants.MAINTENANCE_OBJECT_LABEL);
             maintenanceObjectColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceObject"));
 
-            TableColumn<WorkHoursMaintenance, String> workContentColumn = new TableColumn<>("Содержание работ");
+            TableColumn<WorkHoursMaintenance, String> workContentColumn = new TableColumn<>(Constants.WORK_CONTENTS_LABEL);
             workContentColumn.setCellValueFactory(new PropertyValueFactory<>("workContent"));
 
-            TableColumn<WorkHoursMaintenance, Integer> workHoursColumn = new TableColumn<>("Время работы, ч");
+            TableColumn<WorkHoursMaintenance, Integer> workHoursColumn = new TableColumn<>(Constants.WORK_HOURS_LABEL);
             workHoursColumn.setCellValueFactory(new PropertyValueFactory<>("workHours"));
 
-            TableColumn<WorkHoursMaintenance, String> additionalInfoColumn = new TableColumn<>("Дополнительная информация");
+            TableColumn<WorkHoursMaintenance, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
             additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
             workHoursMaintenanceTableView.getColumns().addAll(maintenanceObjectColumn, workContentColumn, workHoursColumn, additionalInfoColumn);
@@ -220,7 +221,7 @@ public class CraneUIFactory implements TechnicUIFactory {
                             workHoursTableContainer, workHoursMaintenanceObservableList,
                             workHoursMaintenanceTableView,
                             () -> MaintenanceDAO.getWorkHoursMaintenanceByTechnicId(technic.getId(),
-                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace("ТО-", ""))
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
@@ -239,19 +240,19 @@ public class CraneUIFactory implements TechnicUIFactory {
             workHoursLubricationObservableList = FXCollections.observableArrayList();
             workHoursLubricationTableView.setItems(workHoursLubricationObservableList);
 
-            TableColumn<WorkHoursLubrication, String> lubricationPointColumn = new TableColumn<>("Точка смазки");
+            TableColumn<WorkHoursLubrication, String> lubricationPointColumn = new TableColumn<>(Constants.LUBRICATION_POINT_LABEL);
             lubricationPointColumn.setCellValueFactory(new PropertyValueFactory<>("lubricationPoint"));
 
-            TableColumn<WorkHoursLubrication, String> lubricationMethodColumn = new TableColumn<>("Способ нанесения");
+            TableColumn<WorkHoursLubrication, String> lubricationMethodColumn = new TableColumn<>(Constants.LUBRICATION_POINT_LABEL);
             lubricationMethodColumn.setCellValueFactory(new PropertyValueFactory<>("lubricationMethod"));
 
-            TableColumn<WorkHoursLubrication, Integer> workHoursColumn = new TableColumn<>("Периодичность смазки, ч");
+            TableColumn<WorkHoursLubrication, Integer> workHoursColumn = new TableColumn<>(Constants.LUBRICATION_WORK_HOURS_LABEL);
             workHoursColumn.setCellValueFactory(new PropertyValueFactory<>("workHours"));
 
-            TableColumn<WorkHoursLubrication, String> lubricantColumn = new TableColumn<>("Наименование смазочных материалов");
+            TableColumn<WorkHoursLubrication, String> lubricantColumn = new TableColumn<>(Constants.LUBRICANT_LABEL);
             lubricantColumn.setCellValueFactory(new PropertyValueFactory<>("lubricant"));
 
-            TableColumn<WorkHoursLubrication, String> additionalInfoColumn = new TableColumn<>("Дополнительная информация");
+            TableColumn<WorkHoursLubrication, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
             additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
             workHoursLubricationTableView.getColumns().addAll(lubricationPointColumn, lubricationMethodColumn, workHoursColumn, lubricantColumn, additionalInfoColumn);
@@ -264,7 +265,7 @@ public class CraneUIFactory implements TechnicUIFactory {
                             workHoursLubricationTableContainer, workHoursLubricationObservableList,
                             workHoursLubricationTableView,
                             () -> MaintenanceDAO.getWorkHoursLubricationByTechnicId(technic.getId(),
-                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace("ТО-", ""))
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
@@ -281,7 +282,7 @@ public class CraneUIFactory implements TechnicUIFactory {
      */
     private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup, List<Integer> filterParamsTOList) {
         for (Integer mileage : filterParamsTOList) {
-            ToggleButton button = new ToggleButton("ТО-" + mileage);
+            ToggleButton button = new ToggleButton(Constants.TO_LABEL + mileage);
             button.setToggleGroup(toggleGroup);
             button.getStyleClass().add("toggle-button");
             toggleButtonContainer.getChildren().add(button);
@@ -311,7 +312,7 @@ public class CraneUIFactory implements TechnicUIFactory {
             }
         });
 
-        tableView.getColumns().removeIf(col -> col.getText().equals("Дополнительная информация"));
+        tableView.getColumns().removeIf(col -> col.getText().equals(Constants.ADDITIONAL_INFO_LABEL));
 
         if (hasAdditionalInfo) {
             TableColumn<T, String> additionalInfoColumn = getAdditionalInfoColumn();
@@ -320,7 +321,7 @@ public class CraneUIFactory implements TechnicUIFactory {
     }
 
     private static <T> TableColumn<T, String> getAdditionalInfoColumn() {
-        TableColumn<T, String> additionalInfoColumn = new TableColumn<>("Дополнительная информация");
+        TableColumn<T, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
         additionalInfoColumn.setCellValueFactory(cellData -> {
             try {
                 Method method = cellData.getValue().getClass().getMethod("additionalInfoProperty");
@@ -332,3 +333,6 @@ public class CraneUIFactory implements TechnicUIFactory {
         return additionalInfoColumn;
     }
 }
+
+// 335 code lines
+// 2092 all
