@@ -3,17 +3,17 @@ package org.example.zoomlion.models;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class WorkingHoursLubrication {
+public class WorkHoursLubrication {
     private final SimpleStringProperty lubricationPoint;
     private final SimpleStringProperty lubricationMethod;
-    private final SimpleIntegerProperty workingHours;
+    private final SimpleIntegerProperty workHours;
     private final SimpleStringProperty lubricant;
     private final SimpleStringProperty additionalInfo;
 
-    public WorkingHoursLubrication(String lubricationPoint, String lubricationMethod, int workingHours, String lubricant, String additionalInfo) {
+    public WorkHoursLubrication(String lubricationPoint, String lubricationMethod, int workHours, String lubricant, String additionalInfo) {
         this.lubricationPoint = new SimpleStringProperty(lubricationPoint);
         this.lubricationMethod = new SimpleStringProperty(lubricationMethod);
-        this.workingHours = new SimpleIntegerProperty(workingHours);
+        this.workHours = new SimpleIntegerProperty(workHours);
         this.lubricant = new SimpleStringProperty(lubricant);
         this.additionalInfo = new SimpleStringProperty(additionalInfo);
     }
@@ -34,12 +34,12 @@ public class WorkingHoursLubrication {
         return lubricationMethod;
     }
 
-    public int getWorkingHours() {
-        return workingHours.get();
+    public int getWorkHours() {
+        return workHours.get();
     }
 
-    public SimpleIntegerProperty workingHoursProperty() {
-        return workingHours;
+    public SimpleIntegerProperty workHoursProperty() {
+        return workHours;
     }
 
     public String getLubricant() {

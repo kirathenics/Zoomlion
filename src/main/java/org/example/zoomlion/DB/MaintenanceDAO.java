@@ -2,8 +2,8 @@ package org.example.zoomlion.DB;
 
 import org.example.zoomlion.models.MileageLubrication;
 import org.example.zoomlion.models.MileageMaintenance;
-import org.example.zoomlion.models.WorkingHoursLubrication;
-import org.example.zoomlion.models.WorkingHoursMaintenance;
+import org.example.zoomlion.models.WorkHoursLubrication;
+import org.example.zoomlion.models.WorkHoursMaintenance;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -154,7 +154,7 @@ public class MaintenanceDAO {
         return mileageMaintenanceList;
     }
 
-    public static List<MileageLubrication> getMileageLubricationByTechnicId(int technicId) {
+    public static List<MileageLubrication> getMileageLubricationByTechnicId(int technicId, int mileage) {
         List<MileageLubrication> mileageLubricationList = new ArrayList<>();
 
         String query = """
@@ -173,13 +173,16 @@ public class MaintenanceDAO {
             ON LM.id = LO.lubrication_method_id
             LEFT JOIN lubricants AS L
             ON L.id = LO.lubricant_id
-            WHERE M.technic_id = ? AND M.mileage IS NOT NULL;
+            WHERE M.technic_id = ?
+                AND M.mileage IS NOT NULL
+                AND ? % M.mileage = 0
             """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, technicId);
+            preparedStatement.setInt(2, mileage);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
@@ -198,14 +201,14 @@ public class MaintenanceDAO {
         return mileageLubricationList;
     }
 
-    public static List<WorkingHoursMaintenance> getWorkingHoursMaintenanceByTechnicId(int technicId) {
-        List<WorkingHoursMaintenance> workingHoursMaintenanceList = new ArrayList<>();
+    public static List<WorkHoursMaintenance> getWorkHoursMaintenanceByTechnicId(int technicId, int workHours) {
+        List<WorkHoursMaintenance> workHoursMaintenanceList = new ArrayList<>();
 
         String query = """
                 SELECT
                     MO.name AS 'maintenance_object',
                     W.name AS 'work_content',
-                    M.mileage AS 'working_hours',
+                    M.work_hours AS 'work_hours',
                     M.additional_info AS 'additional_info'
                 FROM maintenance as M
                 LEFT JOIN operations AS O
@@ -214,20 +217,23 @@ public class MaintenanceDAO {
                 ON MO.id = O.maintenance_object_id
                 LEFT JOIN work_contents AS W
                 ON W.id = O.work_content_id
-                WHERE M.technic_id = ? AND M.working_hours IS NOT NULL
+                WHERE M.technic_id = ?
+                    AND M.work_hours IS NOT NULL
+                    AND ? % M.work_hours = 0
                 """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, technicId);
+            preparedStatement.setInt(2, workHours);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                workingHoursMaintenanceList.add(new WorkingHoursMaintenance(
+                workHoursMaintenanceList.add(new WorkHoursMaintenance(
                         resultSet.getString("maintenance_object"),
                         resultSet.getString("work_content"),
-                        resultSet.getInt("working_hours"),
+                        resultSet.getInt("work_hours"),
                         resultSet.getNString("additional_info")
                 ));
             }
@@ -235,17 +241,17 @@ public class MaintenanceDAO {
             e.printStackTrace();
         }
 
-        return workingHoursMaintenanceList;
+        return workHoursMaintenanceList;
     }
 
-    public static List<WorkingHoursLubrication> getWorkingHoursLubricationByTechnicId(int technicId) {
-        List<WorkingHoursLubrication> workingHoursLubricationList = new ArrayList<>();
+    public static List<WorkHoursLubrication> getWorkHoursLubricationByTechnicId(int technicId, int workHours) {
+        List<WorkHoursLubrication> workHoursLubricationList = new ArrayList<>();
 
         String query = """
             SELECT
                 LP.name AS 'lubrication_point',
                 LM.name AS 'lubrication_method',
-                M.working_hours AS 'working_hours',
+                M.work_hours AS 'work_hours',
                 L.name AS 'lubricant',
                 M.additional_info AS 'additional_info'
             FROM lubrication_operations AS LO
@@ -258,20 +264,22 @@ public class MaintenanceDAO {
             LEFT JOIN lubricants AS L
             ON L.id = LO.lubricant_id
             WHERE M.technic_id = ?
-                AND M.working_hours IS NOT NULL
+                AND M.work_hours IS NOT NULL
+                AND ? % M.work_hours = 0
             """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, technicId);
+            preparedStatement.setInt(2, workHours);
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                workingHoursLubricationList.add(new WorkingHoursLubrication(
+                workHoursLubricationList.add(new WorkHoursLubrication(
                         resultSet.getString("lubrication_point"),
                         resultSet.getString("lubrication_method"),
-                        resultSet.getInt("working_hours"),
+                        resultSet.getInt("work_hours"),
                         resultSet.getString("lubricant"),
                         resultSet.getNString("additional_info")
                 ));
@@ -280,6 +288,6 @@ public class MaintenanceDAO {
             e.printStackTrace();
         }
 
-        return workingHoursLubricationList;
+        return workHoursLubricationList;
     }
 }

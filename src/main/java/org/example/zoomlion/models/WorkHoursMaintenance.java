@@ -3,16 +3,16 @@ package org.example.zoomlion.models;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 
-public class WorkingHoursMaintenance {
+public class WorkHoursMaintenance {
     private final SimpleStringProperty maintenanceObject;
     private final SimpleStringProperty workContent;
-    private final SimpleIntegerProperty workingHours;
+    private final SimpleIntegerProperty workHours;
     private final SimpleStringProperty additionalInfo;
 
-    public WorkingHoursMaintenance(String maintenanceObject, String workContent, int workingHours, String additionalInfo) {
+    public WorkHoursMaintenance(String maintenanceObject, String workContent, int workHours, String additionalInfo) {
         this.maintenanceObject = new SimpleStringProperty(maintenanceObject);
         this.workContent = new SimpleStringProperty(workContent);
-        this.workingHours = new SimpleIntegerProperty(workingHours);
+        this.workHours = new SimpleIntegerProperty(workHours);
         this.additionalInfo = new SimpleStringProperty(additionalInfo);
     }
 
@@ -32,12 +32,12 @@ public class WorkingHoursMaintenance {
         return workContent;
     }
 
-    public int getWorkingHours() {
-        return workingHours.get();
+    public int getWorkHours() {
+        return workHours.get();
     }
 
-    public SimpleIntegerProperty workingHoursProperty() {
-        return workingHours;
+    public SimpleIntegerProperty workHoursProperty() {
+        return workHours;
     }
 
     public String getAdditionalInfo() {
