@@ -1,5 +1,7 @@
 package org.example.zoomlion.UIFactory;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
@@ -11,109 +13,48 @@ import org.example.zoomlion.DB.MaintenanceDAO;
 import org.example.zoomlion.models.MileageMaintenance;
 import org.example.zoomlion.models.Technic;
 
-import java.util.List;
-
-//public class CraneUIFactory implements TechnicUIFactory {
-//    HBox toggleButtonContainer;
-//    ToggleGroup toggleGroup;
-//    VBox tableContainer;
-//    TableView<?> technicTable;
-//
-//    @Override
-//    public Node createUI(Technic technic) {
-//        VBox vbox = new VBox(10);
-//
-//        List<Integer> mileageList = MaintenanceDAO.getMileageByTechnicId(technic.getId());
-//
-//        if (!mileageList.isEmpty()) {
-//            vbox.getChildren().add(new Label("ТО по пробегу:"));
-//
-//            toggleButtonContainer = new HBox(10);
-//            toggleGroup = new ToggleGroup();
-//            createToggleButtons(toggleGroup, mileageList);
-//
-//            tableContainer = new VBox();
-//            tableContainer.setVisible(false);
-//
-//            technicTable = new TableView<>();
-//            technicTable.getColumns().add(new TableColumn<>("Объекты обслуживания"));
-//            technicTable.getColumns().add(new TableColumn<>("Содержание работ"));
-//            technicTable.getColumns().add(new TableColumn<>("Пробег, км"));
-//            // опционально добавить доп инфу
-//
-//            tableContainer.getChildren().add(technicTable);
-//
-//            toggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
-//                if (newToggle != null) {
-//                    updateTable((ToggleButton) newToggle);
-//                } else {
-//                    tableContainer.setVisible(false);
-//                }
-//            });
-//
-//            vbox.getChildren().add(toggleButtonContainer);
-//            vbox.getChildren().add(tableContainer);
-//        }
-//
-//        return vbox;
-//    }
-//
-//    /**
-//     * Создание кнопок ТО (ТО100, ТО250, ТО500, ТО750) динамически
-//     */
-//    private void createToggleButtons(ToggleGroup toggleGroup, List<Integer> mileageList) {
-//        for (Integer mileage : mileageList) {
-//            ToggleButton button = new ToggleButton("ТО" + mileage);
-//            button.setToggleGroup(toggleGroup);
-//            button.getStyleClass().add("toggle-button"); // Применяем стиль из styles.css
-//            toggleButtonContainer.getChildren().add(button);
-//        }
-//    }
-//
-//    /**
-//     * Обновление таблицы при выборе ТО
-//     */
-//    private void updateTable(ToggleButton selectedButton) {
-//        tableContainer.setVisible(true);
-//        String selectedTO = selectedButton.getText().replace("ТО", "");
-//        loadData(selectedTO);
-//    }
-//
-//    /**
-//     * Загрузка данных в таблицу
-//     */
-//    private void loadData(String filter) {
-//        System.out.println("Loading data for maintenance: " + filter);
-//    }
-//}
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
+import java.util.function.Supplier;
 
 public class CraneUIFactory implements TechnicUIFactory {
-    private HBox toggleButtonContainer;
-    private ToggleGroup toggleGroup;
-    private VBox tableContainer;
-    private TableView<MileageMaintenance> technicTable;
-    private ObservableList<MileageMaintenance> tableData;
+    private HBox mileageToggleButtonContainer;
+    private ToggleGroup mileageToggleGroup;
+    private VBox mileageTableContainer;
+    private TableView<MileageMaintenance> mileageMaintenanceTableView;
+    private ObservableList<MileageMaintenance> mileageMaintenanceObservableList;
 
     @Override
     public Node createUI(Technic technic) {
         VBox vbox = new VBox(10);
 
-        List<Integer> mileageList = MaintenanceDAO.getMileageByTechnicId(technic.getId());
-        System.out.println(mileageList);
+        List<Integer> mileageList = MaintenanceDAO.getMileageListByTechnicId(technic.getId());
+        Collections.sort(mileageList);
 
-        if (!mileageList.isEmpty()) {
+        List<Integer> mileageLubricationList = MaintenanceDAO.getMileageLubricationListByTechnicId(technic.getId());
+        Collections.sort(mileageLubricationList);
+
+        Set<Integer> mileageSet = new HashSet<>(mileageList);
+        mileageSet.addAll(mileageLubricationList);
+        List<Integer> mergedMileageList = new ArrayList<>(mileageSet);
+        Collections.sort(mergedMileageList);
+
+        if (!mergedMileageList.isEmpty()) {
             vbox.getChildren().add(new Label("ТО по пробегу:"));
 
-            toggleButtonContainer = new HBox(10);
-            toggleGroup = new ToggleGroup();
-            createToggleButtons(toggleGroup, mileageList);
+            mileageToggleButtonContainer = new HBox();
+            mileageToggleGroup = new ToggleGroup();
+            createToggleButtons(mileageToggleButtonContainer, mileageToggleGroup, mergedMileageList);
+        }
 
-            tableContainer = new VBox();
-            tableContainer.setVisible(false);
+        if (!mileageList.isEmpty()) {
+            mileageTableContainer = new VBox();
+            mileageTableContainer.setVisible(false);
 
-            technicTable = new TableView<>();
-            tableData = FXCollections.observableArrayList();
-            technicTable.setItems(tableData);
+            mileageMaintenanceTableView = new TableView<>();
+            mileageMaintenanceObservableList = FXCollections.observableArrayList();
+            mileageMaintenanceTableView.setItems(mileageMaintenanceObservableList);
 
             TableColumn<MileageMaintenance, String> maintenanceObjectColumn = new TableColumn<>("Объекты обслуживания");
             maintenanceObjectColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceObject"));
@@ -127,62 +68,78 @@ public class CraneUIFactory implements TechnicUIFactory {
             TableColumn<MileageMaintenance, String> additionalInfoColumn = new TableColumn<>("Доп. информация");
             additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
-            technicTable.getColumns().addAll(maintenanceObjectColumn, workContentColumn, mileageColumn, additionalInfoColumn);
+            mileageMaintenanceTableView.getColumns().addAll(maintenanceObjectColumn, workContentColumn, mileageColumn, additionalInfoColumn);
 
-            tableContainer.getChildren().add(technicTable);
+            mileageTableContainer.getChildren().add(mileageMaintenanceTableView);
 
-            toggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+            mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
-                    updateTable((ToggleButton) newToggle, technic.getId());
+                    updateTable(
+                            mileageTableContainer, mileageMaintenanceObservableList,
+                            mileageMaintenanceTableView,
+                            () -> MaintenanceDAO.getMileageMaintenanceByTechnicId(technic.getId(),
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace("ТО-", ""))
+                            )
+                    );
                 } else {
-                    tableContainer.setVisible(false);
+                    mileageTableContainer.setVisible(false);
                 }
             });
 
-            vbox.getChildren().addAll(toggleButtonContainer, tableContainer);
+            vbox.getChildren().addAll(mileageToggleButtonContainer, mileageTableContainer);
         }
 
         return vbox;
     }
 
-    private void createToggleButtons(ToggleGroup toggleGroup, List<Integer> mileageList) {
+    /**
+     * Создание кнопок ТО (ТО100, ТО250, ТО500, ТО750) динамически
+     */
+    private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup, List<Integer> mileageList) {
         for (Integer mileage : mileageList) {
-            ToggleButton button = new ToggleButton("ТО" + mileage);
+            ToggleButton button = new ToggleButton("ТО-" + mileage);
             button.setToggleGroup(toggleGroup);
             button.getStyleClass().add("toggle-button");
             toggleButtonContainer.getChildren().add(button);
         }
     }
 
-    private void updateTable(ToggleButton selectedButton, int technicId) {
+    /**
+     * Обновление таблицы при выборе ТО
+     */
+    private <T> void updateTable(VBox tableContainer, ObservableList<T> observableList,
+                                 TableView<T> tableView, Supplier<List<T>> dataLoader) {
         tableContainer.setVisible(true);
-        String selectedTO = selectedButton.getText().replace("ТО", "");
-        loadData(Integer.parseInt(selectedTO), technicId);
+        observableList.clear();
+        observableList.addAll(dataLoader.get());
+
+        setAdditionalInfoColumn(observableList, tableView);
     }
 
-    private void loadData(int mileage, int technicId) {
-        tableData.clear();
-        List<MileageMaintenance> maintenanceList = MaintenanceDAO.loadMileageMaintenanceByTechnicId(technicId)
-                .stream()
-                .filter(m -> m.getMileage() == mileage)
-                .toList();
-
-        tableData.addAll(maintenanceList);
-
-        // Проверяем, есть ли хотя бы одно ненулевое значение в additionalInfo
-        boolean hasAdditionalInfo = maintenanceList.stream()
-                .anyMatch(m -> m.getAdditionalInfo() != null && !m.getAdditionalInfo().isEmpty());
-
-        if (!hasAdditionalInfo) {
-            // Убираем колонку, если в данных нет информации
-            technicTable.getColumns().removeIf(col -> col.getText().equals("Доп. информация"));
-        } else {
-            // Добавляем колонку только если её нет в таблице
-            if (technicTable.getColumns().stream().noneMatch(col -> col.getText().equals("Доп. информация"))) {
-                TableColumn<MileageMaintenance, String> additionalInfoColumn = new TableColumn<>("Доп. информация");
-                additionalInfoColumn.setCellValueFactory(cellData -> cellData.getValue().additionalInfoProperty());
-                technicTable.getColumns().add(additionalInfoColumn);
+    private static <T> void setAdditionalInfoColumn(ObservableList<T> observableList, TableView<T> tableView) {
+        boolean hasAdditionalInfo = observableList.stream().anyMatch(item -> {
+            try {
+                Method method = item.getClass().getMethod("getAdditionalInfo");
+                Object value = method.invoke(item);
+                return value != null && !value.toString().isEmpty();
+            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                return false;
             }
+        });
+
+        tableView.getColumns().removeIf(col -> col.getText().equals("Доп. информация"));
+
+        if (hasAdditionalInfo) {
+            TableColumn<T, String> additionalInfoColumn = new TableColumn<>("Доп. информация");
+            additionalInfoColumn.setCellValueFactory(cellData -> {
+                try {
+                    Method method = cellData.getValue().getClass().getMethod("additionalInfoProperty");
+                    return (ObservableValue<String>) method.invoke(cellData.getValue());
+                } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
+                    return new SimpleStringProperty("");
+                }
+            });
+            tableView.getColumns().add(additionalInfoColumn);
         }
     }
 }

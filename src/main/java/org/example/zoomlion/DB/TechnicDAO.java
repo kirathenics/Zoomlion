@@ -77,7 +77,8 @@ public class TechnicDAO {
 
     public static String getTechnicTypeByTechnicId(int technicId) {
         String query = """
-            SELECT technic_types.name FROM technic_types
+            SELECT technic_types.name
+            FROM technic_types
             LEFT JOIN technic_models
             ON technic_types.id = technic_models.technic_type_id
             LEFT JOIN technics
