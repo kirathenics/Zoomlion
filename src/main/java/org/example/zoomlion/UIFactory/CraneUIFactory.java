@@ -89,8 +89,8 @@ public class CraneUIFactory implements TechnicUIFactory {
 
             mainContainer.getChildren().add(mileageToggleButtonContainer);
 
-            TextField textField = new TextField();
-            mileageToggleButtonContainer.getChildren().add(textField);
+//            TextField textField = new TextField();
+//            mileageToggleButtonContainer.getChildren().add(textField);
         }
 
         if (!mileageList.isEmpty()) {
@@ -446,7 +446,7 @@ public class CraneUIFactory implements TechnicUIFactory {
 //        tableView.prefHeightProperty().bind(
 //                Bindings.when(Bindings.isEmpty(tableView.getItems()))
 //                        .then(0) // Если данных нет, высота = 0
-////                        .otherwise(Bindings.size(tableView.getItems()).multiply(40).add(30)) // Динамическая высота строк
+//                        .otherwise(Bindings.size(tableView.getItems()).multiply(40).add(30)) // Динамическая высота строк
 //                        .otherwise(Bindings.size(tableView.getItems()).multiply(40)) // Динамическая высота строк
 //        );
 //
