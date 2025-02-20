@@ -1,14 +1,17 @@
 package org.example.zoomlion.UIFactory;
 
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
 import org.example.zoomlion.DB.MaintenanceDAO;
 import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.models.*;
@@ -18,6 +21,10 @@ import java.lang.reflect.Method;
 import java.util.*;
 import java.util.function.Supplier;
 
+
+// 335 code lines
+// 2092 all
+
 public class CraneUIFactory implements TechnicUIFactory {
     private VBox mainContainer;
 
@@ -25,7 +32,7 @@ public class CraneUIFactory implements TechnicUIFactory {
     private HBox mileageToggleButtonContainer;
     private ToggleGroup mileageToggleGroup;
 
-    private VBox mileageTableContainer;
+    private VBox mileageMaintenanceTableContainer;
     private TableView<MileageMaintenance> mileageMaintenanceTableView;
     private ObservableList<MileageMaintenance> mileageMaintenanceObservableList;
 
@@ -37,7 +44,7 @@ public class CraneUIFactory implements TechnicUIFactory {
     private HBox workHoursToggleButtonContainer;
     private ToggleGroup workHoursToggleGroup;
 
-    private VBox workHoursTableContainer;
+    private VBox workHoursMaintenanceTableContainer;
     private TableView<WorkHoursMaintenance> workHoursMaintenanceTableView;
     private ObservableList<WorkHoursMaintenance> workHoursMaintenanceObservableList;
 
@@ -87,18 +94,21 @@ public class CraneUIFactory implements TechnicUIFactory {
         }
 
         if (!mileageList.isEmpty()) {
-            mileageTableContainer = new VBox();
-            mileageTableContainer.setVisible(false);
+            mileageMaintenanceTableContainer = new VBox();
 
             mileageMaintenanceTableView = new TableView<>();
             mileageMaintenanceObservableList = FXCollections.observableArrayList();
             mileageMaintenanceTableView.setItems(mileageMaintenanceObservableList);
+
+            adjustTableSize(mileageMaintenanceTableView, mileageMaintenanceTableContainer);
+            mileageMaintenanceTableView.getStyleClass().add("table-view");
 
             TableColumn<MileageMaintenance, String> maintenanceObjectColumn = new TableColumn<>(Constants.MAINTENANCE_OBJECT_LABEL);
             maintenanceObjectColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceObject"));
 
             TableColumn<MileageMaintenance, String> workContentColumn = new TableColumn<>(Constants.WORK_CONTENTS_LABEL);
             workContentColumn.setCellValueFactory(new PropertyValueFactory<>("workContent"));
+            workContentColumn.setCellFactory(tc -> createWrappedCell());
 
             TableColumn<MileageMaintenance, Integer> mileageColumn = new TableColumn<>(Constants.MILEAGE_LABEL);
             mileageColumn.setCellValueFactory(new PropertyValueFactory<>("mileage"));
@@ -106,25 +116,31 @@ public class CraneUIFactory implements TechnicUIFactory {
             TableColumn<MileageMaintenance, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
             additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
 
+            maintenanceObjectColumn.prefWidthProperty().bind(mileageMaintenanceTableView.widthProperty().multiply(0.3));
+            workContentColumn.prefWidthProperty().bind(mileageMaintenanceTableView.widthProperty().multiply(0.5));
+            mileageColumn.prefWidthProperty().bind(mileageMaintenanceTableView.widthProperty().multiply(0.2));
+
             mileageMaintenanceTableView.getColumns().addAll(maintenanceObjectColumn, workContentColumn, mileageColumn, additionalInfoColumn);
 
-            mileageTableContainer.getChildren().add(mileageMaintenanceTableView);
+            mileageMaintenanceTableContainer.getChildren().add(mileageMaintenanceTableView);
 
             mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
                     updateTable(
-                            mileageTableContainer, mileageMaintenanceObservableList,
+                            mileageMaintenanceObservableList,
                             mileageMaintenanceTableView,
                             () -> MaintenanceDAO.getMileageMaintenanceByTechnicId(technic.getId(),
                                     Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
-                    mileageTableContainer.setVisible(false);
+                    mileageMaintenanceTableContainer.setVisible(false);
+                    mileageMaintenanceTableContainer.setManaged(false);
+                    mileageMaintenanceObservableList.clear();
                 }
             });
 
-            mainContainer.getChildren().add(mileageTableContainer);
+            mainContainer.getChildren().add(mileageMaintenanceTableContainer);
         }
 
         if (!mileageLubricationList.isEmpty()) {
@@ -134,6 +150,9 @@ public class CraneUIFactory implements TechnicUIFactory {
             mileageLubricationTableView = new TableView<>();
             mileageLubricationObservableList = FXCollections.observableArrayList();
             mileageLubricationTableView.setItems(mileageLubricationObservableList);
+
+            adjustTableSize(mileageLubricationTableView, mileageLubricationTableContainer);
+            mileageLubricationTableView.getStyleClass().add("table-view");
 
             TableColumn<MileageLubrication, String> lubricationPointColumn = new TableColumn<>(Constants.LUBRICATION_POINT_LABEL);
             lubricationPointColumn.setCellValueFactory(new PropertyValueFactory<>("lubricationPoint"));
@@ -157,7 +176,7 @@ public class CraneUIFactory implements TechnicUIFactory {
             mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
                     updateTable(
-                            mileageLubricationTableContainer, mileageLubricationObservableList,
+                            mileageLubricationObservableList,
                             mileageLubricationTableView,
                             () -> MaintenanceDAO.getMileageLubricationByTechnicId(technic.getId(),
                                     Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
@@ -195,12 +214,15 @@ public class CraneUIFactory implements TechnicUIFactory {
         }
 
         if (!workHoursList.isEmpty()) {
-            workHoursTableContainer = new VBox();
-            workHoursTableContainer.setVisible(false);
+            workHoursMaintenanceTableContainer = new VBox();
+//            workHoursTableContainer.setVisible(false);
 
             workHoursMaintenanceTableView = new TableView<>();
             workHoursMaintenanceObservableList = FXCollections.observableArrayList();
             workHoursMaintenanceTableView.setItems(workHoursMaintenanceObservableList);
+
+            adjustTableSize(workHoursMaintenanceTableView, workHoursMaintenanceTableContainer);
+            workHoursMaintenanceTableView.getStyleClass().add("table-view");
 
             TableColumn<WorkHoursMaintenance, String> maintenanceObjectColumn = new TableColumn<>(Constants.MAINTENANCE_OBJECT_LABEL);
             maintenanceObjectColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceObject"));
@@ -216,23 +238,39 @@ public class CraneUIFactory implements TechnicUIFactory {
 
             workHoursMaintenanceTableView.getColumns().addAll(maintenanceObjectColumn, workContentColumn, workHoursColumn, additionalInfoColumn);
 
-            workHoursTableContainer.getChildren().add(workHoursMaintenanceTableView);
+            workHoursMaintenanceTableContainer.getChildren().add(workHoursMaintenanceTableView);
+
+//            workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+//                if (newToggle != null) {
+//                    updateTable(
+//                            workHoursMaintenanceObservableList,
+//                            workHoursMaintenanceTableView,
+//                            () -> MaintenanceDAO.getWorkHoursMaintenanceByTechnicId(technic.getId(),
+//                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
+//                            )
+//                    );
+//                } else {
+//                    workHoursTableContainer.setVisible(false);
+//                }
+//            });
 
             workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
                     updateTable(
-                            workHoursTableContainer, workHoursMaintenanceObservableList,
+                            workHoursMaintenanceObservableList,
                             workHoursMaintenanceTableView,
                             () -> MaintenanceDAO.getWorkHoursMaintenanceByTechnicId(technic.getId(),
                                     Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
-                    workHoursTableContainer.setVisible(false);
+                    workHoursMaintenanceTableContainer.setVisible(false);
+                    workHoursMaintenanceTableContainer.setManaged(false);
+                    workHoursMaintenanceObservableList.clear();
                 }
             });
 
-            mainContainer.getChildren().add(workHoursTableContainer);
+            mainContainer.getChildren().add(workHoursMaintenanceTableContainer);
         }
 
         if (!workHoursLubricationList.isEmpty()) {
@@ -242,6 +280,9 @@ public class CraneUIFactory implements TechnicUIFactory {
             workHoursLubricationTableView = new TableView<>();
             workHoursLubricationObservableList = FXCollections.observableArrayList();
             workHoursLubricationTableView.setItems(workHoursLubricationObservableList);
+
+            adjustTableSize(workHoursLubricationTableView, workHoursLubricationTableContainer);
+            workHoursLubricationTableView.getStyleClass().add("table-view");
 
             TableColumn<WorkHoursLubrication, String> lubricationPointColumn = new TableColumn<>(Constants.LUBRICATION_POINT_LABEL);
             lubricationPointColumn.setCellValueFactory(new PropertyValueFactory<>("lubricationPoint"));
@@ -265,18 +306,18 @@ public class CraneUIFactory implements TechnicUIFactory {
             workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
                     updateTable(
-                            workHoursLubricationTableContainer, workHoursLubricationObservableList,
+                            workHoursLubricationObservableList,
                             workHoursLubricationTableView,
                             () -> MaintenanceDAO.getWorkHoursLubricationByTechnicId(technic.getId(),
                                     Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
-                    mileageLubricationTableContainer.setVisible(false);
+                    workHoursLubricationTableContainer.setVisible(false);
                 }
             });
 
-            mainContainer.getChildren().add(mileageLubricationTableContainer);
+            mainContainer.getChildren().add(workHoursLubricationTableContainer);
         }
     }
 
@@ -295,9 +336,8 @@ public class CraneUIFactory implements TechnicUIFactory {
     /**
      * Обновление таблицы при выборе ТО
      */
-    private <T> void updateTable(VBox tableContainer, ObservableList<T> observableList, TableView<T> tableView,
+    private <T> void updateTable(ObservableList<T> observableList, TableView<T> tableView,
                                  Supplier<List<T>> dataLoader) {
-        tableContainer.setVisible(true);
         observableList.clear();
         observableList.addAll(dataLoader.get());
 
@@ -335,7 +375,143 @@ public class CraneUIFactory implements TechnicUIFactory {
         });
         return additionalInfoColumn;
     }
-}
 
-// 335 code lines
-// 2092 all
+//    private void adjustTableHeight(TableView<?> tableView, VBox tableContainer) {
+//        tableView.setFixedCellSize(30);
+//        tableView.prefHeightProperty().bind(Bindings.size(tableView.getItems()).multiply(tableView.getFixedCellSize()).add(30)); // Высота = строки * размер + заголовок
+//
+//        tableView.getItems().addListener(
+//                (ListChangeListener<? super Object>) change -> tableContainer.setVisible(!tableView.getItems().isEmpty())
+//        );
+//
+//        tableContainer.setVisible(!tableView.getItems().isEmpty());
+//    }
+
+
+//    private void adjustTableSize(TableView<?> tableView, VBox tableContainer) {
+//        tableView.setFixedCellSize(30); // Фиксированная высота строки
+//        tableView.prefHeightProperty().bind(
+//                Bindings.size(tableView.getItems()).multiply(tableView.getFixedCellSize()).add(30)
+//        );
+//
+//        // Автоизменение ширины таблицы при изменении контейнера
+//        tableView.prefWidthProperty().bind(tableContainer.widthProperty());
+//
+//        // Автоизменение ширины столбцов
+//        tableView.getColumns().forEach(column ->
+//                column.prefWidthProperty().bind(tableView.widthProperty().divide(tableView.getColumns().size()))
+//        );
+//
+//        // Обновляем видимость таблицы при изменении данных
+//        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
+//            tableContainer.setVisible(!tableView.getItems().isEmpty());
+//        });
+//
+//        // Начальное состояние
+//        tableContainer.setVisible(!tableView.getItems().isEmpty());
+//    }
+
+    private void adjustTableSize(TableView<?> tableView, VBox tableContainer) {
+        tableView.setFixedCellSize(30); // Фиксированная высота строки
+        tableView.prefHeightProperty().bind(
+                Bindings.when(Bindings.isEmpty(tableView.getItems()))
+                        .then(0) // Если данных нет, высота = 0
+                        .otherwise(Bindings.size(tableView.getItems()).multiply(tableView.getFixedCellSize()).add(30))
+        );
+
+        // Автоизменение ширины таблицы при изменении контейнера
+        tableView.prefWidthProperty().bind(tableContainer.widthProperty());
+
+        // Автоизменение ширины столбцов
+        tableView.getColumns().forEach(column ->
+                column.prefWidthProperty().bind(tableView.widthProperty().divide(tableView.getColumns().size()))
+        );
+
+        // Обновляем видимость контейнера
+        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
+            boolean hasItems = !tableView.getItems().isEmpty();
+            tableContainer.setVisible(hasItems);
+            tableContainer.setManaged(hasItems); // Чтобы не занимал место
+        });
+
+        // Начальное состояние
+        boolean hasItems = !tableView.getItems().isEmpty();
+        tableContainer.setVisible(hasItems);
+        tableContainer.setManaged(hasItems);
+    }
+
+//    private void adjustTableSize(TableView<?> tableView, VBox tableContainer) {
+//        tableView.setFixedCellSize(-1); // Автоматическая высота строк
+//
+//        tableView.prefHeightProperty().bind(
+//                Bindings.when(Bindings.isEmpty(tableView.getItems()))
+//                        .then(0) // Если данных нет, высота = 0
+////                        .otherwise(Bindings.size(tableView.getItems()).multiply(40).add(30)) // Динамическая высота строк
+//                        .otherwise(Bindings.size(tableView.getItems()).multiply(40)) // Динамическая высота строк
+//        );
+//
+//        // Автоизменение ширины таблицы при изменении контейнера
+//        tableView.prefWidthProperty().bind(tableContainer.widthProperty());
+//
+//        // Обновляем видимость контейнера
+//        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
+//            boolean hasItems = !tableView.getItems().isEmpty();
+//            tableContainer.setVisible(hasItems);
+//            tableContainer.setManaged(hasItems);
+//        });
+//
+//        boolean hasItems = !tableView.getItems().isEmpty();
+//        tableContainer.setVisible(hasItems);
+//        tableContainer.setManaged(hasItems);
+//    }
+
+//    private void adjustTableSize(TableView<?> tableView, VBox tableContainer) {
+//        // Автоизменение ширины таблицы при изменении контейнера
+//        tableView.prefWidthProperty().bind(tableContainer.widthProperty());
+//
+//        // Обновляем видимость контейнера
+//        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
+//            boolean hasItems = !tableView.getItems().isEmpty();
+//            tableContainer.setVisible(hasItems);
+//            tableContainer.setManaged(hasItems);
+//
+//            // Пересчитать высоту таблицы
+//            Platform.runLater(() -> adjustTableHeight(tableView));
+//        });
+//
+//        boolean hasItems = !tableView.getItems().isEmpty();
+//        tableContainer.setVisible(hasItems);
+//        tableContainer.setManaged(hasItems);
+//
+//        // Начальная корректировка высоты
+//        Platform.runLater(() -> adjustTableHeight(tableView));
+//    }
+//
+//    private void adjustTableHeight(TableView<?> tableView) {
+//        Platform.runLater(() -> {
+//            Node node = tableView.lookup("VirtualFlow");
+//            if (node instanceof Region region) {
+//                tableView.prefHeightProperty().bind(region.heightProperty());
+//            }
+//        });
+//    }
+
+
+    private TableCell<MileageMaintenance, String> createWrappedCell() {
+        return new TableCell<>() {
+            private Text text;
+
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (!empty && item != null) {
+                    text = new Text(item);
+                    text.setWrappingWidth(290);
+                    setGraphic(text);
+                }
+            }
+        };
+    }
+
+}

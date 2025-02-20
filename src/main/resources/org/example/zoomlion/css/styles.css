@@ -1,33 +1,33 @@
-.parent{
+.parent {
     -fx-background-color: #F6F6F8;
     -fx-background-radius: 30px;
 }
 
-.sidebar{
+.sidebar {
     -fx-background-color: #333640;
 }
 
-.sidebar-opt{
+.sidebar-opt {
     /* -fx-fill: #C1C1C1; */
     -fx-scale-x: 1;
     -fx-scale-y: 1;
 }
 
-.sidebar-opt:hover{
+.sidebar-opt:hover {
     -fx-scale-x: 1.1;
     -fx-scale-y: 1.1;
 }
 
-.transparent{
+.transparent {
     -fx-background-color: transparent;
 }
 
-.shadow{
+.shadow {
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0, 0.0, 0.0, 10.0);
 }
 
 .technic-item {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: white;
     -fx-background-radius: 5px;
 
     -fx-scale-x: 1;
@@ -46,27 +46,26 @@
     -fx-border-radius: 5px;
 }
 
-.toolbar{
+.toolbar {
     -fx-background-color: #333640;
 }
 
 
 .toggle-button {
-    -fx-font-size: 16px;
     -fx-pref-width: 100px;
     -fx-pref-height: 40px;
     -fx-background-radius: 20px;
-    
     -fx-border-radius: 20px;
+    
     -fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
-
-
+    
     -fx-border-width: 2px;
     -fx-border-color: #333640;
-
     -fx-background-color: white;
+    
+    -fx-font-size: 16px;
     -fx-text-fill: #333640;
     -fx-font-weight: bold;
     
@@ -80,11 +79,32 @@
     -fx-border-color: transparent;
 }
 
-.toggle-button:hover{
+.toggle-button:hover {
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
 
+.label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-opacity: 0;
+    -fx-max-width: 0;
+    -fx-max-height: 0;
+}
+
+
+/*
+.table {
+}
+*/
 
 /* Делаем фон ScrollPane прозрачным */
 .scroll-pane {
@@ -109,7 +129,8 @@
 
 /* Изменение цвета ползунка при наведении */
 .scroll-bar .thumb:hover {
-    -fx-background-color: #A8A8A8;
+    /* -fx-background-color: #A8A8A8; */
+    -fx-background-color: #333640;
 }
 
 /* Стилизация кнопок (стрелки) */

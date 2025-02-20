@@ -23,14 +23,14 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="transparent">
-               <image>
-                  <Image url="@../images/no-image.png" />
-               </image>
-               <VBox.margin>
-                  <Insets top="10.0" />
-               </VBox.margin>
-            </ImageView>
+<!--            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="transparent">-->
+<!--               <image>-->
+<!--                  <Image url="@../images/no-image.png" />-->
+<!--               </image>-->
+<!--               <VBox.margin>-->
+<!--                  <Insets top="10.0" />-->
+<!--               </VBox.margin>-->
+<!--            </ImageView>-->
          </children>
          <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

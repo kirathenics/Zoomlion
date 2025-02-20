@@ -3,11 +3,10 @@
 <?import de.jensd.fx.glyphs.materialicons.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicMaintenanceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="parent" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicMaintenanceController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -20,49 +19,42 @@
                   </MaterialIconView>
                </children>
             </HBox>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../images/ZTC250V-1.png" />
-                     </image>
-                     <HBox.margin>
-                        <Insets left="100.0" />
-                     </HBox.margin>
-                  </ImageView>
-                  <Pane prefWidth="150.0" styleClass="transparent" stylesheets="@../css/styles.css" />
-                  <Label fx:id="nameLabel" text="КС ZOOMLION ZTC250V-1 (25 тн)">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </Label>
-               </children>
+            <ScrollPane prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/styles.css" VBox.vgrow="ALWAYS">
+               <content>
+                  <VBox alignment="TOP_CENTER">
+                     <children>
+                        <HBox alignment="CENTER_LEFT">
+                           <children>
+<!--                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                                 <image>-->
+<!--                                    <Image url="@../images/no-image.png" />-->
+<!--                                 </image>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets left="100.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </ImageView>-->
+                              <Pane prefWidth="150.0" styleClass="transparent" stylesheets="@../css/styles.css" />
+                              <Label fx:id="nameLabel" text="КС ZOOMLION ZTC250V-1 (25 тн)">
+                                 <font>
+                                    <Font name="System Bold" size="18.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets />
+                                 </HBox.margin>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <VBox fx:id="dynamicContentContainer" />
+                     </children>
+                  </VBox>
+               </content>
                <VBox.margin>
-                  <Insets bottom="10.0" top="10.0" />
+                  <Insets left="10.0" />
                </VBox.margin>
-            </HBox>
-
-            <!-- Контейнер для кнопок ТО -->
-<!--            <HBox fx:id="toggleButtonContainer" alignment="CENTER" spacing="10.0">-->
-<!--               <VBox.margin>-->
-<!--                  <Insets bottom="10.0" top="10.0" />-->
-<!--               </VBox.margin></HBox>-->
-
-            <!-- Контейнер для таблицы -->
-<!--            <VBox fx:id="tableContainer" visible="false">-->
-<!--               <TableView fx:id="technicTable" prefHeight="200.0" prefWidth="200.0">-->
-<!--                  <columns>-->
-<!--                     <TableColumn prefWidth="75.0" text="C1" />-->
-<!--                     <TableColumn prefWidth="75.0" text="C2" />-->
-<!--                  </columns>-->
-<!--               </TableView>-->
-<!--            </VBox>-->
-            <VBox fx:id="dynamicContentContainer">
-
-            </VBox>
+            </ScrollPane>
          </children>
       </VBox>
    </children>

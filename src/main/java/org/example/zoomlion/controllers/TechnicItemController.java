@@ -41,8 +41,7 @@ public class TechnicItemController {
         if (imageStream != null) {
             image = new Image(imageStream);
         }
-
-        imageView.setImage(image);
+//        imageView.setImage(image);
 
         rootPane.setOnMouseClicked(this::openDetailScene);
     }
