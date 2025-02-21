@@ -8,8 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.zoomlion.DB.TechnicDAO;
-import org.example.zoomlion.UIFactory.TechnicUIFactory;
-import org.example.zoomlion.UIFactory.TechnicUIFactoryProvider;
+import org.example.zoomlion.MaintenanceUIFactory.TechnicMaintenanceUIFactory;
+import org.example.zoomlion.MaintenanceUIFactory.TechnicMaintenanceUIFactoryProvider;
 import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.models.Technic;
 
@@ -142,7 +142,7 @@ public class TechnicMaintenanceController {
         if (imageStream != null) {
             image = new Image(imageStream);
         }
-        imageView.setImage(image);
+//        imageView.setImage(image);
 
         loadTechnicUI();
     }
@@ -155,7 +155,7 @@ public class TechnicMaintenanceController {
 
     private void loadTechnicUI() {
         dynamicContentContainer.getChildren().clear();
-        TechnicUIFactory factory = TechnicUIFactoryProvider.getFactory(
+        TechnicMaintenanceUIFactory factory = TechnicMaintenanceUIFactoryProvider.getFactory(
                 Objects.requireNonNull(
                         TechnicDAO.getTechnicTypeByTechnicId(technic.getId())
                 )

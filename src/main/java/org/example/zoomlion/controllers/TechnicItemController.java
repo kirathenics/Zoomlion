@@ -41,7 +41,7 @@ public class TechnicItemController {
         if (imageStream != null) {
             image = new Image(imageStream);
         }
-        imageView.setImage(image);
+//        imageView.setImage(image);
 
         rootPane.setOnMouseClicked(this::openDetailScene);
     }
@@ -57,6 +57,8 @@ public class TechnicItemController {
             Stage stage = new Stage();
             stage.setScene(new Scene(detailRoot));
             stage.setTitle(technic.getName());
+            stage.setResizable(false);
+            stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResource("/org/example/zoomlion/images/icon-app.png")).toExternalForm()));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

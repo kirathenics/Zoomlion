@@ -6,8 +6,6 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.image.Image?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" styleClass="parent" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicMaintenanceController">
    <children>
       <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -27,14 +25,14 @@
                      <children>
                         <HBox alignment="CENTER_LEFT">
                            <children>
-                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../images/no-image.png" />
-                                 </image>
-                                 <HBox.margin>
-                                    <Insets left="100.0" />
-                                 </HBox.margin>
-                              </ImageView>
+<!--                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                                 <image>-->
+<!--                                    <Image url="@../images/no-image.png" />-->
+<!--                                 </image>-->
+<!--                                 <HBox.margin>-->
+<!--                                    <Insets left="100.0" />-->
+<!--                                 </HBox.margin>-->
+<!--                              </ImageView>-->
                               <Pane prefWidth="150.0" styleClass="transparent" stylesheets="@../css/styles.css" />
                               <Label fx:id="nameLabel" text="КС ZOOMLION ZTC250V-1 (25 тн)">
                                  <font>

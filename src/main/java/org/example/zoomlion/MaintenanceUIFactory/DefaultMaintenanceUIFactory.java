@@ -1,11 +1,11 @@
-package org.example.zoomlion.UIFactory;
+package org.example.zoomlion.MaintenanceUIFactory;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import org.example.zoomlion.models.Technic;
 
-public class DefaultUIFactory implements TechnicUIFactory {
+public class DefaultMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
     @Override
     public Node createUI(Technic technic) {
         VBox vbox = new VBox(10);

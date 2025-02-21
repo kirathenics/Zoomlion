@@ -16,7 +16,13 @@ public class MaintenanceDAO {
     public static List<Integer> getMileageListByTechnicId(int technicId) {
         List<Integer> mileageList = new ArrayList<>();
 
-        String query = "SELECT mileage FROM maintenance WHERE technic_id = ? AND mileage IS NOT NULL GROUP BY mileage";
+        String query = """
+            SELECT mileage
+            FROM maintenance
+            WHERE technic_id = ?
+                AND mileage IS NOT NULL
+            GROUP BY mileage
+            """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -42,7 +48,8 @@ public class MaintenanceDAO {
             FROM lubrication_operations AS LO
             LEFT JOIN maintenance AS M
             ON M.id = LO.maintenance_id
-            WHERE M.technic_id = ? AND M.mileage IS NOT NULL
+            WHERE M.technic_id = ?
+                AND M.mileage IS NOT NULL
             GROUP BY M.mileage
             """;
 
@@ -65,7 +72,13 @@ public class MaintenanceDAO {
     public static List<Integer> getWorkHoursListByTechnicId(int technicId) {
         List<Integer> workHoursList = new ArrayList<>();
 
-        String query = "SELECT work_hours FROM maintenance WHERE technic_id = ? AND work_hours IS NOT NULL GROUP BY work_hours";
+        String query = """
+            SELECT work_hours
+            FROM maintenance
+            WHERE technic_id = ?
+                AND work_hours IS NOT NULL
+            GROUP BY work_hours
+            """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -205,22 +218,22 @@ public class MaintenanceDAO {
         List<WorkHoursMaintenance> workHoursMaintenanceList = new ArrayList<>();
 
         String query = """
-                SELECT
-                    MO.name AS 'maintenance_object',
-                    W.name AS 'work_content',
-                    M.work_hours AS 'work_hours',
-                    M.additional_info AS 'additional_info'
-                FROM maintenance as M
-                LEFT JOIN operations AS O
-                ON O.id = M.operation_id
-                LEFT JOIN maintenance_objects AS MO
-                ON MO.id = O.maintenance_object_id
-                LEFT JOIN work_contents AS W
-                ON W.id = O.work_content_id
-                WHERE M.technic_id = ?
-                    AND M.work_hours IS NOT NULL
-                    AND ? % M.work_hours = 0
-                """;
+            SELECT
+                MO.name AS 'maintenance_object',
+                W.name AS 'work_content',
+                M.work_hours AS 'work_hours',
+                M.additional_info AS 'additional_info'
+            FROM maintenance as M
+            LEFT JOIN operations AS O
+            ON O.id = M.operation_id
+            LEFT JOIN maintenance_objects AS MO
+            ON MO.id = O.maintenance_object_id
+            LEFT JOIN work_contents AS W
+            ON W.id = O.work_content_id
+            WHERE M.technic_id = ?
+                AND M.work_hours IS NOT NULL
+                AND ? % M.work_hours = 0
+            """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

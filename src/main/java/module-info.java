@@ -11,8 +11,8 @@ module org.example.zoomlion {
     exports org.example.zoomlion;
     exports org.example.zoomlion.Utils;
     opens org.example.zoomlion.Utils to javafx.fxml;
-    exports org.example.zoomlion.UIFactory;
-    opens org.example.zoomlion.UIFactory to javafx.fxml;
+    exports org.example.zoomlion.MaintenanceUIFactory;
+    opens org.example.zoomlion.MaintenanceUIFactory to javafx.fxml;
     opens org.example.zoomlion.models to javafx.base;
     exports org.example.zoomlion.models;
 }
