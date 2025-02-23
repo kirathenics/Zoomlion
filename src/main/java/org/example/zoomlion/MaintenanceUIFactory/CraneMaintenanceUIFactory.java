@@ -12,7 +12,11 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import org.example.zoomlion.DB.MaintenanceDAO;
+import org.example.zoomlion.TableColumnFactory.IntegerColumnFactory;
+import org.example.zoomlion.TableColumnFactory.MultiLineStringColumnFactory;
+import org.example.zoomlion.TableColumnFactory.TableWrappedCellFactory;
 import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.Utils.ListUtils;
 import org.example.zoomlion.models.*;
 
 import java.lang.reflect.InvocationTargetException;
@@ -73,17 +77,8 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
 
     private void createMileageMaintenanceUI() {
         List<Integer> mileageList = MaintenanceDAO.getMileageListByTechnicId(technic.getId());
-        Collections.sort(mileageList);
-
         List<Integer> mileageLubricationList = MaintenanceDAO.getMileageLubricationListByTechnicId(technic.getId());
-        Collections.sort(mileageLubricationList);
-
-//        Set<Integer> mileageSet = new HashSet<>(mileageList);
-//        mileageSet.addAll(mileageLubricationList);
-//        List<Integer> mergedMileageList = new ArrayList<>(mileageSet);
-//        Collections.sort(mergedMileageList);
-
-        List<Integer> mergedMileageList = mergeAndSortList(mileageList, mileageLubricationList);
+        List<Integer> mergedMileageList = ListUtils.mergeAndSort(mileageList, mileageLubricationList);
 
         if (!mergedMileageList.isEmpty()) {
             mainContainer.getChildren().add(new Label(Constants.MILEAGE_TO_LABEL));
@@ -100,8 +95,6 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
 
         if (!mileageList.isEmpty()) {
             mileageMaintenanceTableContainer = new VBox();
-//            mileageMaintenanceTableContainer.setPrefHeight(Region.USE_COMPUTED_SIZE);
-//            mileageMaintenanceTableContainer.getStyleClass().add("table-container");
 
             mileageMaintenanceTableContainer.prefWidthProperty().bind(mainContainer.widthProperty());
             mileageMaintenanceTableContainer.setMaxWidth(Double.MAX_VALUE);
@@ -113,10 +106,15 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
             adjustTableSize(mileageMaintenanceTableView, mileageMaintenanceTableContainer);
             mileageMaintenanceTableView.getStyleClass().add("table-view");
 
-            maintenanceObjectColumnMileageMaintenance = createMaintenanceObjectTableColumn();
-            workContentColumnMileageMaintenance = createWorkContentTableColumn();
-            mileageColumnMileageMaintenance = createMileageTableColumn();
-            additionalInfoColumnMileageMaintenance= createAdditionalInfoTableColumn();
+//            maintenanceObjectColumnMileageMaintenance = createMaintenanceObjectTableColumn();
+//            workContentColumnMileageMaintenance = createWorkContentTableColumn();
+//            mileageColumnMileageMaintenance = createMileageTableColumn();
+//            additionalInfoColumnMileageMaintenance= createAdditionalInfoTableColumn();
+
+            maintenanceObjectColumnMileageMaintenance = new MultiLineStringColumnFactory<MileageMaintenance>().createColumn(Constants.MAINTENANCE_OBJECT_LABEL, "maintenanceObject");
+            workContentColumnMileageMaintenance = new MultiLineStringColumnFactory<MileageMaintenance>().createColumn(Constants.WORK_CONTENTS_LABEL, "workContent");
+            mileageColumnMileageMaintenance = new IntegerColumnFactory<MileageMaintenance>().createColumn(Constants.MILEAGE_LABEL, "mileage");
+            additionalInfoColumnMileageMaintenance= new MultiLineStringColumnFactory<MileageMaintenance>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
 
             mileageMaintenanceTableView.getColumns().addAll(
                     maintenanceObjectColumnMileageMaintenance,
@@ -140,6 +138,7 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
                     mileageMaintenanceTableContainer.setManaged(false);
                     mileageMaintenanceObservableList.clear();
                 }
+                adjustTableSize(mileageMaintenanceTableView, mileageMaintenanceTableContainer);
             });
 
             mainContainer.getChildren().add(mileageMaintenanceTableContainer);
@@ -147,35 +146,6 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
 
         //
     }
-
-
-    private TableColumn<MileageMaintenance, String> createMaintenanceObjectTableColumn() {
-        TableColumn<MileageMaintenance, String> maintenanceObjectColumn = new TableColumn<>(Constants.MAINTENANCE_OBJECT_LABEL);
-        maintenanceObjectColumn.setCellValueFactory(new PropertyValueFactory<>("maintenanceObject"));
-        maintenanceObjectColumn.setCellFactory(tc -> createWrappedCell());
-        return maintenanceObjectColumn;
-    }
-
-    private TableColumn<MileageMaintenance, String> createWorkContentTableColumn() {
-        TableColumn<MileageMaintenance, String> workContentColumn = new TableColumn<>(Constants.WORK_CONTENTS_LABEL);
-        workContentColumn.setCellValueFactory(new PropertyValueFactory<>("workContent"));
-        workContentColumn.setCellFactory(tc -> createWrappedCell());
-        return workContentColumn;
-    }
-
-    private static TableColumn<MileageMaintenance, Integer> createMileageTableColumn() {
-        TableColumn<MileageMaintenance, Integer> mileageColumn = new TableColumn<>(Constants.MILEAGE_LABEL);
-        mileageColumn.setCellValueFactory(new PropertyValueFactory<>("mileage"));
-        return mileageColumn;
-    }
-
-    private TableColumn<MileageMaintenance, String> createAdditionalInfoTableColumn() {
-        TableColumn<MileageMaintenance, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
-        additionalInfoColumn.setCellValueFactory(new PropertyValueFactory<>("additionalInfo"));
-        additionalInfoColumn.setCellFactory(tc -> createWrappedCell());
-        return additionalInfoColumn;
-    }
-
 
     /**
      * Создание кнопок ТО (ТО-100, ТО-250, ТО-500, ТО-750) динамически
@@ -231,7 +201,7 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
                 return new SimpleStringProperty("");
             }
         });
-        additionalInfoColumn.setCellFactory(tc -> createWrappedCell());
+        additionalInfoColumn.setCellFactory(tc -> TableWrappedCellFactory.createWrappedCell());
         return additionalInfoColumn;
     }
 
@@ -253,17 +223,31 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
     }
 
     private void adjustTableSize(TableView<?> tableView, VBox tableContainer) {
+        tableView.setFixedCellSize(-1);
+
 //        tableView.setFixedCellSize(30);
 //        tableView.prefHeightProperty().bind(
 //                Bindings.when(Bindings.isEmpty(tableView.getItems()))
 //                        .then(0)
 //                        .otherwise(Bindings.size(tableView.getItems()).multiply(tableView.getFixedCellSize()).add(30))
-////                        .otherwise(tableView.fixedCellSizeProperty().multiply(Bindings.size(tableView.getItems()).add(1.01)))
 //        );
-//        tableView.minHeightProperty().bind(tableView.prefHeightProperty());
-//        tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
 
-//        tableView.prefHeightProperty().bind(tableContainer.heightProperty());
+//        tableView.prefHeightProperty().bind(
+//                Bindings.createDoubleBinding(() -> {
+//                    int rowCount = tableView.getItems().size();
+//                    double rowHeight = 30; // Примерная высота одной строки
+//                    double headerHeight = 40; // Высота заголовка
+//                    return rowCount > 0 ? (rowCount * rowHeight + headerHeight) : headerHeight;
+//                }, tableView.getItems())
+//        );
+        tableView.setPrefHeight(450);
+        tableView.minHeightProperty().bind(tableView.prefHeightProperty());
+        tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
+
+
+        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
+            tableView.refresh();
+        });
 
         tableView.prefWidthProperty().bind(tableContainer.widthProperty());
 
@@ -278,67 +262,28 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         tableContainer.setManaged(hasItems);
     }
 
-
 //    private <T> TableCell<T, String> createWrappedCell() {
 //        return new TableCell<>() {
-//            private Text text;
+//            private final Text text = new Text();
+//
+//            {
+//                text.wrappingWidthProperty().bind(widthProperty());
+//            }
 //
 //            @Override
 //            protected void updateItem(String item, boolean empty) {
 //                super.updateItem(item, empty);
-//
-//                if (item == null || empty) {
+//                if (empty || item == null) {
 //                    setGraphic(null);
-//                    return;
-//                }
-//
-//                if (text == null) {
-//                    text = new Text(item);
-//                    text.wrappingWidthProperty().bind(widthProperty());
+//                    setPrefHeight(0);
 //                } else {
 //                    text.setText(item);
+//                    setGraphic(text);
+//                    setPrefHeight(text.getLayoutBounds().getHeight() + 10);
 //                }
-//                setGraphic(text);
 //            }
 //        };
 //    }
-
-    private <T> TableCell<T, String> createWrappedCell() {
-        return new TableCell<>() {
-            private Text text;
-
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (text == null) {
-                    text = new Text();
-                    text.wrappingWidthProperty().bind(widthProperty());
-                }
-
-                if (item == null || empty) {
-                    setGraphic(null);
-                    setPrefHeight(0);
-                } else {
-                    text.setText(item);
-                    setGraphic(text);
-                    double textHeight = text.getLayoutBounds().getHeight();
-                    setPrefHeight(textHeight + 10);
-                }
-            }
-        };
-    }
-
-
-    @SafeVarargs
-    private <T extends Comparable<T>> List<T> mergeAndSortList(List<T>... lists) {
-        Set<T> resultSet = new HashSet<>();
-        for (List<T> list : lists) {
-            resultSet.addAll(list);
-        }
-        List<T> mergedList = new ArrayList<>(resultSet);
-        Collections.sort(mergedList);
-        return  mergedList;
-    }
 }
 
 //public class CraneUIFactory implements TechnicUIFactory {
@@ -603,3 +548,8 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
 
 //
 //}
+
+
+// JavaFX есть table view с observable list, у таблицы две колонки string, в этих ячейках нужно сделать так, чтобы умещалось несколько строк текста, если текст длинный, одна колонка int, колонки по ширине в соотношении 3:5:2. Необходимо также сделать так, чтобы для таблицы рассчитывалась высота по сумме высот всех ячеек
+
+

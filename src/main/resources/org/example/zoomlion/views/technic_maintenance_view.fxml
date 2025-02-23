@@ -19,7 +19,7 @@
                   </MaterialIconView>
                </children>
             </HBox>
-            <ScrollPane prefHeight="500.0" prefWidth="900.0" stylesheets="@../css/styles.css" VBox.vgrow="ALWAYS">
+            <ScrollPane prefWidth="900.0" stylesheets="@../css/styles.css" VBox.vgrow="ALWAYS">
                <content>
                   <VBox alignment="TOP_CENTER">
                      <children>
