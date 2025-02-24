@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
     private TableColumn<T, String> maintenanceObjectColumn;
     private TableColumn<T, String> workContentColumn;
-    private TableColumn<T, ?> valueColumn; // универсальный столбец
+    private TableColumn<T, Integer> valueColumn; // универсальный столбец
     private TableColumn<T, String> additionalInfoColumn;
 
     private final String valueColumnLabel;
@@ -56,7 +56,7 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
         }
     }
 
-    public static class TableBuilder<T> extends AbstractTableBuilder<T, MaintenanceTable<T>> {
+    public static class Builder<T> extends AbstractTableBuilder<T, MaintenanceTable<T>> {
         @Override
         public MaintenanceTable<T> build() {
             return new MaintenanceTable<>(valueColumnLabel, valueColumnProperty);

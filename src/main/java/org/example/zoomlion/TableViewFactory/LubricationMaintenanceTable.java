@@ -61,7 +61,7 @@ public class LubricationMaintenanceTable<T> extends AbstractMaintenanceTable<T> 
         }
     }
 
-    public static class TableBuilder<T> extends AbstractTableBuilder<T, LubricationMaintenanceTable<T>> {
+    public static class Builder<T> extends AbstractTableBuilder<T, LubricationMaintenanceTable<T>> {
         @Override
         public LubricationMaintenanceTable<T> build() {
             return new LubricationMaintenanceTable<>(valueColumnLabel, valueColumnProperty);
