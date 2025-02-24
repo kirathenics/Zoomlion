@@ -1,4 +1,4 @@
-package org.example.zoomlion.MaintenanceUIFactory;
+package org.example.zoomlion.TechnicMaintenanceUIFactory;
 
 import javafx.scene.Node;
 import javafx.scene.control.Label;

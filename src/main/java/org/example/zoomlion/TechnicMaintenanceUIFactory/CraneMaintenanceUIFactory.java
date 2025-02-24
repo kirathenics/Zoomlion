@@ -1,12 +1,10 @@
-package org.example.zoomlion.MaintenanceUIFactory;
+package org.example.zoomlion.TechnicMaintenanceUIFactory;
 
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.zoomlion.DB.MaintenanceDAO;
-import org.example.zoomlion.TableViewFactory.Builders.LubricationMaintenanceTableBuilder;
-import org.example.zoomlion.TableViewFactory.Builders.MaintenanceTableBuilder;
 import org.example.zoomlion.TableViewFactory.MaintenanceTable;
 import org.example.zoomlion.TableViewFactory.LubricationMaintenanceTable;
 import org.example.zoomlion.Utils.Constants;
@@ -63,16 +61,10 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         }
 
         if (!mileageList.isEmpty()) {
-            MaintenanceTableBuilder<MileageMaintenance> maintenanceTableBuilder = new MaintenanceTableBuilder<>();
-            maintenanceTableBuilder.setValueColumnLabel(Constants.MILEAGE_LABEL);
-            maintenanceTableBuilder.setValueColumnProperty("mileage");
-
-            MaintenanceTable<MileageMaintenance> mileageMaintenanceTable = maintenanceTableBuilder.build();
-
-//            MaintenanceTable<MileageMaintenance> mileageMaintenanceTable = new MaintenanceTableBuilder<MileageMaintenance>()
-//                    .setValueColumnLabel(Constants.MILEAGE_LABEL)
-//                    .setValueColumnProperty("mileage")
-//                    .build();
+            MaintenanceTable<MileageMaintenance> mileageMaintenanceTable = new MaintenanceTable.TableBuilder<MileageMaintenance>()
+                    .setValueColumnLabel(Constants.MILEAGE_LABEL)
+                    .setValueColumnProperty("mileage")
+                    .build();
 
             mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
@@ -90,11 +82,10 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         }
 
         if (!mileageLubricationList.isEmpty()) {
-            LubricationMaintenanceTableBuilder<MileageLubrication> lubricationMaintenanceTableBuilder = new LubricationMaintenanceTableBuilder<>();
-            lubricationMaintenanceTableBuilder.setValueColumnLabel(Constants.MILEAGE_LABEL);
-            lubricationMaintenanceTableBuilder.setValueColumnProperty("mileage");
-
-            LubricationMaintenanceTable<MileageLubrication> mileageLubricationMaintenanceTable = lubricationMaintenanceTableBuilder.build();
+            LubricationMaintenanceTable<MileageLubrication> mileageLubricationMaintenanceTable = new LubricationMaintenanceTable.TableBuilder<MileageLubrication>()
+                    .setValueColumnLabel(Constants.MILEAGE_LABEL)
+                    .setValueColumnProperty("mileage")
+                    .build();
 
             mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
@@ -128,11 +119,10 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         }
 
         if (!workHoursList.isEmpty()) {
-            MaintenanceTableBuilder<WorkHoursMaintenance> maintenanceTableBuilder = new MaintenanceTableBuilder<>();
-            maintenanceTableBuilder.setValueColumnLabel(Constants.WORK_HOURS_LABEL);
-            maintenanceTableBuilder.setValueColumnProperty("workHours");
-
-            MaintenanceTable<WorkHoursMaintenance> workHoursMaintenanceTable = maintenanceTableBuilder.build();
+            MaintenanceTable<WorkHoursMaintenance> workHoursMaintenanceTable = new MaintenanceTable.TableBuilder<WorkHoursMaintenance>()
+                    .setValueColumnLabel(Constants.WORK_HOURS_LABEL)
+                    .setValueColumnProperty("workHours")
+                    .build();
 
             workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
@@ -150,11 +140,10 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         }
 
         if (!workHoursLubricationList.isEmpty()) {
-            LubricationMaintenanceTableBuilder<WorkHoursLubrication> lubricationTableBuilder = new LubricationMaintenanceTableBuilder<>();
-            lubricationTableBuilder.setValueColumnLabel(Constants.WORK_HOURS_LABEL);
-            lubricationTableBuilder.setValueColumnProperty("workHours");
-
-            LubricationMaintenanceTable<WorkHoursLubrication> workHoursLubricationMaintenanceTable = lubricationTableBuilder.build();
+            LubricationMaintenanceTable<WorkHoursLubrication> workHoursLubricationMaintenanceTable = new LubricationMaintenanceTable.TableBuilder<WorkHoursLubrication>()
+                    .setValueColumnLabel(Constants.WORK_HOURS_LABEL)
+                    .setValueColumnProperty("workHours")
+                    .build();
 
             workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {

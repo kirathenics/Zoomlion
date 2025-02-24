@@ -8,8 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.example.zoomlion.DB.TechnicDAO;
-import org.example.zoomlion.MaintenanceUIFactory.TechnicMaintenanceUIFactory;
-import org.example.zoomlion.MaintenanceUIFactory.TechnicMaintenanceUIFactoryProvider;
+import org.example.zoomlion.TechnicMaintenanceUIFactory.TechnicMaintenanceUIFactory;
+import org.example.zoomlion.TechnicMaintenanceUIFactory.TechnicMaintenanceUIFactoryProvider;
 import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.models.Technic;
 

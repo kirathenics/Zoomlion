@@ -1,4 +1,4 @@
-package org.example.zoomlion.MaintenanceUIFactory;
+package org.example.zoomlion.TechnicMaintenanceUIFactory;
 
 public class TechnicMaintenanceUIFactoryProvider {
     public static TechnicMaintenanceUIFactory getFactory(String technicType) {
