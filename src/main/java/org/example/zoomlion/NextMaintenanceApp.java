@@ -35,7 +35,7 @@ public class NextMaintenanceApp extends Application {
             String inputText = mileageInput.getText();
             try {
                 int currentMileage = Integer.parseInt(inputText);
-                Integer nextMaintenance = getNextMaintenance(currentMileage);
+                Integer nextMaintenance = getNextMaintenance(currentMileage, maintenanceIntervals);
                 if (nextMaintenance != null) {
                     resultLabel.setText("Следующее ТО на " + nextMaintenance + " км");
                 } else {
@@ -53,25 +53,27 @@ public class NextMaintenanceApp extends Application {
         primaryStage.show();
     }
 
-//    private Integer getNextMaintenance(int currentMileage) {
-//        for (int interval : maintenanceIntervals) {
-//            if (currentMileage < interval) {
-//                return interval; // Возвращаем следующее ТО
-//            }
-//        }
-//        return null; // Все ТО выполнены
-//    }
-
-    private Integer getNextMaintenance(int currentMileage) {
-        int minVal = Integer.MIN_VALUE;
-        Integer res = null;
+    private Integer getNextMaintenance(int currentMileage, List<Integer> maintenanceIntervals) {
+        List<Integer> nextMaintenance = new ArrayList<>();
 
         for (int interval : maintenanceIntervals) {
-            if (minVal < (currentMileage  % interval)) {
-                minVal = currentMileage  % interval;
-                res = interval;
+            int prevMileage = currentMileage - currentMileage % interval;
+            nextMaintenance.add(prevMileage + interval);
+        }
+
+        int minDiff = Integer.MAX_VALUE;
+        Integer nextServiceInterval = null;
+
+        for (int i = 0; i < nextMaintenance.size(); i++) {
+            int diff = nextMaintenance.get(i) - currentMileage;
+
+            if (diff >= 0 && diff <= minDiff) {
+                minDiff = diff;
+                nextServiceInterval = maintenanceIntervals.get(i);
             }
         }
-        return res;
+
+        return nextServiceInterval;
     }
+
 }
