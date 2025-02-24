@@ -30,6 +30,16 @@ public class NextMaintenanceApp extends Application {
 
         Label resultLabel = new Label();
 
+        Button checkButton = getCheckButton(mileageInput, resultLabel);
+
+        VBox vbox = new VBox(10, mileageInput, checkButton, resultLabel);
+        Scene scene = new Scene(vbox, 300, 200);
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Определение следующего ТО");
+        primaryStage.show();
+    }
+
+    private Button getCheckButton(TextField mileageInput, Label resultLabel) {
         Button checkButton = new Button("Определить следующее ТО");
         checkButton.setOnAction(event -> {
             String inputText = mileageInput.getText();
@@ -45,12 +55,7 @@ public class NextMaintenanceApp extends Application {
                 resultLabel.setText("Введите корректное число");
             }
         });
-
-        VBox vbox = new VBox(10, mileageInput, checkButton, resultLabel);
-        Scene scene = new Scene(vbox, 300, 200);
-        primaryStage.setScene(scene);
-        primaryStage.setTitle("Определение следующего ТО");
-        primaryStage.show();
+        return checkButton;
     }
 
     private Integer getNextMaintenance(int currentMileage, List<Integer> maintenanceIntervals) {
