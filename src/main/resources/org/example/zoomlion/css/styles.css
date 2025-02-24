@@ -94,53 +94,53 @@
 }
 
 
-.table-view {
+.maintenance-table-view {
     -fx-background-color: transparent;
     /* -fx-border-color: linear-gradient(to bottom right, #333640, #A4CE4E); */
     -fx-border-radius: 8px;
     -fx-padding: 0px;
 }
 
-.table-view .column-header-background {
+.maintenance-table-view .column-header-background {
     -fx-background-color: linear-gradient(to bottom right, #333640, #A4CE4E);
     -fx-background-insets: 0 0 0 0;
     -fx-background-radius: 8px 8px 0px 0px;
 }
 
-.table-view .column-header, .filler {
+.maintenance-table-view .column-header, .filler {
     -fx-background-color: transparent;
     -fx-size: 40px;
 }
 
-.table-view .column-header .label {
+.maintenance-table-view .column-header .label {
     -fx-text-fill: #FFF;
     -fx-font-family: "Arial";
 }
 
-/* .table-view .scroll-bar:vertical, */
-.table-view .scroll-bar:horizontal {
+/* .maintenance-table-view .scroll-bar:vertical,
+.maintenance-table-view .scroll-bar:horizontal {
     -fx-opacity: 0;
     -fx-max-width: 0;
     -fx-max-height: 0;
-}
+} */
 
-.table-row-cell:selected {
+.maintenance-table-row-cell:selected {
     -fx-background-color: #A4CE4E;
     -fx-text-fill: black; /* Цвет текста для контраста */
     -fx-table-cell-border-color: #A4CE4E;
 }
 
-.table-row-cell:selected .text {
+.maintenance-table-row-cell:selected .text {
     -fx-fill: black; /* Чтобы текст оставался читаемым */
 }
 
-.table-row-cell:focused:selected {
+.maintenance-table-row-cell:focused:selected {
     -fx-background-color: #A4CE4E;
     -fx-table-cell-border-color: #A4CE4E;
 }
 
 
-/* .table-containter {
+/* .maintenance-table-containter {
     -fx-padding: 5px;
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;

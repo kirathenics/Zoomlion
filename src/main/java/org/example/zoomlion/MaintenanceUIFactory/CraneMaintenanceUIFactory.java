@@ -1,28 +1,19 @@
 package org.example.zoomlion.MaintenanceUIFactory;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import org.example.zoomlion.DB.MaintenanceDAO;
-import org.example.zoomlion.TableColumnFactory.IntegerColumnFactory;
-import org.example.zoomlion.TableColumnFactory.MultiLineStringColumnFactory;
-import org.example.zoomlion.TableColumnFactory.TableWrappedCellFactory;
+import org.example.zoomlion.TableViewFactory.Builders.LubricationMaintenanceTableBuilder;
+import org.example.zoomlion.TableViewFactory.Builders.MaintenanceTableBuilder;
+import org.example.zoomlion.TableViewFactory.MaintenanceTable;
+import org.example.zoomlion.TableViewFactory.LubricationMaintenanceTable;
 import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.Utils.ListUtils;
 import org.example.zoomlion.models.*;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.*;
-import java.util.function.Supplier;
 
 
 // 335 code lines
@@ -35,30 +26,8 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
     private HBox mileageToggleButtonContainer;
     private ToggleGroup mileageToggleGroup;
 
-    private VBox mileageMaintenanceTableContainer;
-    private TableView<MileageMaintenance> mileageMaintenanceTableView;
-    private ObservableList<MileageMaintenance> mileageMaintenanceObservableList;
-
-    TableColumn<MileageMaintenance, String> maintenanceObjectColumnMileageMaintenance;
-    TableColumn<MileageMaintenance, String> workContentColumnMileageMaintenance;
-    TableColumn<MileageMaintenance, Integer> mileageColumnMileageMaintenance;
-    TableColumn<MileageMaintenance, String> additionalInfoColumnMileageMaintenance;
-
-    private VBox mileageLubricationTableContainer;
-    private TableView<MileageLubrication> mileageLubricationTableView;
-    private ObservableList<MileageLubrication> mileageLubricationObservableList;
-
-
     private HBox workHoursToggleButtonContainer;
     private ToggleGroup workHoursToggleGroup;
-
-    private VBox workHoursMaintenanceTableContainer;
-    private TableView<WorkHoursMaintenance> workHoursMaintenanceTableView;
-    private ObservableList<WorkHoursMaintenance> workHoursMaintenanceObservableList;
-
-    private VBox workHoursLubricationTableContainer;
-    private TableView<WorkHoursLubrication> workHoursLubricationTableView;
-    private ObservableList<WorkHoursLubrication> workHoursLubricationObservableList;
 
     private Technic technic;
 
@@ -70,7 +39,7 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         mainContainer.setPrefWidth(870);
 
         createMileageMaintenanceUI();
-//        createWorkHoursMaintenanceUI();
+        createWorkHoursMaintenanceUI();
 
         return mainContainer;
     }
@@ -94,63 +63,121 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
         }
 
         if (!mileageList.isEmpty()) {
-            mileageMaintenanceTableContainer = new VBox();
+            MaintenanceTableBuilder<MileageMaintenance> maintenanceTableBuilder = new MaintenanceTableBuilder<>();
+            maintenanceTableBuilder.setValueColumnLabel(Constants.MILEAGE_LABEL);
+            maintenanceTableBuilder.setValueColumnProperty("mileage");
 
-            mileageMaintenanceTableContainer.prefWidthProperty().bind(mainContainer.widthProperty());
-            mileageMaintenanceTableContainer.setMaxWidth(Double.MAX_VALUE);
+            MaintenanceTable<MileageMaintenance> mileageMaintenanceTable = maintenanceTableBuilder.build();
 
-            mileageMaintenanceTableView = new TableView<>();
-            mileageMaintenanceObservableList = FXCollections.observableArrayList();
-            mileageMaintenanceTableView.setItems(mileageMaintenanceObservableList);
-
-            adjustTableSize(mileageMaintenanceTableView, mileageMaintenanceTableContainer);
-            mileageMaintenanceTableView.getStyleClass().add("table-view");
-
-//            maintenanceObjectColumnMileageMaintenance = createMaintenanceObjectTableColumn();
-//            workContentColumnMileageMaintenance = createWorkContentTableColumn();
-//            mileageColumnMileageMaintenance = createMileageTableColumn();
-//            additionalInfoColumnMileageMaintenance= createAdditionalInfoTableColumn();
-
-            maintenanceObjectColumnMileageMaintenance = new MultiLineStringColumnFactory<MileageMaintenance>().createColumn(Constants.MAINTENANCE_OBJECT_LABEL, "maintenanceObject");
-            workContentColumnMileageMaintenance = new MultiLineStringColumnFactory<MileageMaintenance>().createColumn(Constants.WORK_CONTENTS_LABEL, "workContent");
-            mileageColumnMileageMaintenance = new IntegerColumnFactory<MileageMaintenance>().createColumn(Constants.MILEAGE_LABEL, "mileage");
-            additionalInfoColumnMileageMaintenance= new MultiLineStringColumnFactory<MileageMaintenance>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
-
-            mileageMaintenanceTableView.getColumns().addAll(
-                    maintenanceObjectColumnMileageMaintenance,
-                    workContentColumnMileageMaintenance,
-                    mileageColumnMileageMaintenance,
-                    additionalInfoColumnMileageMaintenance);
-
-            mileageMaintenanceTableContainer.getChildren().add(mileageMaintenanceTableView);
+//            MaintenanceTable<MileageMaintenance> mileageMaintenanceTable = new MaintenanceTableBuilder<MileageMaintenance>()
+//                    .setValueColumnLabel(Constants.MILEAGE_LABEL)
+//                    .setValueColumnProperty("mileage")
+//                    .build();
 
             mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
                 if (newToggle != null) {
-                    updateTable(
-                            mileageMaintenanceObservableList,
-                            mileageMaintenanceTableView,
+                    mileageMaintenanceTable.updateTable(
                             () -> MaintenanceDAO.getMileageMaintenanceByTechnicId(technic.getId(),
                                     Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
                             )
                     );
                 } else {
-                    mileageMaintenanceTableContainer.setVisible(false);
-                    mileageMaintenanceTableContainer.setManaged(false);
-                    mileageMaintenanceObservableList.clear();
+                    mileageMaintenanceTable.hideTable();
                 }
-                adjustTableSize(mileageMaintenanceTableView, mileageMaintenanceTableContainer);
             });
 
-            mainContainer.getChildren().add(mileageMaintenanceTableContainer);
+            mainContainer.getChildren().add(mileageMaintenanceTable.getTableContainer());
         }
 
-        //
+        if (!mileageLubricationList.isEmpty()) {
+            LubricationMaintenanceTableBuilder<MileageLubrication> lubricationMaintenanceTableBuilder = new LubricationMaintenanceTableBuilder<>();
+            lubricationMaintenanceTableBuilder.setValueColumnLabel(Constants.MILEAGE_LABEL);
+            lubricationMaintenanceTableBuilder.setValueColumnProperty("mileage");
+
+            LubricationMaintenanceTable<MileageLubrication> mileageLubricationMaintenanceTable = lubricationMaintenanceTableBuilder.build();
+
+            mileageToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+                if (newToggle != null) {
+                    mileageLubricationMaintenanceTable.updateTable(
+                            () -> MaintenanceDAO.getMileageLubricationByTechnicId(technic.getId(),
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
+                            )
+                    );
+                } else {
+                    mileageLubricationMaintenanceTable.hideTable();
+                }
+            });
+
+            mainContainer.getChildren().add(mileageLubricationMaintenanceTable.getTableContainer());
+        }
+    }
+
+    private void createWorkHoursMaintenanceUI() {
+        List<Integer> workHoursList = MaintenanceDAO.getWorkHoursListByTechnicId(technic.getId());
+        List<Integer> workHoursLubricationList = MaintenanceDAO.getWorkHoursLubricationListByTechnicId(technic.getId());
+        List<Integer> mergedWorkHoursList = ListUtils.mergeAndSort(workHoursList, workHoursLubricationList);
+
+        if (!mergedWorkHoursList.isEmpty()) {
+            mainContainer.getChildren().add(new Label(Constants.WORK_HOURS_TO_LABEL));
+
+            workHoursToggleButtonContainer = new HBox();
+            workHoursToggleGroup = new ToggleGroup();
+            createToggleButtons(workHoursToggleButtonContainer, workHoursToggleGroup, mergedWorkHoursList);
+
+            mainContainer.getChildren().add(workHoursToggleButtonContainer);
+        }
+
+        if (!workHoursList.isEmpty()) {
+            MaintenanceTableBuilder<WorkHoursMaintenance> maintenanceTableBuilder = new MaintenanceTableBuilder<>();
+            maintenanceTableBuilder.setValueColumnLabel(Constants.WORK_HOURS_LABEL);
+            maintenanceTableBuilder.setValueColumnProperty("workHours");
+
+            MaintenanceTable<WorkHoursMaintenance> workHoursMaintenanceTable = maintenanceTableBuilder.build();
+
+            workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+                if (newToggle != null) {
+                    workHoursMaintenanceTable.updateTable(
+                            () -> MaintenanceDAO.getWorkHoursMaintenanceByTechnicId(technic.getId(),
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
+                            )
+                    );
+                } else {
+                    workHoursMaintenanceTable.hideTable();
+                }
+            });
+
+            mainContainer.getChildren().add(workHoursMaintenanceTable.getTableContainer());
+        }
+
+        if (!workHoursLubricationList.isEmpty()) {
+            LubricationMaintenanceTableBuilder<WorkHoursLubrication> lubricationTableBuilder = new LubricationMaintenanceTableBuilder<>();
+            lubricationTableBuilder.setValueColumnLabel(Constants.WORK_HOURS_LABEL);
+            lubricationTableBuilder.setValueColumnProperty("workHours");
+
+            LubricationMaintenanceTable<WorkHoursLubrication> workHoursLubricationMaintenanceTable = lubricationTableBuilder.build();
+
+            workHoursToggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
+                if (newToggle != null) {
+                    workHoursLubricationMaintenanceTable.updateTable(
+                            () -> MaintenanceDAO.getWorkHoursLubricationByTechnicId(technic.getId(),
+                                    Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""))
+                            )
+                    );
+                } else {
+                    workHoursLubricationMaintenanceTable.hideTable();
+                }
+            });
+
+            mainContainer.getChildren().add(workHoursLubricationMaintenanceTable.getTableContainer());
+        }
+
     }
 
     /**
      * Создание кнопок ТО (ТО-100, ТО-250, ТО-500, ТО-750) динамически
      */
-    private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup, List<Integer> filterParamsTOList) {
+    private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup,
+                                     List<Integer> filterParamsTOList) {
         for (Integer mileage : filterParamsTOList) {
             ToggleButton button = new ToggleButton(Constants.TO_LABEL + mileage);
             button.setToggleGroup(toggleGroup);
@@ -158,133 +185,9 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
             toggleButtonContainer.getChildren().add(button);
         }
     }
-
-    /**
-     * Обновление таблицы при выборе ТО
-     */
-    private <T> void updateTable(ObservableList<T> observableList, TableView<T> tableView,
-                                 Supplier<List<T>> dataLoader) {
-        observableList.clear();
-        observableList.addAll(dataLoader.get());
-
-        setAdditionalInfoColumn(observableList, tableView);
-    }
-
-    private <T> void setAdditionalInfoColumn(ObservableList<T> observableList, TableView<T> tableView) {
-        boolean hasAdditionalInfo = observableList.stream().anyMatch(item -> {
-            try {
-                Method method = item.getClass().getMethod("getAdditionalInfo");
-                Object value = method.invoke(item);
-                return value != null && !value.toString().isEmpty();
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                return false;
-            }
-        });
-
-        tableView.getColumns().removeIf(col -> col.getText().equals(Constants.ADDITIONAL_INFO_LABEL));
-
-        if (hasAdditionalInfo) {
-            TableColumn<T, String> additionalInfoColumn = getAdditionalInfoColumn();
-            tableView.getColumns().add(additionalInfoColumn);
-        }
-
-        adjustColumnWidths(tableView, hasAdditionalInfo);
-    }
-
-    private <T> TableColumn<T, String> getAdditionalInfoColumn() {
-        TableColumn<T, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
-        additionalInfoColumn.setCellValueFactory(cellData -> {
-            try {
-                Method method = cellData.getValue().getClass().getMethod("additionalInfoProperty");
-                return (ObservableValue<String>) method.invoke(cellData.getValue());
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                return new SimpleStringProperty("");
-            }
-        });
-        additionalInfoColumn.setCellFactory(tc -> TableWrappedCellFactory.createWrappedCell());
-        return additionalInfoColumn;
-    }
-
-    private void adjustColumnWidths(TableView<?> tableView, boolean hasAdditionalInfo) {
-        double additionalInfoWidth = hasAdditionalInfo ? 0.2 : 0.0;
-        double remainingWidth = 1.0 - additionalInfoWidth;
-
-        double maintenanceObjectWidth = remainingWidth * 0.3;
-        double workContentWidth = remainingWidth * 0.5;
-        double mileageWidth = remainingWidth * 0.2;
-
-        maintenanceObjectColumnMileageMaintenance.prefWidthProperty().bind(tableView.widthProperty().multiply(maintenanceObjectWidth));
-        workContentColumnMileageMaintenance.prefWidthProperty().bind(tableView.widthProperty().multiply(workContentWidth));
-        mileageColumnMileageMaintenance.prefWidthProperty().bind(tableView.widthProperty().multiply(mileageWidth));
-
-        if (hasAdditionalInfo) {
-            additionalInfoColumnMileageMaintenance.prefWidthProperty().bind(tableView.widthProperty().multiply(additionalInfoWidth));
-        }
-    }
-
-    private void adjustTableSize(TableView<?> tableView, VBox tableContainer) {
-        tableView.setFixedCellSize(-1);
-
-//        tableView.setFixedCellSize(30);
-//        tableView.prefHeightProperty().bind(
-//                Bindings.when(Bindings.isEmpty(tableView.getItems()))
-//                        .then(0)
-//                        .otherwise(Bindings.size(tableView.getItems()).multiply(tableView.getFixedCellSize()).add(30))
-//        );
-
-//        tableView.prefHeightProperty().bind(
-//                Bindings.createDoubleBinding(() -> {
-//                    int rowCount = tableView.getItems().size();
-//                    double rowHeight = 30; // Примерная высота одной строки
-//                    double headerHeight = 40; // Высота заголовка
-//                    return rowCount > 0 ? (rowCount * rowHeight + headerHeight) : headerHeight;
-//                }, tableView.getItems())
-//        );
-        tableView.setPrefHeight(450);
-        tableView.minHeightProperty().bind(tableView.prefHeightProperty());
-        tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
-
-
-        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
-            tableView.refresh();
-        });
-
-        tableView.prefWidthProperty().bind(tableContainer.widthProperty());
-
-        tableView.getItems().addListener((ListChangeListener<? super Object>) change -> {
-            boolean hasItems = !tableView.getItems().isEmpty();
-            tableContainer.setVisible(hasItems);
-            tableContainer.setManaged(hasItems);
-        });
-
-        boolean hasItems = !tableView.getItems().isEmpty();
-        tableContainer.setVisible(hasItems);
-        tableContainer.setManaged(hasItems);
-    }
-
-//    private <T> TableCell<T, String> createWrappedCell() {
-//        return new TableCell<>() {
-//            private final Text text = new Text();
-//
-//            {
-//                text.wrappingWidthProperty().bind(widthProperty());
-//            }
-//
-//            @Override
-//            protected void updateItem(String item, boolean empty) {
-//                super.updateItem(item, empty);
-//                if (empty || item == null) {
-//                    setGraphic(null);
-//                    setPrefHeight(0);
-//                } else {
-//                    text.setText(item);
-//                    setGraphic(text);
-//                    setPrefHeight(text.getLayoutBounds().getHeight() + 10);
-//                }
-//            }
-//        };
-//    }
 }
+
+
 
 //public class CraneUIFactory implements TechnicUIFactory {
 //
