@@ -11,7 +11,7 @@ public class Constants {
     public static final String MILEAGE_TO_LABEL = "ТО по пробегу:";
     public static final String WORK_HOURS_TO_LABEL = "ТО по наработанным часам:";
 
-    public static final String CALCULATE_NEXT_MAINTENANCE_LABEL = "Рассчитать следующее то";
+    public static final String CALCULATE_NEXT_MAINTENANCE_LABEL = "Рассчитать следующее ТО";
 
     public static final String MAINTENANCE_OBJECT_LABEL = "Объект обслуживания";
     public static final String WORK_CONTENTS_LABEL = "Содержание работ";

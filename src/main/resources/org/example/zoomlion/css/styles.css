@@ -113,7 +113,7 @@
 }
 
 .maintenance-table-view .column-header .label {
-    -fx-text-fill: #FFF;
+    -fx-text-fill: white;
     -fx-font-family: "Arial";
 }
 
@@ -126,12 +126,12 @@
 
 .maintenance-table-row-cell:selected {
     -fx-background-color: #A4CE4E;
-    -fx-text-fill: black; /* Цвет текста для контраста */
+    -fx-text-fill: black;
     -fx-table-cell-border-color: #A4CE4E;
 }
 
 .maintenance-table-row-cell:selected .text {
-    -fx-fill: black; /* Чтобы текст оставался читаемым */
+    -fx-fill: black;
 }
 
 .maintenance-table-row-cell:focused:selected {
@@ -148,6 +148,77 @@
 
 
 
+.text-field {
+    -fx-background-color:
+        #909090,
+        #FFFFFF;
+    /* -fx-background-insets: 0, 2;
+    -fx-background-radius: 0, 0; */
+
+    -fx-font-size: 13px;
+ }
+
+.text-field:focused {
+    -fx-background-color:
+        #A4CE4E,
+        #FFFFFF;
+}
+
+.text-field:hover {
+    -fx-background-color:
+        #909090,
+        #FFFFFF;
+}
+
+.text-field:focused:hover {
+    -fx-background-color:
+        #A4CE4E,
+        #FFFFFF;
+}
+
+.calculate-button {
+    -fx-pref-width: 150px;
+    -fx-pref-height: 50px;
+    -fx-background-radius: 20px;
+    -fx-border-radius: 20px;
+    
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+    
+    /* -fx-border-width: 2px; */
+    /* -fx-border-color: #333640; */
+    -fx-background-color: #333640;
+    
+    -fx-text-alignment: center;
+    -fx-wrap-text: true;
+
+    -fx-font-size: 13px;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    
+    -fx-scale-x: 1.0;
+    -fx-scale-y: 1.0;
+}
+
+/* .calculate-button {
+    -fx-pref-width: 120px;
+    -fx-pref-height: 60px;
+    -fx-padding: 10px;
+    -fx-font-size: 13px;
+    
+} */
+
+.calculate-button:focused:pressed {
+    -fx-background-color: #A4CE4E;
+    -fx-text-fill: white;
+    -fx-border-color: transparent;
+}
+
+.calculate-button:hover {
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
 
 
 /* Делаем фон ScrollPane прозрачным */
@@ -159,6 +230,7 @@
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
+
 
 /* Стилизация горизонтального и вертикального скроллбара */
 .scroll-bar {
