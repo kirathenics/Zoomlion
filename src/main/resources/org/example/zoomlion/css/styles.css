@@ -113,6 +113,7 @@
 .maintenance-table-view .column-header, .filler {
     -fx-background-color: transparent;
     -fx-size: 40px;
+    -fx-wrap-text: true;
 }
 
 .maintenance-table-view .column-header .label {
