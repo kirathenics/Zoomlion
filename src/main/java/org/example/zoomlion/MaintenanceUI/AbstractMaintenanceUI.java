@@ -21,13 +21,16 @@ public abstract class AbstractMaintenanceUI<T, L> {
     protected Technic technic;
     protected String label;
     protected String valueColumnLabel;
+    protected String lubricationValueColumnLabel;
     protected String valueColumnProperty;
 
-    public AbstractMaintenanceUI(Technic technic, String label, String valueColumnLabel, String valueColumnProperty) {
+    public AbstractMaintenanceUI(Technic technic, String label,
+                                 String valueColumnLabel, String lubricationValueColumnLabel, String valueColumnProperty) {
         this.technic = technic;
         this.label = label;
         this.valueColumnLabel = valueColumnLabel;
         this.valueColumnProperty = valueColumnProperty;
+        this.lubricationValueColumnLabel = lubricationValueColumnLabel;
         this.container = new VBox();
         createUI();
     }
@@ -59,7 +62,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
 
         if (!lubricationList.isEmpty()) {
             LubricationMaintenanceTable<L> lubricationTable = new LubricationMaintenanceTable.Builder<L>()
-                    .setValueColumnLabel(valueColumnLabel)
+                    .setValueColumnLabel(lubricationValueColumnLabel)
                     .setValueColumnProperty(valueColumnProperty)
                     .build();
 

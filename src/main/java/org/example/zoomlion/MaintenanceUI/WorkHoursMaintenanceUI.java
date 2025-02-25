@@ -10,7 +10,7 @@ import java.util.List;
 
 public class WorkHoursMaintenanceUI extends AbstractMaintenanceUI<WorkHoursMaintenance, WorkHoursLubrication> {
     public WorkHoursMaintenanceUI(Technic technic) {
-        super(technic, Constants.WORK_HOURS_TO_LABEL, Constants.WORK_HOURS_LABEL, "workHours");
+        super(technic, Constants.WORK_HOURS_TO_LABEL, Constants.WORK_HOURS_LABEL, Constants.LUBRICATION_WORK_HOURS_LABEL,"workHours");
     }
 
     @Override

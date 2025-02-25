@@ -28,8 +28,6 @@ public abstract class AbstractMaintenanceTable<T> {
         observableList = FXCollections.observableArrayList();
         tableView.setItems(observableList);
 
-//        setupColumns();
-
         setupTableSize();
         tableView.getStyleClass().add("maintenance-table-view");
 

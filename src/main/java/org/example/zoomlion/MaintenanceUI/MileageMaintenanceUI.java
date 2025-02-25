@@ -10,7 +10,7 @@ import java.util.List;
 
 public class MileageMaintenanceUI extends AbstractMaintenanceUI<MileageMaintenance, MileageLubrication> {
     public MileageMaintenanceUI(Technic technic) {
-        super(technic, Constants.MILEAGE_TO_LABEL, Constants.MILEAGE_LABEL, "mileage");
+        super(technic, Constants.MILEAGE_TO_LABEL, Constants.MILEAGE_LABEL, Constants.LUBRICATION_MILEAGE_LABEL,"mileage");
     }
 
     @Override
