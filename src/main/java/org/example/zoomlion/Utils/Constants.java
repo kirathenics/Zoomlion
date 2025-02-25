@@ -24,4 +24,7 @@ public class Constants {
     public static final String LUBRICATION_MILEAGE_LABEL = "Периодичность смазки, км";
     public static final String LUBRICATION_WORK_HOURS_LABEL = "Периодичность смазки, км";
     public static final String LUBRICANT_LABEL = "Наименование смазочных материалов";
+
+    public static final String ERROR_LABEL = "Ошибка";
+    public static final String ENTER_VALUE_LABEL = "Введите значение перед расчетом!";
 }

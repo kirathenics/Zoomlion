@@ -1,8 +1,11 @@
 package org.example.zoomlion.MaintenanceUI;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import org.example.zoomlion.TableViewFactory.AbstractMaintenanceTable;
 import org.example.zoomlion.TableViewFactory.LubricationMaintenanceTable;
@@ -51,13 +54,16 @@ public abstract class AbstractMaintenanceUI<T, L> {
             container.getChildren().add(toLabel);
 
             toggleButtonContainer = new HBox();
-            toggleButtonContainer.setAlignment(Pos.CENTER_LEFT);
 
             toggleGroup = new ToggleGroup();
             createToggleButtons(toggleButtonContainer, toggleGroup, mergedMaintenanceList);
 
+            Region spacer = new Region();
+            HBox.setHgrow(spacer, Priority.ALWAYS);
+
             TextField valueInput = new TextField();
-            valueInput.setPrefWidth(100);
+            HBox.setMargin(valueInput, new Insets(10));
+            valueInput.setAlignment(Pos.CENTER);
             valueInput.textProperty().addListener((observable, oldValue, newValue) -> {
                 if (!newValue.matches("\\d*")) {
                     valueInput.setText(newValue.replaceAll("\\D", ""));
@@ -70,7 +76,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
             calculateNextMaintenance.setOnAction(event -> {
                 String inputValue = valueInput.getText();
                 if (inputValue.isEmpty()) {
-                    showAlert("Ошибка", "Введите значение перед расчетом!");
+                    showAlert(Constants.ERROR_LABEL, Constants.ENTER_VALUE_LABEL);
                     return;
                 }
 
@@ -78,8 +84,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
                 calculateNextMaintenanceAction(maintenanceValue);
             });
 
-            toggleButtonContainer.getChildren().add(valueInput);
-            toggleButtonContainer.getChildren().add(calculateNextMaintenance);
+            toggleButtonContainer.getChildren().addAll(spacer, valueInput, calculateNextMaintenance);
 
             container.getChildren().add(toggleButtonContainer);
         }
@@ -128,12 +133,28 @@ public abstract class AbstractMaintenanceUI<T, L> {
 
     private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup,
                                      List<Integer> filterParamsTOList) {
+        VBox toggleButtonsContainer = new VBox();
+        HBox currentRow = new HBox();
+        toggleButtonsContainer.getChildren().add(currentRow);
+
+        int maxButtonsPerRow = 6;
+        int count = 0;
+
         for (Integer mileage : filterParamsTOList) {
+            if (count >= maxButtonsPerRow) {
+                currentRow = new HBox();
+                toggleButtonsContainer.getChildren().add(currentRow);
+                count = 0;
+            }
             ToggleButton button = new ToggleButton(Constants.TO_LABEL + mileage);
             button.setToggleGroup(toggleGroup);
             button.getStyleClass().add("toggle-button");
-            toggleButtonContainer.getChildren().add(button);
+            currentRow.getChildren().add(button);
+            count++;
         }
+
+        toggleButtonContainer.getChildren().add(toggleButtonsContainer);
+
     }
 
     private void showAlert(String title, String message) {

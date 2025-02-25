@@ -26,6 +26,7 @@
     -fx-effect: dropShadow(three-pass-box,rgba(0,0,0,0.1), 10.0, 0.0, 0.0, 10.0);
 }
 
+
 .technic-item {
     -fx-background-color: white;
     -fx-background-radius: 5px;
@@ -46,14 +47,15 @@
     -fx-border-radius: 5px;
 }
 
+
 .toolbar {
     -fx-background-color: #333640;
 }
 
 
 .toggle-button {
-    -fx-pref-width: 100px;
-    -fx-pref-height: 40px;
+    -fx-pref-width: 120px;
+    -fx-pref-height: 50px;
     -fx-background-radius: 20px;
     -fx-border-radius: 20px;
     
@@ -83,6 +85,7 @@
     -fx-scale-x: 1.05;
     -fx-scale-y: 1.05;
 }
+
 
 .to-label {
     -fx-font-size: 16px;
@@ -147,13 +150,12 @@
 } */
 
 
-
 .text-field {
+    -fx-pref-width: 100px;
+
     -fx-background-color:
         #909090,
         #FFFFFF;
-    /* -fx-background-insets: 0, 2;
-    -fx-background-radius: 0, 0; */
 
     -fx-font-size: 13px;
  }
@@ -176,6 +178,7 @@
         #FFFFFF;
 }
 
+
 .calculate-button {
     -fx-pref-width: 150px;
     -fx-pref-height: 50px;
@@ -186,8 +189,6 @@
     -fx-border-insets: 5px;
     -fx-background-insets: 5px;
     
-    /* -fx-border-width: 2px; */
-    /* -fx-border-color: #333640; */
     -fx-background-color: #333640;
     
     -fx-text-alignment: center;
@@ -200,14 +201,6 @@
     -fx-scale-x: 1.0;
     -fx-scale-y: 1.0;
 }
-
-/* .calculate-button {
-    -fx-pref-width: 120px;
-    -fx-pref-height: 60px;
-    -fx-padding: 10px;
-    -fx-font-size: 13px;
-    
-} */
 
 .calculate-button:focused:pressed {
     -fx-background-color: #A4CE4E;

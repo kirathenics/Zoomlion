@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
@@ -24,6 +25,7 @@ public abstract class AbstractMaintenanceTable<T> {
 
     public AbstractMaintenanceTable() {
         tableContainer = new VBox();
+        VBox.setMargin(tableContainer, new Insets(10,0,10,0));
         tableView = new TableView<>();
         observableList = FXCollections.observableArrayList();
         tableView.setItems(observableList);
