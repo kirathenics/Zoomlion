@@ -1,8 +1,6 @@
 package org.example.zoomlion.MaintenanceUI;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleButton;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.example.zoomlion.TableViewFactory.AbstractMaintenanceTable;
@@ -24,8 +22,11 @@ public abstract class AbstractMaintenanceUI<T, L> {
     protected String lubricationValueColumnLabel;
     protected String valueColumnProperty;
 
-    public AbstractMaintenanceUI(Technic technic, String label,
-                                 String valueColumnLabel, String lubricationValueColumnLabel, String valueColumnProperty) {
+    public AbstractMaintenanceUI(Technic technic,
+                                 String label,
+                                 String valueColumnLabel,
+                                 String lubricationValueColumnLabel,
+                                 String valueColumnProperty) {
         this.technic = technic;
         this.label = label;
         this.valueColumnLabel = valueColumnLabel;
@@ -46,6 +47,13 @@ public abstract class AbstractMaintenanceUI<T, L> {
             toggleButtonContainer = new HBox();
             toggleGroup = new ToggleGroup();
             createToggleButtons(toggleButtonContainer, toggleGroup, mergedList);
+
+            TextField valueInput = new TextField();
+            Button calculateNextMaintenance = new Button();
+            calculateNextMaintenance.setText(Constants.CALCULATE_NEXT_MAINTENANCE_LABEL);
+
+            toggleButtonContainer.getChildren().add(valueInput);
+            toggleButtonContainer.getChildren().add(calculateNextMaintenance);
 
             container.getChildren().add(toggleButtonContainer);
         }

@@ -3,9 +3,15 @@ package org.example.zoomlion.Utils;
 public class Constants {
     public static final String IMAGE_PATH = "/org/example/zoomlion/images/";
 
+    public static final String CRANE_TECHNIC_TYPE = "Стреловой самоходный кран";
+    public static final String ELEVATOR_TECHNIC_TYPE = "Подъемник";
+    public static final String DEFAULT_TECHNIC_TYPE = "Не определено";
+
     public static final String TO_LABEL = "ТО-";
     public static final String MILEAGE_TO_LABEL = "ТО по пробегу:";
     public static final String WORK_HOURS_TO_LABEL = "ТО по наработанным часам:";
+
+    public static final String CALCULATE_NEXT_MAINTENANCE_LABEL = "Рассчитать следующее то";
 
     public static final String MAINTENANCE_OBJECT_LABEL = "Объект обслуживания";
     public static final String WORK_CONTENTS_LABEL = "Содержание работ";
