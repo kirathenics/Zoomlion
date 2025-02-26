@@ -9,8 +9,10 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.skin.TableViewSkin;
+import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.VBox;
-import org.example.zoomlion.TableColumnFactory.TableWrappedCellFactory;
+import org.example.zoomlion.TableColumnFactory.WrappedTableCellFactory;
 import org.example.zoomlion.Utils.Constants;
 
 import java.lang.reflect.InvocationTargetException;
@@ -26,6 +28,7 @@ public abstract class AbstractMaintenanceTable<T> {
     public AbstractMaintenanceTable() {
         tableContainer = new VBox();
         VBox.setMargin(tableContainer, new Insets(10,0,10,0));
+
         tableView = new TableView<>();
         observableList = FXCollections.observableArrayList();
         tableView.setItems(observableList);
@@ -57,12 +60,25 @@ public abstract class AbstractMaintenanceTable<T> {
     public void adjustTableSize() {
         tableView.setFixedCellSize(-1);
 
-        tableView.setPrefHeight(450);
+        tableView.layout();
+
+        TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
+        if (skin != null) {
+            VirtualFlow<?> flow = (VirtualFlow<?>) skin.getChildren().get(1);
+            double totalHeight = tableView.lookup(".column-header-background").getBoundsInLocal().getHeight();
+            totalHeight += 20;
+
+            for (int i = 0; i < tableView.getItems().size(); i++) {
+                totalHeight += flow.getCell(i).getBoundsInLocal().getHeight();
+            }
+
+            tableView.setPrefHeight(totalHeight);
+        }
+
         tableView.minHeightProperty().bind(tableView.prefHeightProperty());
         tableView.maxHeightProperty().bind(tableView.prefHeightProperty());
 
         tableView.prefWidthProperty().bind(tableContainer.widthProperty());
-        tableView.setMaxWidth(Double.MAX_VALUE);
     }
 
     public void hideTable() {
@@ -117,25 +133,9 @@ public abstract class AbstractMaintenanceTable<T> {
                 return new SimpleStringProperty("");
             }
         });
-        additionalInfoColumn.setCellFactory(tc -> TableWrappedCellFactory.createWrappedCell());
+        additionalInfoColumn.setCellFactory(tc -> WrappedTableCellFactory.createWrappedCell());
         return additionalInfoColumn;
     }
 
     protected abstract void adjustColumnWidths(boolean hasAdditionalInfo);
 }
-
-//        tableView.setFixedCellSize(30);
-//        tableView.prefHeightProperty().bind(
-//                Bindings.when(Bindings.isEmpty(tableView.getItems()))
-//                        .then(0)
-//                        .otherwise(Bindings.size(tableView.getItems()).multiply(tableView.getFixedCellSize()).add(30))
-//        );
-
-//        tableView.prefHeightProperty().bind(
-//                Bindings.createDoubleBinding(() -> {
-//                    int rowCount = tableView.getItems().size();
-//                    double rowHeight = 30; // Примерная высота одной строки
-//                    double headerHeight = 40; // Высота заголовка
-//                    return rowCount > 0 ? (rowCount * rowHeight + headerHeight) : headerHeight;
-//                }, tableView.getItems())
-//        );

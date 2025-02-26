@@ -45,7 +45,7 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
 
         double maintenanceObjectWidth = remainingWidth * 0.3;
         double workContentWidth = remainingWidth * 0.5;
-        double valueWidth = remainingWidth * 0.2;
+        double valueWidth = remainingWidth * 0.17;
 
         maintenanceObjectColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(maintenanceObjectWidth));
         workContentColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(workContentWidth));

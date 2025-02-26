@@ -3,7 +3,7 @@ package org.example.zoomlion.TableColumnFactory;
 import javafx.scene.control.TableCell;
 import javafx.scene.text.Text;
 
-public class TableWrappedCellFactory {
+public class WrappedTableCellFactory {
     public static <T> TableCell<T, String> createWrappedCell() {
         return new TableCell<>() {
             private final Text text = new Text();

@@ -8,7 +8,7 @@ public class MultiLineStringColumnFactory<T> extends StringColumnFactory<T>  {
     public TableColumn<T, String> createColumn(String title, String property) {
         TableColumn<T, String> column = new TableColumn<>(title);
         column.setCellValueFactory(new PropertyValueFactory<>(property));
-        column.setCellFactory(tc -> TableWrappedCellFactory.createWrappedCell());
+        column.setCellFactory(tc -> WrappedTableCellFactory.createWrappedCell());
         return column;
     }
 }
