@@ -16,13 +16,13 @@ public class Constants {
     public static final String MAINTENANCE_OBJECT_LABEL = "Объект обслуживания";
     public static final String WORK_CONTENTS_LABEL = "Содержание работ";
     public static final String MILEAGE_LABEL = "Пробег, км";
-    public static final String WORK_HOURS_LABEL = "Пробег, км";
+    public static final String WORK_HOURS_LABEL = "Моточасы, ч";
     public static final String ADDITIONAL_INFO_LABEL = "Дополнительная информация";
 
     public static final String LUBRICATION_POINT_LABEL = "Точка смазки";
     public static final String LUBRICATION_METHOD_LABEL = "Способ нанесения";
     public static final String LUBRICATION_MILEAGE_LABEL = "Периодичность смазки, км";
-    public static final String LUBRICATION_WORK_HOURS_LABEL = "Периодичность смазки, км";
+    public static final String LUBRICATION_WORK_HOURS_LABEL = "Периодичность смазки, ч";
     public static final String LUBRICANT_LABEL = "Наименование смазочных материалов";
 
     public static final String ERROR_LABEL = "Ошибка";

@@ -9,7 +9,7 @@
 
 <AnchorPane fx:id="rootPane" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicItemController">
    <children>
-      <VBox alignment="TOP_CENTER" layoutX="63.0" layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox alignment="CENTER" layoutX="63.0" layoutY="8.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <HBox>
                <children>
@@ -23,14 +23,14 @@
                   <Insets />
                </VBox.margin>
             </HBox>
-<!--            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="transparent">-->
-<!--               <image>-->
-<!--                  <Image url="@../images/no-image.png" />-->
-<!--               </image>-->
-<!--               <VBox.margin>-->
-<!--                  <Insets top="10.0" />-->
-<!--               </VBox.margin>-->
-<!--            </ImageView>-->
+            <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" styleClass="transparent">
+               <image>
+                  <Image url="@../images/no-image.png" />
+               </image>
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </ImageView>
          </children>
          <padding>
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

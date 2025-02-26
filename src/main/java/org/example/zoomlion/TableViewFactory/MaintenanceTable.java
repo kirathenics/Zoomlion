@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
     private TableColumn<T, String> maintenanceObjectColumn;
     private TableColumn<T, String> workContentColumn;
-    private TableColumn<T, Integer> valueColumn; // универсальный столбец
+    private TableColumn<T, Integer> valueColumn;
     private TableColumn<T, String> additionalInfoColumn;
 
     private final String valueColumnLabel;

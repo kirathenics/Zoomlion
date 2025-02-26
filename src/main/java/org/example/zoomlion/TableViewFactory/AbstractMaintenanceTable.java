@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.control.IndexedCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.skin.TableViewSkin;
@@ -113,7 +114,7 @@ public abstract class AbstractMaintenanceTable<T> {
             }
         });
 
-        tableView.getColumns().removeIf(col -> col.getText().equals(Constants.ADDITIONAL_INFO_LABEL));
+        tableView.getColumns().removeIf(col -> Constants.ADDITIONAL_INFO_LABEL.equals(col.getText()));
 
         if (hasAdditionalInfo) {
             TableColumn<T, String> additionalInfoColumn = getAdditionalInfoColumn();

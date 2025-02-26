@@ -121,17 +121,17 @@
     -fx-font-family: "Arial";
 }
 
-.maintenance-table-row-cell:selected {
+.table-row-cell:selected {
     -fx-background-color: #A4CE4E;
     -fx-text-fill: black;
     -fx-table-cell-border-color: #A4CE4E;
 }
 
-.maintenance-table-row-cell:selected .text {
+.table-row-cell:selected .text {
     -fx-fill: black;
 }
 
-.maintenance-table-row-cell:focused:selected {
+.table-row-cell:focused:selected {
     -fx-background-color: #A4CE4E;
     -fx-table-cell-border-color: #A4CE4E;
 }

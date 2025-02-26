@@ -1,16 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import de.jensd.fx.glyphs.materialicons.MaterialIconView?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
+<?import de.jensd.fx.glyphs.materialicons.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="parent" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicMaintenanceController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="650.0" prefWidth="1000.0" styleClass="parent" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.zoomlion.controllers.TechnicMaintenanceController">
    <children>
       <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -23,29 +20,32 @@
                   </MaterialIconView>
                </children>
             </HBox>
-            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" stylesheets="@../css/styles.css" VBox.vgrow="ALWAYS">
                <content>
                   <VBox alignment="TOP_CENTER">
                      <children>
-                        <HBox>
+                        <HBox alignment="CENTER_LEFT">
                            <children>
-<!--                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">-->
-<!--                                 <image>-->
-<!--                                    <Image url="@../images/no-image.png" />-->
-<!--                                 </image>-->
-<!--                                 <HBox.margin>-->
-<!--                                    <Insets left="100.0" />-->
-<!--                                 </HBox.margin>-->
-<!--                              </ImageView>-->
+                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/no-image.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </ImageView>
                               <Region prefWidth="150.0" styleClass="transparent" stylesheets="@../css/styles.css" />
-                              <Label fx:id="nameLabel" text="КС ZOOMLION ZTC250V-1 (25 тн)">
+                              <Label fx:id="nameLabel" text="КС ZOOMLION ZTC250V-1 (25 тн)" wrapText="true">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
                               </Label>
                            </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
                         </HBox>
-                        <VBox fx:id="dynamicContentContainer" alignment="TOP_CENTER">
+                        <VBox fx:id="dynamicContentContainer" alignment="TOP_CENTER" stylesheets="@../css/styles.css">
                            <VBox.margin>
                               <Insets left="15.0" right="15.0" />
                            </VBox.margin>
