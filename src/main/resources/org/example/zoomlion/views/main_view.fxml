@@ -3,6 +3,8 @@
 <?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.GridPane?>
@@ -20,7 +22,6 @@
                      <children>
                         <ScrollPane fx:id="technicItemScrollPane" fitToHeight="true" fitToWidth="true" prefHeight="590.0" prefWidth="950.0" stylesheets="@../css/styles.css" HBox.hgrow="ALWAYS">
                            <content>
-<!--                              <GridPane fx:id="technicItemGridPane" GridPane.hgrow="ALWAYS" GridPane.vgrow="ALWAYS">-->
                               <GridPane fx:id="technicItemGridPane" alignment="TOP_CENTER" GridPane.hgrow="SOMETIMES" GridPane.vgrow="SOMETIMES">
                                  <rowConstraints>
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" />
@@ -41,11 +42,19 @@
             <children>
                   <VBox alignment="TOP_CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                     <FontAwesomeIconView fill="WHITE" glyphName="BARS" size="1.5em" text="">
+                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../images/icon-app.png" />
+                           </image>
                            <VBox.margin>
                               <Insets top="15.0" />
                            </VBox.margin>
-                        </FontAwesomeIconView>
+                        </ImageView>
+<!--                     <FontAwesomeIconView fill="WHITE" glyphName="BARS" size="1.5em" text="">-->
+<!--                           <VBox.margin>-->
+<!--                              <Insets top="15.0" />-->
+<!--                           </VBox.margin>-->
+<!--                        </FontAwesomeIconView>-->
                      <VBox alignment="TOP_CENTER" fillWidth="false">
                         <children>
                            <FontAwesomeIconView fx:id="homeSidebarButton" fill="#a4ce4e" glyphName="HOME" size="1.5em" styleClass="sidebar-opt">
