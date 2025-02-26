@@ -121,13 +121,6 @@
     -fx-font-family: "Arial";
 }
 
-/* .maintenance-table-view .scroll-bar:vertical,
-.maintenance-table-view .scroll-bar:horizontal {
-    -fx-opacity: 0;
-    -fx-max-width: 0;
-    -fx-max-height: 0;
-} */
-
 .maintenance-table-row-cell:selected {
     -fx-background-color: #A4CE4E;
     -fx-text-fill: black;
@@ -142,13 +135,6 @@
     -fx-background-color: #A4CE4E;
     -fx-table-cell-border-color: #A4CE4E;
 }
-
-
-/* .maintenance-table-containter {
-    -fx-padding: 5px;
-    -fx-border-insets: 5px;
-    -fx-background-insets: 5px;
-} */
 
 
 .text-field {
@@ -233,8 +219,8 @@
 
 /* Стилизация ползунка (ползущий элемент) */
 .scroll-bar .thumb {
-    -fx-background-color: #C1C1C1; /* Цвет ползунка */
-    -fx-background-radius: 10px; /* Закругленные края */
+    -fx-background-color: #C1C1C1;
+    -fx-background-radius: 10px;
 }
 
 /* Изменение цвета ползунка при наведении */
@@ -258,13 +244,13 @@
 
 /* Стилизация трека (фона скроллбара) */
 .scroll-bar .track {
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: white;
     -fx-background-radius: 10px;
 }
 
 /* Устанавливаем ширину вертикального скроллбара */
 .scroll-bar:vertical {
-    -fx-pref-width: 10px; /* Ширина скроллбара */
+    -fx-pref-width: 10px;
 }
 
 /* Устанавливаем высоту горизонтального скроллбара */

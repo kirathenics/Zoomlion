@@ -12,7 +12,6 @@ public class CraneMaintenanceUIFactory implements TechnicMaintenanceUIFactory {
     @Override
     public Node createUI(Technic technic) {
         VBox mainContainer = new VBox();
-        mainContainer.setPrefWidth(950);
         mainContainer.setAlignment(Pos.TOP_CENTER);
 
         mainContainer.getChildren().add(new MileageMaintenanceUI(technic).getUI());

@@ -1,4 +1,4 @@
-package org.example.zoomlion.TableViewFactory.Builders;
+package org.example.zoomlion.TableViewFactory.TableBuilder;
 
 import org.example.zoomlion.TableViewFactory.AbstractMaintenanceTable;
 
