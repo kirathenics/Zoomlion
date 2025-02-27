@@ -116,8 +116,11 @@ public abstract class AbstractMaintenanceUI<T, L> {
             if (newToggle != null) {
                 int value = Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""));
                 if (isMaintenance) {
+                    // TODO: fix shitty code
+                    ((AbstractMaintenanceTable<T>) table).updateTable(() -> fetchMaintenanceData(value));
                     ((AbstractMaintenanceTable<T>) table).updateTable(() -> fetchMaintenanceData(value));
                 } else {
+                    ((AbstractMaintenanceTable<L>) table).updateTable(() -> fetchLubricationData(value));
                     ((AbstractMaintenanceTable<L>) table).updateTable(() -> fetchLubricationData(value));
                 }
             } else {

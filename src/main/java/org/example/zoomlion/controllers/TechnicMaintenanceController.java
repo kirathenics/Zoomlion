@@ -42,7 +42,7 @@ public class TechnicMaintenanceController {
         if (imageStream != null) {
             image = new Image(imageStream);
         }
-        imageView.setImage(image);
+//        imageView.setImage(image);
 
         loadTechnicUI();
     }

@@ -61,6 +61,7 @@ public abstract class AbstractMaintenanceTable<T> {
     public void adjustTableSize() {
         tableView.setFixedCellSize(-1);
 
+        tableView.applyCss();
         tableView.layout();
 
         TableViewSkin<?> skin = (TableViewSkin<?>) tableView.getSkin();
@@ -69,7 +70,9 @@ public abstract class AbstractMaintenanceTable<T> {
             double totalHeight = tableView.lookup(".column-header-background").getBoundsInLocal().getHeight();
             totalHeight += 20;
 
+//            System.out.println("\n\n\nNext\n\n\n");
             for (int i = 0; i < tableView.getItems().size(); i++) {
+//                System.out.println(flow.getCell(i).getBoundsInLocal().getHeight());
                 totalHeight += flow.getCell(i).getBoundsInLocal().getHeight();
             }
 

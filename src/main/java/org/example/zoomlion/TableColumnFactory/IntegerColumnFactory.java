@@ -8,6 +8,7 @@ public class IntegerColumnFactory<T> implements TableColumnFactory<T, Integer> {
     public TableColumn<T, Integer> createColumn(String title, String property) {
         TableColumn<T, Integer> column = new TableColumn<>(title);
         column.setCellValueFactory(new PropertyValueFactory<>(property));
+        WrappedColumnHeader.makeHeaderWrappable(column);
         return column;
     }
 }
