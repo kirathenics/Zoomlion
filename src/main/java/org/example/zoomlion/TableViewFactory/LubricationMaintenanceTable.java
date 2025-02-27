@@ -46,10 +46,10 @@ public class LubricationMaintenanceTable<T> extends AbstractMaintenanceTable<T> 
         double additionalInfoWidth = hasAdditionalInfo ? 0.2 : 0.0;
         double remainingWidth = 1.0 - additionalInfoWidth;
 
-        double maintenanceObjectWidth = remainingWidth * 0.2;
-        double workContentWidth = remainingWidth * 0.4;
+        double maintenanceObjectWidth = remainingWidth * 0.3;
+        double workContentWidth = remainingWidth * 0.2;
         double valueWidth = remainingWidth * 0.18;
-        double lubricantWidth = remainingWidth * 0.2;
+        double lubricantWidth = remainingWidth * 0.3;
 
         lubricationPointColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(maintenanceObjectWidth));
         lubricationMethodColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(workContentWidth));

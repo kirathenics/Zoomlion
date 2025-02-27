@@ -1,19 +1,14 @@
 package org.example.zoomlion.TableViewFactory;
 
 import javafx.application.Platform;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.control.IndexedCell;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.skin.TableViewSkin;
 import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.VBox;
-import org.example.zoomlion.TableColumnFactory.WrappedTableCellFactory;
 import org.example.zoomlion.Utils.Constants;
 
 import java.lang.reflect.InvocationTargetException;
@@ -33,6 +28,8 @@ public abstract class AbstractMaintenanceTable<T> {
         tableView = new TableView<>();
         observableList = FXCollections.observableArrayList();
         tableView.setItems(observableList);
+
+        observableList.addListener((ListChangeListener<T>) change -> Platform.runLater(this::adjustTableSize));
 
         setupTableSize();
         tableView.getStyleClass().add("maintenance-table-view");
@@ -70,9 +67,7 @@ public abstract class AbstractMaintenanceTable<T> {
             double totalHeight = tableView.lookup(".column-header-background").getBoundsInLocal().getHeight();
             totalHeight += 20;
 
-//            System.out.println("\n\n\nNext\n\n\n");
             for (int i = 0; i < tableView.getItems().size(); i++) {
-//                System.out.println(flow.getCell(i).getBoundsInLocal().getHeight());
                 totalHeight += flow.getCell(i).getBoundsInLocal().getHeight();
             }
 
@@ -117,28 +112,11 @@ public abstract class AbstractMaintenanceTable<T> {
             }
         });
 
-        tableView.getColumns().removeIf(col -> Constants.ADDITIONAL_INFO_LABEL.equals(col.getText()));
-
-        if (hasAdditionalInfo) {
-            TableColumn<T, String> additionalInfoColumn = getAdditionalInfoColumn();
-            tableView.getColumns().add(additionalInfoColumn);
-        }
+        tableView.getColumns().stream()
+                .filter(col -> Constants.ADDITIONAL_INFO_LABEL.equals(col.getText()))
+                .findFirst().ifPresent(additionalInfoColumn -> additionalInfoColumn.setVisible(hasAdditionalInfo));
 
         adjustColumnWidths(hasAdditionalInfo);
-    }
-
-    protected TableColumn<T, String> getAdditionalInfoColumn() {
-        TableColumn<T, String> additionalInfoColumn = new TableColumn<>(Constants.ADDITIONAL_INFO_LABEL);
-        additionalInfoColumn.setCellValueFactory(cellData -> {
-            try {
-                Method method = cellData.getValue().getClass().getMethod("additionalInfoProperty");
-                return (ObservableValue<String>) method.invoke(cellData.getValue());
-            } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-                return new SimpleStringProperty("");
-            }
-        });
-        additionalInfoColumn.setCellFactory(tc -> WrappedTableCellFactory.createWrappedCell());
-        return additionalInfoColumn;
     }
 
     protected abstract void adjustColumnWidths(boolean hasAdditionalInfo);
