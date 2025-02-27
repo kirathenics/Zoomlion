@@ -179,5 +179,3 @@ public abstract class AbstractMaintenanceUI<T, L> {
         return container;
     }
 }
-
-// почему высота таблицы не может с первого раза адаптироваться под высоту всех строк и нужно вызывать метод два раза

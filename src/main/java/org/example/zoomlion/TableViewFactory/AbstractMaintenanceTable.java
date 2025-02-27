@@ -34,6 +34,11 @@ public abstract class AbstractMaintenanceTable<T> {
         setupTableSize();
         tableView.getStyleClass().add("maintenance-table-view");
 
+//        tableView.setOnContextMenuRequested(event -> {
+//            System.out.println("ПКМ по таблице");
+//            event.consume();
+//        });
+
         tableContainer.getChildren().add(tableView);
     }
 
