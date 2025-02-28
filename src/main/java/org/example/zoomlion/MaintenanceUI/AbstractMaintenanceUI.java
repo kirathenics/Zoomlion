@@ -29,7 +29,9 @@ public abstract class AbstractMaintenanceUI<T, L> {
     protected String lubricationValueColumnLabel;
     protected String valueColumnProperty;
 
-    List<MaintenanceValue> mergedMaintenanceList;
+    private List<MaintenanceValue> mergedMaintenanceList;
+
+    private boolean hasNonPeriodicMaintenance = false;
 
     public AbstractMaintenanceUI(Technic technic,
                                  String label,
@@ -60,8 +62,6 @@ public abstract class AbstractMaintenanceUI<T, L> {
             toggleGroup = new ToggleGroup();
             createToggleButtons(toggleButtonContainer, toggleGroup, mergedMaintenanceList);
 
-            // TODO: добавить label с объяснением первичного то, если есть кнопка со *
-
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
 
@@ -90,6 +90,10 @@ public abstract class AbstractMaintenanceUI<T, L> {
             toggleButtonContainer.getChildren().addAll(spacer, valueInput, calculateNextMaintenance);
 
             container.getChildren().add(toggleButtonContainer);
+
+            if (hasNonPeriodicMaintenance) {
+                createAsteriskLabel();
+            }
         }
 
         if (!maintenanceList.isEmpty()) {
@@ -137,7 +141,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
     protected abstract List<L> fetchLubricationData(int value, Boolean isPeriodic);
 
     private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup,
-                                     List<MaintenanceValue> filterParamsTOList) {
+                                     List<MaintenanceValue> maintenanceValues) {
         VBox toggleButtonsContainer = new VBox();
         HBox currentRow = new HBox();
         toggleButtonsContainer.getChildren().add(currentRow);
@@ -145,7 +149,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
         int maxButtonsPerRow = 6;
         int count = 0;
 
-        for (MaintenanceValue maintenanceValue : filterParamsTOList) {
+        for (MaintenanceValue maintenanceValue : maintenanceValues) {
             if (count >= maxButtonsPerRow) {
                 currentRow = new HBox();
                 toggleButtonsContainer.getChildren().add(currentRow);
@@ -155,6 +159,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
             String buttonName = Constants.TO_LABEL + maintenanceValue.getValue();
             if (maintenanceValue.isPeriodic() != null && !maintenanceValue.isPeriodic()) {
                 buttonName += "*";
+                hasNonPeriodicMaintenance = true;
             }
 
             ToggleButton button = new ToggleButton(buttonName);
@@ -165,7 +170,6 @@ public abstract class AbstractMaintenanceUI<T, L> {
         }
 
         toggleButtonContainer.getChildren().add(toggleButtonsContainer);
-
     }
 
     private void calculateNextMaintenanceAction(int maintenanceValue) {
@@ -183,6 +187,12 @@ public abstract class AbstractMaintenanceUI<T, L> {
                 break;
             }
         }
+    }
+
+    private void createAsteriskLabel() {
+        Label asteriskLabel = new Label(Constants.ASTERISK_LABEL);
+        asteriskLabel.getStyleClass().add("asterisk-label");
+        container.getChildren().add(asteriskLabel);
     }
 
     public VBox getUI() {

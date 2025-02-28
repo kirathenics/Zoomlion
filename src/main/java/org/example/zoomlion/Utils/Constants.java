@@ -13,6 +13,7 @@ public class Constants {
     public static final String TO_LABEL = "ТО-";
     public static final String MILEAGE_TO_LABEL = "ТО по пробегу:";
     public static final String WORK_HOURS_TO_LABEL = "ТО по наработанным часам:";
+    public static final String ASTERISK_LABEL = "* - первое ТО";
 
     public static final String CALCULATE_NEXT_MAINTENANCE_LABEL = "Рассчитать следующее ТО";
 

@@ -96,6 +96,14 @@
     -fx-background-insets: 5px;
 }
 
+.asterisk-label {
+    -fx-font-size: 13px;
+
+    -fx-padding: 5px;
+    -fx-border-insets: 5px;
+    -fx-background-insets: 5px;
+}
+
 
 .maintenance-table-view {
     -fx-background-color: transparent;
