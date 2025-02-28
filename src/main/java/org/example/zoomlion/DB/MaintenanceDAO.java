@@ -11,132 +11,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MaintenanceDAO {
-//    public static List<Integer> getMileageListByTechnicId(int technicId) {
-//        List<Integer> mileageList = new ArrayList<>();
-//
-//        String query = """
-//            SELECT M.mileage, M.is_periodic
-//            FROM maintenance
-//            WHERE technic_id = ?
-//                AND mileage IS NOT NULL
-//            GROUP BY M.mileage, M.is_periodic
-//            ORDER BY M.mileage
-//            """;
-//
-//        try (Connection connection = DatabaseConnector.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            preparedStatement.setInt(1, technicId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                mileageList.add(resultSet.getInt("mileage"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return mileageList;
-//    }
-//
-//    public static List<Integer> getMileageLubricationListByTechnicId(int technicId) {
-//        List<Integer> mileageList = new ArrayList<>();
-//
-//        String query = """
-//            SELECT M.mileage, M.is_periodic
-//            FROM lubrication_operations AS LO
-//            LEFT JOIN maintenance AS M
-//            ON M.id = LO.maintenance_id
-//            WHERE M.technic_id = ?
-//                AND M.mileage IS NOT NULL
-//            GROUP BY M.mileage, M.is_periodic
-//            ORDER BY M.mileage
-//            """;
-//
-//        try (Connection connection = DatabaseConnector.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            preparedStatement.setInt(1, technicId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                mileageList.add(resultSet.getInt("mileage"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return mileageList;
-//    }
-//
-//    public static List<Integer> getWorkHoursListByTechnicId(int technicId) {
-//        List<Integer> workHoursList = new ArrayList<>();
-//
-//        String query = """
-//            SELECT work_hours, is_periodic
-//            FROM maintenance
-//            WHERE technic_id = ?
-//                AND work_hours IS NOT NULL
-//            GROUP BY work_hours, is_periodic
-//            ORDER BY work_hours
-//            """;
-//
-//        try (Connection connection = DatabaseConnector.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            preparedStatement.setInt(1, technicId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                workHoursList.add(resultSet.getInt("work_hours"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return workHoursList;
-//    }
-//
-//    public static List<Integer> getWorkHoursLubricationListByTechnicId(int technicId) {
-//        List<Integer> workHoursList = new ArrayList<>();
-//
-//        String query = """
-//            SELECT M.work_hours, M.is_periodic
-//            FROM lubrication_operations AS LO
-//            LEFT JOIN maintenance AS M
-//            ON M.id = LO.maintenance_id
-//            WHERE M.technic_id = ? AND M.work_hours IS NOT NULL
-//            GROUP BY M.work_hours, M.is_periodic
-//            ORDER BY M.work_hours
-//            """;
-//
-//        try (Connection connection = DatabaseConnector.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//
-//            preparedStatement.setInt(1, technicId);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                workHoursList.add(resultSet.getInt("work_hours"));
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return workHoursList;
-//    }
+    public static List<MaintenanceValue> getMileageListByTechnicId(int technicId) {
+        return getValueListByTechnicId(technicId, Constants.MILEAGE_VALUE);
+    }
+
+    public static List<MaintenanceValue> getWorkHoursListByTechnicId(int technicId) {
+        return getValueListByTechnicId(technicId, Constants.WORK_HOURS_VALUE);
+    }
 
     private static List<MaintenanceValue> getValueListByTechnicId(int technicId, String valueName) {
         List<MaintenanceValue> valueList = new ArrayList<>();
 
-        String query = """
-        SELECT %s, is_periodic
-        FROM maintenance
-        WHERE technic_id = ?
-          AND %s IS NOT NULL
-        GROUP BY %s, is_periodic
-        ORDER BY %s ASC
-        """.formatted(valueName, valueName, valueName, valueName);
+        String query = String.format("""
+            SELECT %s, is_periodic
+            FROM maintenance
+            WHERE technic_id = ?
+              AND %s IS NOT NULL
+            GROUP BY %s, is_periodic
+            ORDER BY %s ASC
+        """, valueName, valueName, valueName, valueName);
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -158,128 +51,27 @@ public class MaintenanceDAO {
         return valueList;
     }
 
-    public static List<MaintenanceValue> getMileageListByTechnicId(int technicId) {
-        return getValueListByTechnicId(technicId, Constants.MILEAGE_VALUE);
-    }
-
-    public static List<MaintenanceValue> getWorkHoursListByTechnicId(int technicId) {
-        return getValueListByTechnicId(technicId, Constants.WORK_HOURS_VALUE);
-    }
-
-
-
-    // создай общий private метод getValueListByTechnicID(int technicId, String valueName), потом вызывай его для getMileageListByTechnicId и getWorkHoursListByTechnicId передавая mileage и work_hours соответственно
-    public static List<MaintenanceValue> getMileageListByTechnicId(int technicId) {
-        List<MaintenanceValue> mileageList = new ArrayList<>();
-
-        String query = """
-            SELECT mileage, is_periodic
-            FROM maintenance
-            WHERE technic_id = ?
-                AND mileage IS NOT NULL
-            GROUP BY M.mileage, M.is_periodic
-            ORDER BY M.mileage ASC
-            """;
-
-        try (Connection connection = DatabaseConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, technicId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int workHours = resultSet.getInt("mileage");
-                boolean isPeriodic = resultSet.getBoolean("is_periodic");
-                Boolean isPeriodicNullable = resultSet.wasNull() ? null : isPeriodic;
-
-                mileageList.add(new MaintenanceValue(workHours, isPeriodicNullable));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return mileageList;
-    }
-
     public static List<MaintenanceValue> getMileageLubricationListByTechnicId(int technicId) {
-        List<MaintenanceValue> mileageList = new ArrayList<>();
-
-        String query = """
-            SELECT M.mileage, M.is_periodic
-            FROM lubrication_operations AS LO
-            LEFT JOIN maintenance AS M
-            ON M.id = LO.maintenance_id
-            WHERE M.technic_id = ?
-                AND M.mileage IS NOT NULL
-            GROUP BY M.mileage, M.is_periodic
-            ORDER BY M.mileage ASC
-            """;
-
-        try (Connection connection = DatabaseConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, technicId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int workHours = resultSet.getInt("mileage");
-                boolean isPeriodic = resultSet.getBoolean("is_periodic");
-                Boolean isPeriodicNullable = resultSet.wasNull() ? null : isPeriodic;
-
-                mileageList.add(new MaintenanceValue(workHours, isPeriodicNullable));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return mileageList;
-    }
-
-    public static List<MaintenanceValue> getWorkHoursListByTechnicId(int technicId) {
-        List<MaintenanceValue> workHoursList = new ArrayList<>();
-
-        String query = """
-            SELECT work_hours, is_periodic
-            FROM maintenance
-            WHERE technic_id = ?
-                AND work_hours IS NOT NULL
-            GROUP BY work_hours, is_periodic
-            ORDER BY work_hours ASC
-            """;
-
-        try (Connection connection = DatabaseConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, technicId);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                int workHours = resultSet.getInt("work_hours");
-                boolean isPeriodic = resultSet.getBoolean("is_periodic");
-                Boolean isPeriodicNullable = resultSet.wasNull() ? null : isPeriodic;
-
-                workHoursList.add(new MaintenanceValue(workHours, isPeriodicNullable));
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return workHoursList;
+        return getValueLubricationListByTechnicId(technicId, Constants.MILEAGE_VALUE);
     }
 
     public static List<MaintenanceValue> getWorkHoursLubricationListByTechnicId(int technicId) {
-        List<MaintenanceValue> workHoursList = new ArrayList<>();
+        return getValueLubricationListByTechnicId(technicId, Constants.WORK_HOURS_VALUE);
+    }
 
-        String query = """
-            SELECT M.work_hours, M.is_periodic
+    private static List<MaintenanceValue> getValueLubricationListByTechnicId(int technicId, String valueName) {
+        List<MaintenanceValue> valueList = new ArrayList<>();
+
+        String query = String.format("""
+            SELECT M.%s, M.is_periodic
             FROM lubrication_operations AS LO
             LEFT JOIN maintenance AS M
             ON M.id = LO.maintenance_id
-            WHERE M.technic_id = ? AND M.work_hours IS NOT NULL
-            GROUP BY M.work_hours, M.is_periodic
-            ORDER BY M.work_hours ASC
-            """;
+            WHERE M.technic_id = ?
+                AND M.%s IS NOT NULL
+            GROUP BY M.%s, M.is_periodic
+            ORDER BY M.%s ASC
+        """, valueName, valueName, valueName, valueName);
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -288,155 +80,67 @@ public class MaintenanceDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int workHours = resultSet.getInt("work_hours");
+                int value = resultSet.getInt(valueName);
                 boolean isPeriodic = resultSet.getBoolean("is_periodic");
                 Boolean isPeriodicNullable = resultSet.wasNull() ? null : isPeriodic;
 
-                workHoursList.add(new MaintenanceValue(workHours, isPeriodicNullable));
+                valueList.add(new MaintenanceValue(value, isPeriodicNullable));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        return workHoursList;
+        return valueList;
     }
 
-    public static List<MileageMaintenance> getMileageMaintenanceByTechnicId(int technicId, int mileage, Boolean isPeriodic) {
-        List<MileageMaintenance> mileageMaintenanceList = new ArrayList<>();
-
-        String query = """
-            SELECT
-                MO.name AS 'maintenance_object',
-                W.name AS 'work_content',
-                M.mileage AS 'mileage',
-                M.additional_info AS 'additional_info'
-            FROM maintenance as M
-            LEFT JOIN operations AS O
-            ON O.id = M.operation_id
-            LEFT JOIN maintenance_objects AS MO
-            ON MO.id = O.maintenance_object_id
-            LEFT JOIN work_contents AS W
-            ON W.id = O.work_content_id
-            WHERE M.technic_id = ?
-                AND M.mileage IS NOT NULL
-                AND ? % M.mileage = 0
-            ORDER BY M.mileage ASC
-        """;
-
-        try (Connection connection = DatabaseConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, technicId);
-            preparedStatement.setInt(2, mileage);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                mileageMaintenanceList.add(new MileageMaintenance(
-                    resultSet.getString("maintenance_object"),
-                    resultSet.getString("work_content"),
-                    resultSet.getInt("mileage"),
-                    resultSet.getNString("additional_info")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return mileageMaintenanceList;
+    public static List<AbstractValueMaintenance> getMileageMaintenanceByTechnicId(int technicId, int mileage, Boolean isPeriodic) {
+        return getValueMaintenanceByTechnicId(technicId, mileage, isPeriodic, Constants.MILEAGE_VALUE);
     }
 
-    public static List<MileageLubrication> getMileageLubricationByTechnicId(int technicId, int mileage, Boolean isPeriodic) {
-        List<MileageLubrication> mileageLubricationList = new ArrayList<>();
-
-        String query = """
-            SELECT
-                LP.name AS 'lubrication_point',
-                LM.name AS 'lubrication_method',
-                M.mileage AS 'mileage',
-                L.name AS 'lubricant',
-                M.additional_info AS 'additional_info'
-            FROM lubrication_operations AS LO
-            LEFT JOIN maintenance AS M
-            ON M.id = LO.maintenance_id
-            LEFT JOIN lubrication_points AS LP
-            ON LP.id = LO.lubrication_point_id
-            LEFT JOIN lubrication_methods AS LM
-            ON LM.id = LO.lubrication_method_id
-            LEFT JOIN lubricants AS L
-            ON L.id = LO.lubricant_id
-            WHERE M.technic_id = ?
-                AND M.mileage IS NOT NULL
-                AND ? % M.mileage = 0
-            ORDER BY M.mileage ASC
-        """;
-
-        try (Connection connection = DatabaseConnector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
-            preparedStatement.setInt(1, technicId);
-            preparedStatement.setInt(2, mileage);
-            ResultSet resultSet = preparedStatement.executeQuery();
-
-            while (resultSet.next()) {
-                mileageLubricationList.add(new MileageLubrication(
-                        resultSet.getString("lubrication_point"),
-                        resultSet.getString("lubrication_method"),
-                        resultSet.getInt("mileage"),
-                        resultSet.getString("lubricant"),
-                        resultSet.getNString("additional_info")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return mileageLubricationList;
+    public static List<AbstractValueMaintenance> getWorkHoursMaintenanceByTechnicId(int technicId, int mileage, Boolean isPeriodic) {
+        return getValueMaintenanceByTechnicId(technicId, mileage, isPeriodic, Constants.WORK_HOURS_VALUE);
     }
 
-    public static List<WorkHoursMaintenance> getWorkHoursMaintenanceByTechnicId(int technicId, int workHours, Boolean isPeriodic) {
-        List<WorkHoursMaintenance> workHoursMaintenanceList = new ArrayList<>();
+    private static List<AbstractValueMaintenance> getValueMaintenanceByTechnicId(int technicId, int value, Boolean isPeriodic, String valueName) {
+        List<AbstractValueMaintenance> valueMaintenanceList = new ArrayList<>();
 
-        String query = """
+        String query = String.format("""
             SELECT
                 MO.name AS maintenance_object,
                 W.name AS work_content,
-                M.work_hours AS work_hours,
+                M.%s AS %s,
                 M.additional_info AS additional_info
             FROM maintenance AS M
             LEFT JOIN operations AS O ON O.id = M.operation_id
             LEFT JOIN maintenance_objects AS MO ON MO.id = O.maintenance_object_id
             LEFT JOIN work_contents AS W ON W.id = O.work_content_id
             WHERE M.technic_id = ?
-                AND M.work_hours IS NOT NULL
-        """;
+                AND M.%s IS NOT NULL
+        """, valueName, valueName, valueName);
 
         StringBuilder queryBuilder = new StringBuilder(query);
 
         if (isPeriodic == null) {
-            queryBuilder.append(" AND M.is_periodic IS NULL");
-            queryBuilder.append(" AND ? % M.work_hours = 0");
+            queryBuilder.append(String.format(" AND M.is_periodic IS NULL AND ? %% M.%s = 0", valueName));
         } else {
             if (isPeriodic) {
-                queryBuilder.append(" AND ? % M.work_hours = 0");
-            }
-            else {
-                queryBuilder.append(" AND M.work_hours = ?");
+                queryBuilder.append(String.format(" AND ? %% M.%s = 0", valueName));
+            } else {
+                queryBuilder.append(String.format(" AND M.%s = ?", valueName));
             }
             queryBuilder.append(" AND M.is_periodic = ?");
         }
 
-        queryBuilder.append(" ORDER BY M.work_hours ASC");
+        queryBuilder.append(String.format(" ORDER BY M.%s ASC", valueName));
 
         query = queryBuilder.toString();
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-
             int parameterIndex = 1;
 
             preparedStatement.setInt(parameterIndex++, technicId);
-            preparedStatement.setInt(parameterIndex++, workHours);
-
+            preparedStatement.setInt(parameterIndex++, value);
             if (isPeriodic != null) {
                 preparedStatement.setBoolean(parameterIndex, isPeriodic);
             }
@@ -444,10 +148,10 @@ public class MaintenanceDAO {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                workHoursMaintenanceList.add(new WorkHoursMaintenance(
+                valueMaintenanceList.add(new AbstractValueMaintenance(
                         resultSet.getString("maintenance_object"),
                         resultSet.getString("work_content"),
-                        resultSet.getInt("work_hours"),
+                        resultSet.getInt(valueName),
                         resultSet.getNString("additional_info")
                 ));
             }
@@ -455,19 +159,27 @@ public class MaintenanceDAO {
             e.printStackTrace();
         }
 
-        return workHoursMaintenanceList;
+        return valueMaintenanceList;
     }
-    
-    public static List<WorkHoursLubrication> getWorkHoursLubricationByTechnicId(int technicId, int workHours, Boolean isPeriodic) {
-        List<WorkHoursLubrication> workHoursLubricationList = new ArrayList<>();
 
-        String query = """
+    public static List<AbstractValueLubrication> getMileageLubricationByTechnicId(int technicId, int mileage, Boolean isPeriodic) {
+        return getValueLubricationByTechnicId(technicId, mileage, isPeriodic, Constants.MILEAGE_VALUE);
+    }
+
+    public static List<AbstractValueLubrication> getWorkHoursLubricationByTechnicId(int technicId, int mileage, Boolean isPeriodic) {
+        return getValueLubricationByTechnicId(technicId, mileage, isPeriodic, Constants.WORK_HOURS_VALUE);
+    }
+
+        private static List<AbstractValueLubrication> getValueLubricationByTechnicId(int technicId, int value, Boolean isPeriodic, String valueName) {
+        List<AbstractValueLubrication> valueLubricationList = new ArrayList<>();
+
+        String query = String.format("""
             SELECT
-                LP.name AS 'lubrication_point',
-                LM.name AS 'lubrication_method',
-                M.work_hours AS 'work_hours',
-                L.name AS 'lubricant',
-                M.additional_info AS 'additional_info'
+                LP.name AS lubrication_point,
+                LM.name AS lubrication_method,
+                M.%s AS %s,
+                L.name AS lubricant,
+                M.additional_info AS additional_info
             FROM lubrication_operations AS LO
             LEFT JOIN maintenance AS M
             ON M.id = LO.maintenance_id
@@ -478,23 +190,43 @@ public class MaintenanceDAO {
             LEFT JOIN lubricants AS L
             ON L.id = LO.lubricant_id
             WHERE M.technic_id = ?
-                AND M.work_hours IS NOT NULL
-                AND ? % M.work_hours = 0
-            ORDER BY M.work_hours ASC
-        """;
+                AND M.%s IS NOT NULL
+        """, valueName, valueName, valueName);
+
+        StringBuilder queryBuilder = new StringBuilder(query);
+
+        if (isPeriodic == null) {
+            queryBuilder.append(String.format(" AND M.is_periodic IS NULL AND ? %% M.%s = 0", valueName));
+        } else {
+            if (isPeriodic) {
+                queryBuilder.append(String.format(" AND ? %% M.%s = 0", valueName));
+            } else {
+                queryBuilder.append(String.format(" AND M.%s = ?", valueName));
+            }
+            queryBuilder.append(" AND M.is_periodic = ?");
+        }
+
+        queryBuilder.append(" ORDER BY M.%s ASC".formatted(valueName));
+
+        query = queryBuilder.toString();
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            int parameterIndex = 1;
 
-            preparedStatement.setInt(1, technicId);
-            preparedStatement.setInt(2, workHours);
+            preparedStatement.setInt(parameterIndex++, technicId);
+            preparedStatement.setInt(parameterIndex++, value);
+            if (isPeriodic != null) {
+                preparedStatement.setBoolean(parameterIndex, isPeriodic);
+            }
+
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                workHoursLubricationList.add(new WorkHoursLubrication(
+                valueLubricationList.add(new AbstractValueLubrication(
                         resultSet.getString("lubrication_point"),
                         resultSet.getString("lubrication_method"),
-                        resultSet.getInt("work_hours"),
+                        resultSet.getInt(valueName),
                         resultSet.getString("lubricant"),
                         resultSet.getNString("additional_info")
                 ));
@@ -503,6 +235,6 @@ public class MaintenanceDAO {
             e.printStackTrace();
         }
 
-        return workHoursLubricationList;
+        return valueLubricationList;
     }
 }

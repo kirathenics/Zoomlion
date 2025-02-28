@@ -95,7 +95,6 @@ public abstract class AbstractMaintenanceUI<T, L> {
         if (!maintenanceList.isEmpty()) {
             MaintenanceTable<T> maintenanceTable = new MaintenanceTable.Builder<T>()
                     .setValueColumnLabel(valueColumnLabel)
-                    .setValueColumnProperty(valueColumnProperty)
                     .build();
 
             addToggleListener(maintenanceTable, true);
@@ -105,7 +104,6 @@ public abstract class AbstractMaintenanceUI<T, L> {
         if (!lubricationList.isEmpty()) {
             LubricationMaintenanceTable<L> lubricationTable = new LubricationMaintenanceTable.Builder<L>()
                     .setValueColumnLabel(lubricationValueColumnLabel)
-                    .setValueColumnProperty(valueColumnProperty)
                     .build();
 
             addToggleListener(lubricationTable, false);

@@ -16,12 +16,10 @@ public class LubricationMaintenanceTable<T> extends AbstractMaintenanceTable<T> 
     private TableColumn<T, String> additionalInfoColumn;
 
     private final String valueColumnLabel;
-    private final String valueColumnProperty;
 
-    public LubricationMaintenanceTable(String valueColumnLabel, String valueColumnProperty) {
+    public LubricationMaintenanceTable(String valueColumnLabel) {
         super();
         this.valueColumnLabel = valueColumnLabel;
-        this.valueColumnProperty = valueColumnProperty;
         setupColumns();
     }
 
@@ -29,7 +27,7 @@ public class LubricationMaintenanceTable<T> extends AbstractMaintenanceTable<T> 
     protected void setupColumns() {
         lubricationPointColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.LUBRICATION_POINT_LABEL, "lubricationPoint");
         lubricationMethodColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.LUBRICATION_METHOD_LABEL, "lubricationMethod");
-        valueColumn = new IntegerColumnFactory<T>().createColumn(valueColumnLabel, valueColumnProperty);
+        valueColumn = new IntegerColumnFactory<T>().createColumn(valueColumnLabel, "value");
         lubricantColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.LUBRICANT_LABEL, "lubricant");
         additionalInfoColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
 
@@ -64,7 +62,7 @@ public class LubricationMaintenanceTable<T> extends AbstractMaintenanceTable<T> 
     public static class Builder<T> extends AbstractTableBuilder<T, LubricationMaintenanceTable<T>> {
         @Override
         public LubricationMaintenanceTable<T> build() {
-            return new LubricationMaintenanceTable<>(valueColumnLabel, valueColumnProperty);
+            return new LubricationMaintenanceTable<>(valueColumnLabel);
         }
     }
 }

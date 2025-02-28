@@ -84,7 +84,7 @@ public class TechnicDAO {
             LEFT JOIN technics
             ON technic_models.id = technics.technic_model_id
             WHERE technics.id = ?
-            """;
+        """;
 
         try (Connection connection = DatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {

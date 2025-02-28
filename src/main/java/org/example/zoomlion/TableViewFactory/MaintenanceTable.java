@@ -15,12 +15,10 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
     private TableColumn<T, String> additionalInfoColumn;
 
     private final String valueColumnLabel;
-    private final String valueColumnProperty;
 
-    public MaintenanceTable(String valueColumnLabel, String valueColumnProperty) {
+    public MaintenanceTable(String valueColumnLabel) {
         super();
         this.valueColumnLabel = valueColumnLabel;
-        this.valueColumnProperty = valueColumnProperty;
         setupColumns();
     }
 
@@ -28,7 +26,7 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
     protected void setupColumns() {
         maintenanceObjectColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.MAINTENANCE_OBJECT_LABEL, "maintenanceObject");
         workContentColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.WORK_CONTENTS_LABEL, "workContent");
-        valueColumn = new IntegerColumnFactory<T>().createColumn(valueColumnLabel, valueColumnProperty);
+        valueColumn = new IntegerColumnFactory<T>().createColumn(valueColumnLabel, "value");
         additionalInfoColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
 
         tableView.getColumns().addAll(Arrays.asList(
@@ -59,7 +57,7 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
     public static class Builder<T> extends AbstractTableBuilder<T, MaintenanceTable<T>> {
         @Override
         public MaintenanceTable<T> build() {
-            return new MaintenanceTable<>(valueColumnLabel, valueColumnProperty);
+            return new MaintenanceTable<>(valueColumnLabel);
         }
     }
 }
