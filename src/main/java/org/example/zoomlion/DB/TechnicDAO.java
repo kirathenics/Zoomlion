@@ -1,7 +1,6 @@
 package org.example.zoomlion.DB;
 
 import org.example.zoomlion.models.Technic;
-import org.example.zoomlion.models.TechnicType;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -30,28 +29,6 @@ public class TechnicDAO {
         }
 
         return technicList;
-    }
-
-    public static List<TechnicType> loadTechnicTypes() {
-        List<TechnicType> technicTypeList = new ArrayList<>();
-
-        String query = "SELECT * FROM technic_types";
-
-        try (Connection connection = DatabaseConnector.getConnection();
-             Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            while (resultSet.next()) {
-                technicTypeList.add(new TechnicType(
-                        resultSet.getInt("id"),
-                        resultSet.getString("name")
-                ));
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return technicTypeList;
     }
 
     public static List<String> loadTechnicTypeNames() {
