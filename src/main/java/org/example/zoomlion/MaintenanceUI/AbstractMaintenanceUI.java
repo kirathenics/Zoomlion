@@ -12,8 +12,11 @@ import org.example.zoomlion.TableViewFactory.MaintenanceTable;
 import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.Utils.ListUtils;
 import org.example.zoomlion.Utils.MaintenanceCalculator;
+import org.example.zoomlion.Utils.UserDialogs;
+import org.example.zoomlion.models.MaintenanceValue;
 import org.example.zoomlion.models.Technic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractMaintenanceUI<T, L> {
@@ -26,7 +29,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
     protected String lubricationValueColumnLabel;
     protected String valueColumnProperty;
 
-    List<Integer> mergedMaintenanceList;
+    List<MaintenanceValue> mergedMaintenanceList;
 
     public AbstractMaintenanceUI(Technic technic,
                                  String label,
@@ -43,8 +46,8 @@ public abstract class AbstractMaintenanceUI<T, L> {
     }
 
     private void createUI() {
-        List<Integer> maintenanceList = getMaintenanceList();
-        List<Integer> lubricationList = getLubricationList();
+        List<MaintenanceValue> maintenanceList = getMaintenanceList();
+        List<MaintenanceValue> lubricationList = getLubricationList();
         mergedMaintenanceList = ListUtils.mergeAndSort(maintenanceList, lubricationList);
 
         if (!mergedMaintenanceList.isEmpty()) {
@@ -56,6 +59,8 @@ public abstract class AbstractMaintenanceUI<T, L> {
 
             toggleGroup = new ToggleGroup();
             createToggleButtons(toggleButtonContainer, toggleGroup, mergedMaintenanceList);
+
+            // TODO: добавить label с объяснением первичного то, если есть кнопка со *
 
             Region spacer = new Region();
             HBox.setHgrow(spacer, Priority.ALWAYS);
@@ -74,7 +79,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
             calculateNextMaintenance.setOnAction(event -> {
                 String inputValue = valueInput.getText();
                 if (inputValue.isEmpty()) {
-                    showAlert(Constants.ERROR_LABEL, Constants.ENTER_VALUE_LABEL);
+                    UserDialogs.showAlert(Constants.ERROR_LABEL, Constants.ENTER_VALUE_LABEL);
                     return;
                 }
 
@@ -108,17 +113,21 @@ public abstract class AbstractMaintenanceUI<T, L> {
         }
     }
 
-    protected abstract List<Integer> getMaintenanceList();
-    protected abstract List<Integer> getLubricationList();
+    protected abstract List<MaintenanceValue> getMaintenanceList();
+    protected abstract List<MaintenanceValue> getLubricationList();
 
     private void addToggleListener(AbstractMaintenanceTable<?> table, boolean isMaintenance) {
         toggleGroup.selectedToggleProperty().addListener((obs, oldToggle, newToggle) -> {
             if (newToggle != null) {
-                int value = Integer.parseInt(((ToggleButton) newToggle).getText().replace(Constants.TO_LABEL, ""));
+                List<Toggle> toggles = new ArrayList<>(toggleGroup.getToggles());
+                int index = toggles.indexOf(newToggle);
+
+                MaintenanceValue value = mergedMaintenanceList.get(index);
+
                 if (isMaintenance) {
-                    ((AbstractMaintenanceTable<T>) table).updateTable(() -> fetchMaintenanceData(value));
+                    ((AbstractMaintenanceTable<T>) table).updateTable(() -> fetchMaintenanceData(value.getValue(), value.isPeriodic()));
                 } else {
-                    ((AbstractMaintenanceTable<L>) table).updateTable(() -> fetchLubricationData(value));
+                    ((AbstractMaintenanceTable<L>) table).updateTable(() -> fetchLubricationData(value.getValue(), value.isPeriodic()));
                 }
             } else {
                 table.hideTable();
@@ -126,11 +135,11 @@ public abstract class AbstractMaintenanceUI<T, L> {
         });
     }
 
-    protected abstract List<T> fetchMaintenanceData(int value);
-    protected abstract List<L> fetchLubricationData(int value);
+    protected abstract List<T> fetchMaintenanceData(int value, Boolean isPeriodic);
+    protected abstract List<L> fetchLubricationData(int value, Boolean isPeriodic);
 
     private void createToggleButtons(HBox toggleButtonContainer, ToggleGroup toggleGroup,
-                                     List<Integer> filterParamsTOList) {
+                                     List<MaintenanceValue> filterParamsTOList) {
         VBox toggleButtonsContainer = new VBox();
         HBox currentRow = new HBox();
         toggleButtonsContainer.getChildren().add(currentRow);
@@ -138,13 +147,19 @@ public abstract class AbstractMaintenanceUI<T, L> {
         int maxButtonsPerRow = 6;
         int count = 0;
 
-        for (Integer mileage : filterParamsTOList) {
+        for (MaintenanceValue maintenanceValue : filterParamsTOList) {
             if (count >= maxButtonsPerRow) {
                 currentRow = new HBox();
                 toggleButtonsContainer.getChildren().add(currentRow);
                 count = 0;
             }
-            ToggleButton button = new ToggleButton(Constants.TO_LABEL + mileage);
+
+            String buttonName = Constants.TO_LABEL + maintenanceValue.getValue();
+            if (maintenanceValue.isPeriodic() != null && !maintenanceValue.isPeriodic()) {
+                buttonName += "*";
+            }
+
+            ToggleButton button = new ToggleButton(buttonName);
             button.setToggleGroup(toggleGroup);
             button.getStyleClass().add("toggle-button");
             currentRow.getChildren().add(button);
@@ -155,16 +170,13 @@ public abstract class AbstractMaintenanceUI<T, L> {
 
     }
 
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
     private void calculateNextMaintenanceAction(int maintenanceValue) {
-        int nextMaintenance = MaintenanceCalculator.getNextMaintenance(maintenanceValue, mergedMaintenanceList);
+        List<Integer> periodicMaintenanceList = mergedMaintenanceList.stream()
+                .filter(e -> e.isPeriodicProperty().getValue().equals(Boolean.TRUE))
+                .map(MaintenanceValue::getValue)
+                .toList();
+
+        int nextMaintenance = MaintenanceCalculator.getNextMaintenance(maintenanceValue, periodicMaintenanceList);
 
         for (Toggle toggle : toggleGroup.getToggles()) {
             ToggleButton button = (ToggleButton) toggle;

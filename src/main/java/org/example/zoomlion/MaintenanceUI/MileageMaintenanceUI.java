@@ -2,6 +2,7 @@ package org.example.zoomlion.MaintenanceUI;
 
 import org.example.zoomlion.DB.MaintenanceDAO;
 import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.models.MaintenanceValue;
 import org.example.zoomlion.models.MileageLubrication;
 import org.example.zoomlion.models.MileageMaintenance;
 import org.example.zoomlion.models.Technic;
@@ -14,22 +15,22 @@ public class MileageMaintenanceUI extends AbstractMaintenanceUI<MileageMaintenan
     }
 
     @Override
-    protected List<Integer> getMaintenanceList() {
+    protected List<MaintenanceValue> getMaintenanceList() {
         return MaintenanceDAO.getMileageListByTechnicId(technic.getId());
     }
 
     @Override
-    protected List<Integer> getLubricationList() {
+    protected List<MaintenanceValue> getLubricationList() {
         return MaintenanceDAO.getMileageLubricationListByTechnicId(technic.getId());
     }
 
     @Override
-    protected List<MileageMaintenance> fetchMaintenanceData(int value) {
-        return MaintenanceDAO.getMileageMaintenanceByTechnicId(technic.getId(), value);
+    protected List<MileageMaintenance> fetchMaintenanceData(int value, Boolean isPeriodic) {
+        return MaintenanceDAO.getMileageMaintenanceByTechnicId(technic.getId(), value, isPeriodic);
     }
 
     @Override
-    protected List<MileageLubrication> fetchLubricationData(int value) {
-        return MaintenanceDAO.getMileageLubricationByTechnicId(technic.getId(), value);
+    protected List<MileageLubrication> fetchLubricationData(int value, Boolean isPeriodic) {
+        return MaintenanceDAO.getMileageLubricationByTechnicId(technic.getId(), value, isPeriodic);
     }
 }

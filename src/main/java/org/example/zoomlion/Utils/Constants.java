@@ -3,6 +3,9 @@ package org.example.zoomlion.Utils;
 public class Constants {
     public static final String IMAGE_PATH = "/org/example/zoomlion/images/";
 
+    public static final String MILEAGE_VALUE = "mileage";
+    public static final String WORK_HOURS_VALUE = "work_hours";
+
     public static final String CRANE_TECHNIC_TYPE = "Стреловой самоходный кран";
     public static final String ELEVATOR_TECHNIC_TYPE = "Подъемник";
     public static final String DEFAULT_TECHNIC_TYPE = "Не определено";
