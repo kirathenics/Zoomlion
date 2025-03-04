@@ -4,6 +4,7 @@ module org.example.zoomlion {
     requires java.sql;
     requires de.jensd.fx.glyphs.fontawesome;
     requires de.jensd.fx.glyphs.materialicons;
+    requires org.json;
 
 
     opens org.example.zoomlion to javafx.fxml;

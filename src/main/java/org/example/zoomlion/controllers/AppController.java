@@ -13,6 +13,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import org.example.zoomlion.DB.TechnicDAO;
 import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.Utils.ProjectUpdate.AppRestarter;
+import org.example.zoomlion.Utils.ProjectUpdate.GitHubUpdateChecker;
+import org.example.zoomlion.Utils.ProjectUpdate.GitHubUpdater;
 import org.example.zoomlion.Utils.UserDialogs;
 import org.example.zoomlion.models.Technic;
 
@@ -22,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+// 1. нужно где-то хранить версию приложения и заменять ее при обновлении, 2. нужно добавить прогресс бар для этапа скачивания и обновления
 public class AppController implements Initializable {
 
     @FXML
@@ -57,16 +61,30 @@ public class AppController implements Initializable {
 
         updateGrid(technicItemScrollPane.getWidth());
 
+        String updateUrl = GitHubUpdateChecker.checkForUpdates();
+        if (updateUrl != null) {
+            updateProjectCircle.setVisible(true);
+            updateProjectCircle.setManaged(true);
+        }
+        else {
+            updateProjectCircle.setVisible(false);
+            updateProjectCircle.setManaged(false);
+        }
+
         homeSidebarButton.setOnMouseClicked(mouseEvent -> setActiveIcon(homeSidebarButton));
 
         settingsSidebarButton.setOnMouseClicked(mouseEvent -> setActiveIcon(settingsSidebarButton));
 
         updateProjectSidebarButton.setOnMouseClicked(mouseEvent -> {
-            setActiveIcon(updateProjectSidebarButton);
-            updateProjectCircle.setVisible(false);
-            updateProjectCircle.setManaged(false);
-            UserDialogs.showInfo("Загрузка", "Идет загрузка...0%");
-            setActiveIcon(homeSidebarButton);
+            if (updateUrl != null) {
+                setActiveIcon(updateProjectSidebarButton);
+                updateProjectCircle.setVisible(false);
+                updateProjectCircle.setManaged(false);
+//            UserDialogs.showInfo("Загрузка", "Идет загрузка...0%");
+                GitHubUpdater.downloadUpdate(updateUrl, "Zoomlion.jar");
+                AppRestarter.restartApplication("Zoomlion.jar");
+                setActiveIcon(homeSidebarButton);
+            }
         });
 
         aboutSidebarButton.setOnMouseClicked(mouseEvent -> {
