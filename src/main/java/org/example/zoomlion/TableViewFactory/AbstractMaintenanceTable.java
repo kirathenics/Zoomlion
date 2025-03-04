@@ -93,7 +93,7 @@ public abstract class AbstractMaintenanceTable<T> {
                 ObservableList<T> originalItems = FXCollections.observableArrayList(tableView.getItems());
                 int totalRows = originalItems.size();
                 int visibleRowsPerPage = (int) Math.floor(totalRows * (maxPrintableHeight / newHeight));
-                --visibleRowsPerPage;
+                visibleRowsPerPage -= 2;
 
                 List<List<T>> pages = new ArrayList<>();
                 for (int i = 0; i < totalRows; i += visibleRowsPerPage) {

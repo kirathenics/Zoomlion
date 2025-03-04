@@ -26,14 +26,14 @@
                      <children>
                         <HBox alignment="CENTER_LEFT">
                            <children>
-<!--                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">-->
-<!--                                 <image>-->
-<!--                                    <Image url="@../images/no-image.png" />-->
-<!--                                 </image>-->
-<!--                                 <HBox.margin>-->
-<!--                                    <Insets left="100.0" />-->
-<!--                                 </HBox.margin>-->
-<!--                              </ImageView>-->
+                              <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/no-image.png" />
+                                 </image>
+                                 <HBox.margin>
+                                    <Insets left="100.0" />
+                                 </HBox.margin>
+                              </ImageView>
                               <Region prefWidth="150.0" styleClass="transparent" stylesheets="@../css/styles.css" />
                               <Label fx:id="nameLabel" text="КС ZOOMLION ZTC250V-1 (25 тн)" wrapText="true">
                                  <font>

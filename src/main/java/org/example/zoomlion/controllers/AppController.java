@@ -27,9 +27,6 @@ public class AppController implements Initializable {
     private FontAwesomeIconView homeSidebarButton;
 
     @FXML
-    private FontAwesomeIconView settingsSidebarButton;
-
-    @FXML
     private FontAwesomeIconView aboutSidebarButton;
 
     @FXML
@@ -45,40 +42,17 @@ public class AppController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         technicList.addAll(TechnicDAO.loadTechnic());
         technicItemScrollPane.widthProperty().addListener((obs, oldWidth, newWidth) -> updateGrid((double) newWidth));
 
         updateGrid(technicItemScrollPane.getWidth());
 
-//        String updateUrl = GitHubUpdateChecker.checkForUpdates();
-//        if (updateUrl != null) {
-//            updateProjectCircle.setVisible(true);
-//            updateProjectCircle.setManaged(true);
-//        }
-//        else {
-//            updateProjectCircle.setVisible(false);
-//            updateProjectCircle.setManaged(false);
-//        }
-
         homeSidebarButton.setOnMouseClicked(mouseEvent -> setActiveIcon(homeSidebarButton));
-
-        settingsSidebarButton.setOnMouseClicked(mouseEvent -> setActiveIcon(settingsSidebarButton));
-
-//        updateProjectSidebarButton.setOnMouseClicked(mouseEvent -> {
-//            if (updateUrl != null) {
-//                setActiveIcon(updateProjectSidebarButton);
-//                updateProjectCircle.setVisible(false);
-//                updateProjectCircle.setManaged(false);
-////            UserDialogs.showInfo("Загрузка", "Идет загрузка...0%");
-//                GitHubUpdater.downloadUpdate(updateUrl, "Zoomlion.jar", downloadProgressBar);
-//                AppRestarter.restartApplication("Zoomlion.jar");
-//                setActiveIcon(homeSidebarButton);
-//            }
-//        });
 
         aboutSidebarButton.setOnMouseClicked(mouseEvent -> {
             setActiveIcon(aboutSidebarButton);
-            UserDialogs.showInfo("Информация", "Данная программа содержит справочную информацию о техническом обслуживании спецтехники Zoomlion.");
+            UserDialogs.showInfo(Constants.ABOUT_PROGRAM, Constants.PROGRAM_INFO);
             setActiveIcon(homeSidebarButton);
         });
 
@@ -115,7 +89,6 @@ public class AppController implements Initializable {
 
     private void setActiveIcon(FontAwesomeIconView activeIcon) {
         homeSidebarButton.setFill(Color.web(DEFAULT_COLOR));
-        settingsSidebarButton.setFill(Color.web(DEFAULT_COLOR));
         aboutSidebarButton.setFill(Color.web(DEFAULT_COLOR));
 
         activeIcon.setFill(Color.web(ACTIVE_COLOR));

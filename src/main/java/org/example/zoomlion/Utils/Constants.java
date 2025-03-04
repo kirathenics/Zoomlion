@@ -8,6 +8,9 @@ public class Constants {
     public static final String MILEAGE_VALUE = "mileage";
     public static final String WORK_HOURS_VALUE = "work_hours";
 
+    public static final String ABOUT_PROGRAM = "О программе";
+    public static final String PROGRAM_INFO = "Данная программа предоставляет справочную информацию по техническому обслуживанию спецтехники Zoomlion.";
+
     public static final String CRANE_TECHNIC_TYPE = "Стреловой самоходный кран";
     public static final String ELEVATOR_TECHNIC_TYPE = "Подъемник";
     public static final String DEFAULT_TECHNIC_TYPE = "Не определено";
