@@ -10,6 +10,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import org.example.zoomlion.DB.TechnicDAO;
 import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.Utils.UserDialogs;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+// как сделать так, чтобы для иконки updateProject добавить небольшой круг, который долж
 public class MainController implements Initializable {
 
     @FXML
@@ -28,6 +30,12 @@ public class MainController implements Initializable {
 
     @FXML
     private FontAwesomeIconView settingsSidebarButton;
+
+    @FXML
+    private FontAwesomeIconView updateProjectSidebarButton;
+
+    @FXML
+    private Circle updateProjectCircle;
 
     @FXML
     private FontAwesomeIconView aboutSidebarButton;
@@ -50,11 +58,19 @@ public class MainController implements Initializable {
 
         updateGrid(technicItemScrollPane.getWidth());
 
-        homeSidebarButton.setOnMouseClicked(event -> setActiveIcon(homeSidebarButton));
+        homeSidebarButton.setOnMouseClicked(mouseEvent -> setActiveIcon(homeSidebarButton));
 
-        settingsSidebarButton.setOnMouseClicked(event -> setActiveIcon(settingsSidebarButton));
+        settingsSidebarButton.setOnMouseClicked(mouseEvent -> setActiveIcon(settingsSidebarButton));
 
-        aboutSidebarButton.setOnMouseClicked(event -> {
+        updateProjectSidebarButton.setOnMouseClicked(mouseEvent -> {
+            setActiveIcon(updateProjectSidebarButton);
+            updateProjectCircle.setVisible(false);
+            updateProjectCircle.setManaged(false);
+            UserDialogs.showInfo("Загрузка", "Идет загрузка...0%");
+            setActiveIcon(homeSidebarButton);
+        });
+
+        aboutSidebarButton.setOnMouseClicked(mouseEvent -> {
             setActiveIcon(aboutSidebarButton);
             UserDialogs.showInfo("Информация", "Данная программа содержит справочную информацию о техническом обслуживании спецтехники Zoomlion.");
             setActiveIcon(homeSidebarButton);
@@ -94,6 +110,7 @@ public class MainController implements Initializable {
     private void setActiveIcon(FontAwesomeIconView activeIcon) {
         homeSidebarButton.setFill(Color.web(DEFAULT_COLOR));
         settingsSidebarButton.setFill(Color.web(DEFAULT_COLOR));
+        updateProjectSidebarButton.setFill(Color.web(DEFAULT_COLOR));
         aboutSidebarButton.setFill(Color.web(DEFAULT_COLOR));
 
         activeIcon.setFill(Color.web(ACTIVE_COLOR));
