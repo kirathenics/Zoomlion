@@ -1,11 +1,13 @@
 package org.example.zoomlion.Utils.ProjectUpdate;
 
+import org.example.zoomlion.Utils.Constants;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
 public class VersionManager {
-    private static final String VERSION_FILE = "resources/version.txt";
+    private static final String VERSION_FILE = Constants.PROJECT_PATH + "version.txt";
 
     public static String getCurrentVersion() {
         try {

@@ -31,8 +31,8 @@ public class GitHubUpdateChecker {
             String downloadUrl = json.getJSONArray("assets").getJSONObject(0).getString("browser_download_url");
 
             String currentVersion = VersionManager.getCurrentVersion();
-
-            // Убираем "v" перед сравнением
+            System.out.println(currentVersion);
+//            String currentVersion = "1.0.0";
             if (!latestVersion.replace("v", "").equals(currentVersion)) {
                 return downloadUrl;
             }
