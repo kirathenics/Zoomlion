@@ -3,7 +3,7 @@ package org.example.zoomlion.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import org.example.zoomlion.TableColumnFactory.IntegerColumnFactory;
-import org.example.zoomlion.TableColumnFactory.MultiLineStringColumnFactory;
+import org.example.zoomlion.TableColumnFactory.MultilineStringColumnFactory;
 import org.example.zoomlion.TableViewFactory.TableBuilder.AbstractTableBuilder;
 import org.example.zoomlion.Utils.Constants;
 
@@ -26,11 +26,11 @@ public class LubricationMaintenanceTable<T> extends AbstractMaintenanceTable<T> 
 
     @Override
     protected void setupColumns() {
-        lubricationPointColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.LUBRICATION_POINT_LABEL, "lubricationPoint");
-        lubricationMethodColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.LUBRICATION_METHOD_LABEL, "lubricationMethod");
+        lubricationPointColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.LUBRICATION_POINT_LABEL, "lubricationPoint");
+        lubricationMethodColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.LUBRICATION_METHOD_LABEL, "lubricationMethod");
         valueColumn = new IntegerColumnFactory<T>().createColumn(valueColumnLabel, "value");
-        lubricantColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.LUBRICANT_LABEL, "lubricant");
-        additionalInfoColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
+        lubricantColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.LUBRICANT_LABEL, "lubricant");
+        additionalInfoColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
 
         tableView.getColumns().addAll(Arrays.asList(
                 lubricationPointColumn,

@@ -3,7 +3,7 @@ package org.example.zoomlion.TableViewFactory;
 import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import org.example.zoomlion.TableColumnFactory.IntegerColumnFactory;
-import org.example.zoomlion.TableColumnFactory.MultiLineStringColumnFactory;
+import org.example.zoomlion.TableColumnFactory.MultilineStringColumnFactory;
 import org.example.zoomlion.TableViewFactory.TableBuilder.AbstractTableBuilder;
 import org.example.zoomlion.Utils.Constants;
 
@@ -25,10 +25,10 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
 
     @Override
     protected void setupColumns() {
-        maintenanceObjectColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.MAINTENANCE_OBJECT_LABEL, "maintenanceObject");
-        workContentColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.WORK_CONTENTS_LABEL, "workContent");
+        maintenanceObjectColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.MAINTENANCE_OBJECT_LABEL, "maintenanceObject");
+        workContentColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.WORK_CONTENTS_LABEL, "workContent");
         valueColumn = new IntegerColumnFactory<T>().createColumn(valueColumnLabel, "value");
-        additionalInfoColumn = new MultiLineStringColumnFactory<T>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
+        additionalInfoColumn = new MultilineStringColumnFactory<T>().createColumn(Constants.ADDITIONAL_INFO_LABEL, "additionalInfo");
 
         tableView.getColumns().addAll(Arrays.asList(
                 maintenanceObjectColumn,
