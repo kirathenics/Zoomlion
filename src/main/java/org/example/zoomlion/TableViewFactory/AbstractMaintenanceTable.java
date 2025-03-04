@@ -21,7 +21,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-// TODO: сделать так, чтобы в методе printTable изменения происходили над копией, потому что сейчас с точки зрения пользовательского опыта некомфортно видеть, как изменяются размеры таблицы или содержимое, а потом снова восстанавливаются
 public abstract class AbstractMaintenanceTable<T> {
     protected VBox tableContainer;
     protected TableView<T> tableView;
@@ -45,9 +44,10 @@ public abstract class AbstractMaintenanceTable<T> {
         contextMenu.getItems().add(printItem);
 
         printItem.setOnAction(e -> {
-//            AbstractMaintenanceTable<T> tableCopy = cloneTable();
-//            printTable(tableCopy.tableView);
-            printTable(tableView);
+            AbstractMaintenanceTable<T> tableCopy = cloneTable();
+            tableContainer.getChildren().add(tableCopy.getTableContainer());
+            printTable(tableCopy.tableView);
+            tableContainer.getChildren().remove(tableCopy.getTableContainer());
         });
 
         tableView.setOnContextMenuRequested(event -> {
@@ -70,6 +70,9 @@ public abstract class AbstractMaintenanceTable<T> {
 
             double contentWidth = tableView.getWidth();
             double contentHeight = tableView.getHeight();
+
+            System.out.println(tableView.getWidth());
+            System.out.println(tableView.getHeight());
 
             double scaleX = pageLayout.getPrintableWidth() / contentWidth;
             double newHeight = contentHeight * scaleX;
