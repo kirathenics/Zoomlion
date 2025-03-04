@@ -11,6 +11,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.example.zoomlion.DB.TechnicDAO;
+import org.example.zoomlion.Utils.Constants;
 import org.example.zoomlion.models.Technic;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class MainController implements Initializable {
 
         try {
             for (Technic technic : technicList) {
-                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_item_view.fxml"));
+                FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(Constants.VIEW_PATH + "technic_item_view.fxml"));
                 AnchorPane anchorPane = fxmlLoader.load();
 
                 TechnicItemController technicItemController = fxmlLoader.getController();

@@ -48,7 +48,7 @@ public class TechnicItemController {
 
     private void openDetailScene(MouseEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/zoomlion/views/technic_maintenance_view.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(Constants.VIEW_PATH + "technic_maintenance_view.fxml"));
             Parent detailRoot = loader.load();
 
             TechnicMaintenanceController controller = loader.getController();

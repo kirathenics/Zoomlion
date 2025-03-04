@@ -1,7 +1,9 @@
 package org.example.zoomlion.Utils;
 
 public class Constants {
-    public static final String IMAGE_PATH = "/org/example/zoomlion/images/";
+    public static final String PROJECT_PATH = "/org/example/zoomlion/";
+    public static final String IMAGE_PATH = PROJECT_PATH + "images/";
+    public static final String VIEW_PATH = PROJECT_PATH + "views/";
 
     public static final String MILEAGE_VALUE = "mileage";
     public static final String WORK_HOURS_VALUE = "work_hours";
@@ -15,6 +17,7 @@ public class Constants {
     public static final String WORK_HOURS_TO_LABEL = "ТО по наработанным часам:";
     public static final String ASTERISK_LABEL = "* - первое ТО";
 
+    public static final String PRINT_LABEL = "Печать...";
     public static final String CALCULATE_NEXT_MAINTENANCE_LABEL = "Рассчитать следующее ТО";
 
     public static final String MAINTENANCE_OBJECT_LABEL = "Объект обслуживания";

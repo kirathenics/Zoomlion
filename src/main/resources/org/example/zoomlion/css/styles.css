@@ -145,6 +145,24 @@
 }
 
 
+.context-menu {
+    -fx-background-color: white;
+    -fx-text-fill: white;
+  }
+  
+.menu-item .label {
+    -fx-text-fill: #333640;
+}
+  
+.menu-item:focused {
+    -fx-background-color: #A4CE4E;
+}
+
+.menu-item:focused .label {
+    -fx-text-fill: white;
+}
+
+
 .text-field {
     -fx-pref-width: 100px;
 
