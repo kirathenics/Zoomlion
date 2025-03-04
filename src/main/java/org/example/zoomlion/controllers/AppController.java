@@ -22,8 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-// как сделать так, чтобы для иконки updateProject добавить небольшой круг, который долж
-public class MainController implements Initializable {
+public class AppController implements Initializable {
 
     @FXML
     private FontAwesomeIconView homeSidebarButton;
