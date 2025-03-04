@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
+// TODO: сделать так, чтобы в методе printTable изменения происходили над копией, потому что сейчас с точки зрения пользовательского опыта некомфортно видеть, как изменяются размеры таблицы или содержимое, а потом снова восстанавливаются
 public abstract class AbstractMaintenanceTable<T> {
     protected VBox tableContainer;
     protected TableView<T> tableView;
@@ -44,6 +45,8 @@ public abstract class AbstractMaintenanceTable<T> {
         contextMenu.getItems().add(printItem);
 
         printItem.setOnAction(e -> {
+//            AbstractMaintenanceTable<T> tableCopy = cloneTable();
+//            printTable(tableCopy.tableView);
             printTable(tableView);
         });
 
@@ -58,7 +61,7 @@ public abstract class AbstractMaintenanceTable<T> {
     public void printTable(TableView<T> tableView) {
         PrinterJob job = PrinterJob.createPrinterJob();
 
-        if (job != null && job.showPrintDialog(tableView.getScene().getWindow())) {
+        if (job != null && job.showPrintDialog(this.tableView.getScene().getWindow())) {
             Printer printer = job.getPrinter();
             PageLayout pageLayout = printer.createPageLayout(
                     Paper.A4, PageOrientation.PORTRAIT,
@@ -114,6 +117,8 @@ public abstract class AbstractMaintenanceTable<T> {
         }
     }
 
+    protected abstract AbstractMaintenanceTable<T> cloneTable();
+
     public VBox getTableContainer() {
         return tableContainer;
     }
@@ -168,6 +173,16 @@ public abstract class AbstractMaintenanceTable<T> {
 
     public void updateTable(Supplier<List<T>> dataSupplier) {
         observableList.setAll(dataSupplier.get());
+
+        setAdditionalInfoColumn();
+
+        Platform.runLater(this::adjustTableSize);
+        Platform.runLater(() -> Platform.runLater(this::adjustTableSize));
+    }
+
+    // Перегруженная версия updateTable, принимающая готовый список
+    public void updateTable(List<T> items) {
+        observableList.setAll(items);
 
         setAdditionalInfoColumn();
 

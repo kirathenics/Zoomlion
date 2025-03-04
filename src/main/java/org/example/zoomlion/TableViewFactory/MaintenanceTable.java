@@ -1,5 +1,6 @@
 package org.example.zoomlion.TableViewFactory;
 
+import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import org.example.zoomlion.TableColumnFactory.IntegerColumnFactory;
 import org.example.zoomlion.TableColumnFactory.MultiLineStringColumnFactory;
@@ -54,6 +55,13 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
         }
     }
 
+    @Override
+    protected AbstractMaintenanceTable<T> cloneTable() {
+        MaintenanceTable<T> copy = new MaintenanceTable<>(this.valueColumnLabel);
+        copy.updateTable(FXCollections.observableArrayList(this.observableList));
+        return copy;
+    }
+
     public static class Builder<T> extends AbstractTableBuilder<T, MaintenanceTable<T>> {
         @Override
         public MaintenanceTable<T> build() {
@@ -61,5 +69,3 @@ public class MaintenanceTable<T> extends AbstractMaintenanceTable<T> {
         }
     }
 }
-
-
