@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.example.zoomlion.DB.TechnicDAO;
 import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.Utils.UserDialogs;
 import org.example.zoomlion.models.Technic;
 
 import java.io.IOException;
@@ -40,7 +41,7 @@ public class MainController implements Initializable {
     private final String ACTIVE_COLOR = "#A4CE4E";
     private final String DEFAULT_COLOR = "#C1C1C1";
 
-    private List<Technic> technicList = new ArrayList<>();
+    private final List<Technic> technicList = new ArrayList<>();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -50,8 +51,14 @@ public class MainController implements Initializable {
         updateGrid(technicItemScrollPane.getWidth());
 
         homeSidebarButton.setOnMouseClicked(event -> setActiveIcon(homeSidebarButton));
+
         settingsSidebarButton.setOnMouseClicked(event -> setActiveIcon(settingsSidebarButton));
-        aboutSidebarButton.setOnMouseClicked(event -> setActiveIcon(aboutSidebarButton));
+
+        aboutSidebarButton.setOnMouseClicked(event -> {
+            setActiveIcon(aboutSidebarButton);
+            UserDialogs.showInfo("Информация", "Данная программа содержит справочную информацию о техническом обслуживании спецтехники Zoomlion.");
+            setActiveIcon(homeSidebarButton);
+        });
 
         setActiveIcon(homeSidebarButton);
     }

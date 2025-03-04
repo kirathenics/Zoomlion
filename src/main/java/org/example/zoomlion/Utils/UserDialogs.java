@@ -10,4 +10,12 @@ public class UserDialogs {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
+    public static void showInfo(String title, String message) {
+        Alert info = new Alert(Alert.AlertType.INFORMATION);
+        info.setTitle(title);
+        info.setHeaderText(null);
+        info.setContentText(message);
+        info.showAndWait();
+    }
 }
