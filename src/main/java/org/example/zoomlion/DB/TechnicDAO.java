@@ -12,7 +12,7 @@ public class TechnicDAO {
 
         String query = "SELECT * FROM technics";
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -36,7 +36,7 @@ public class TechnicDAO {
 
         String query = "SELECT name FROM technic_types";
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              Statement statement = connection.createStatement();
              ResultSet resultSet = statement.executeQuery(query)) {
 
@@ -63,7 +63,7 @@ public class TechnicDAO {
             WHERE technics.id = ?
         """;
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, technicId);

@@ -31,7 +31,7 @@ public class MaintenanceDAO {
             ORDER BY %s ASC
         """, valueName, valueName, valueName, valueName);
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, technicId);
@@ -73,7 +73,7 @@ public class MaintenanceDAO {
             ORDER BY M.%s ASC
         """, valueName, valueName, valueName, valueName);
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, technicId);
@@ -135,7 +135,7 @@ public class MaintenanceDAO {
 
         query = queryBuilder.toString();
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             int parameterIndex = 1;
 
@@ -152,7 +152,7 @@ public class MaintenanceDAO {
                         resultSet.getString("maintenance_object"),
                         resultSet.getString("work_content"),
                         resultSet.getInt(valueName),
-                        resultSet.getNString("additional_info")
+                        resultSet.getString("additional_info")
                 ));
             }
         } catch (SQLException e) {
@@ -210,7 +210,7 @@ public class MaintenanceDAO {
 
         query = queryBuilder.toString();
 
-        try (Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = SqliteDatabaseConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             int parameterIndex = 1;
 
@@ -228,7 +228,7 @@ public class MaintenanceDAO {
                         resultSet.getString("lubrication_method"),
                         resultSet.getInt(valueName),
                         resultSet.getString("lubricant"),
-                        resultSet.getNString("additional_info")
+                        resultSet.getString("additional_info")
                 ));
             }
         } catch (SQLException e) {
