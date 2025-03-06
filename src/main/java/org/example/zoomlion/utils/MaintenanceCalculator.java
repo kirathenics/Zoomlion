@@ -1,4 +1,4 @@
-package org.example.zoomlion.Utils;
+package org.example.zoomlion.utils;
 
 import java.util.ArrayList;
 import java.util.List;

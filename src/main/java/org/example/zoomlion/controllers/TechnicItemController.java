@@ -10,7 +10,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 import org.example.zoomlion.models.Technic;
 
 import java.io.IOException;

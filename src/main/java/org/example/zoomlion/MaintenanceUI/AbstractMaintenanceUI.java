@@ -9,10 +9,10 @@ import javafx.scene.layout.VBox;
 import org.example.zoomlion.TableViewFactory.AbstractMaintenanceTable;
 import org.example.zoomlion.TableViewFactory.LubricationMaintenanceTable;
 import org.example.zoomlion.TableViewFactory.MaintenanceTable;
-import org.example.zoomlion.Utils.Constants;
-import org.example.zoomlion.Utils.ListUtils;
-import org.example.zoomlion.Utils.MaintenanceCalculator;
-import org.example.zoomlion.Utils.UserDialogs;
+import org.example.zoomlion.utils.Constants;
+import org.example.zoomlion.utils.ListUtils;
+import org.example.zoomlion.utils.MaintenanceCalculator;
+import org.example.zoomlion.utils.UserDialogs;
 import org.example.zoomlion.models.MaintenanceValue;
 import org.example.zoomlion.models.Technic;
 

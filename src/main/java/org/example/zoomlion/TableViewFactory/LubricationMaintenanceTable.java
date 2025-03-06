@@ -5,7 +5,7 @@ import javafx.scene.control.TableColumn;
 import org.example.zoomlion.TableColumnFactory.IntegerColumnFactory;
 import org.example.zoomlion.TableColumnFactory.MultilineStringColumnFactory;
 import org.example.zoomlion.TableViewFactory.TableBuilder.AbstractTableBuilder;
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 
 import java.util.Arrays;
 

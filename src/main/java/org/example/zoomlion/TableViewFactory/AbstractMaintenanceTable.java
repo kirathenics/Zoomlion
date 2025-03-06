@@ -13,7 +13,7 @@ import javafx.scene.control.skin.TableViewSkin;
 import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.VBox;
 import javafx.scene.transform.Scale;
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;

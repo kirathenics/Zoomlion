@@ -1,7 +1,7 @@
 package org.example.zoomlion.MaintenanceUI;
 
 import org.example.zoomlion.DB.MaintenanceDAO;
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 import org.example.zoomlion.models.*;
 
 import java.util.List;

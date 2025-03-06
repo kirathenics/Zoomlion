@@ -1,6 +1,6 @@
 package org.example.zoomlion.TechnicMaintenanceUIFactory;
 
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 
 import java.util.HashMap;
 import java.util.Map;

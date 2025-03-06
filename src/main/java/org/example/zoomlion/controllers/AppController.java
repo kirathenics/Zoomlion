@@ -11,8 +11,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import org.example.zoomlion.DB.TechnicDAO;
-import org.example.zoomlion.Utils.Constants;
-import org.example.zoomlion.Utils.UserDialogs;
+import org.example.zoomlion.utils.Constants;
+import org.example.zoomlion.utils.UserDialogs;
 import org.example.zoomlion.models.Technic;
 
 import java.io.IOException;

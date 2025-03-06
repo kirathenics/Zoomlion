@@ -1,4 +1,4 @@
-package org.example.zoomlion.TableColumnFactory;
+package org.example.zoomlion.TableColumnFactory.Wrappers;
 
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;

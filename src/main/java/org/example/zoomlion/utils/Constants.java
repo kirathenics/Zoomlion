@@ -1,4 +1,4 @@
-package org.example.zoomlion.Utils;
+package org.example.zoomlion.utils;
 
 public class Constants {
     public static final String PROJECT_PATH = "/org/example/zoomlion/";

@@ -1,6 +1,6 @@
 package org.example.zoomlion.DB;
 
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 import org.example.zoomlion.models.*;
 
 import java.sql.Connection;

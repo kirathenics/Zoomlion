@@ -1,4 +1,4 @@
-package org.example.zoomlion.Utils.ProjectUpdate;
+package org.example.zoomlion.utils.ProjectUpdate;
 
 import java.io.File;
 

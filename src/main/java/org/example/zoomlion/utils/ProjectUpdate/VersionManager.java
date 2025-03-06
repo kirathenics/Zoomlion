@@ -1,6 +1,6 @@
-package org.example.zoomlion.Utils.ProjectUpdate;
+package org.example.zoomlion.utils.ProjectUpdate;
 
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 
 import java.io.IOException;
 import java.nio.file.Files;

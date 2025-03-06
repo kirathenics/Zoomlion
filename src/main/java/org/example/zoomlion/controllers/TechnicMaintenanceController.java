@@ -10,7 +10,7 @@ import javafx.stage.Stage;
 import org.example.zoomlion.DB.TechnicDAO;
 import org.example.zoomlion.TechnicMaintenanceUIFactory.TechnicMaintenanceUIFactory;
 import org.example.zoomlion.TechnicMaintenanceUIFactory.TechnicMaintenanceUIFactoryProvider;
-import org.example.zoomlion.Utils.Constants;
+import org.example.zoomlion.utils.Constants;
 import org.example.zoomlion.models.Technic;
 
 import java.io.InputStream;
