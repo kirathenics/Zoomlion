@@ -1,5 +1,6 @@
 package org.example.zoomlion.DB;
 
+import org.example.zoomlion.DB.DatabaseConnectors.SqliteDatabaseConnector;
 import org.example.zoomlion.models.Technic;
 
 import java.sql.*;

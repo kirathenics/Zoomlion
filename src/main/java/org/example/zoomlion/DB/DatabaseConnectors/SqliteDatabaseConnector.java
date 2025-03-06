@@ -1,4 +1,4 @@
-package org.example.zoomlion.DB;
+package org.example.zoomlion.DB.DatabaseConnectors;
 
 import org.example.zoomlion.utils.Constants;
 

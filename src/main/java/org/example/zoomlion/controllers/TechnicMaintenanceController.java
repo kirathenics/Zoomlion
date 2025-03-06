@@ -16,8 +16,6 @@ import org.example.zoomlion.models.Technic;
 import java.io.InputStream;
 import java.util.Objects;
 
-// как собрать JavaFX приложение (используется my sql базу данных) так, чтобы его можно было установить на windows устройство так, чтобы потом не нужно было ничего докачивать
-// JavaFX приложение, было собрано jar файл, а затем с помощью jpackage собрано в exe файл, почему он нормально устанавливается и запускается на устройстве, на котором велась разработка, а на клиентском устройстве запускается с ошибкой: Failed to launch JVM
 public class TechnicMaintenanceController {
 
     @FXML
