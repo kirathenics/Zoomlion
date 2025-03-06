@@ -5,19 +5,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.print.*;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableView;
 import javafx.scene.control.skin.TableViewSkin;
 import javafx.scene.control.skin.VirtualFlow;
 import javafx.scene.layout.VBox;
-import javafx.scene.transform.Scale;
 import org.example.zoomlion.utils.Constants;
+import org.example.zoomlion.utils.TablePrinter;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -47,7 +45,7 @@ public abstract class AbstractMaintenanceTable<T> {
             AbstractMaintenanceTable<T> tableCopy = cloneTable();
             VBox.setMargin(tableCopy.tableContainer, new Insets(500, 0, 0, 0));
             tableContainer.getChildren().add(tableCopy.getTableContainer());
-            printTable(tableCopy.tableView);
+            TablePrinter.print(tableCopy.tableView);
             tableContainer.getChildren().remove(tableCopy.getTableContainer());
         });
 
@@ -58,71 +56,6 @@ public abstract class AbstractMaintenanceTable<T> {
 
         tableContainer.getChildren().add(tableView);
     }
-
-    // TODO: как не менять масштаб таблицы, так как пользователь видит изменения размеров таблицы, а иначе уместить таблицу на листе на печать
-    public void printTable(TableView<T> tableView) {
-        PrinterJob job = PrinterJob.createPrinterJob();
-
-        if (job != null && job.showPrintDialog(this.tableView.getScene().getWindow())) {
-            Printer printer = job.getPrinter();
-            PageLayout pageLayout = printer.createPageLayout(
-                    Paper.A4, PageOrientation.PORTRAIT,
-                    20, 20, 30, 30 // Левые, правые, верхние и нижние отступы (в миллиметрах)
-            );
-
-            double contentWidth = tableView.getWidth();
-            double contentHeight = tableView.getHeight();
-
-//            System.out.println(tableView.getWidth());
-//            System.out.println(tableView.getHeight());
-
-            double scaleX = pageLayout.getPrintableWidth() / contentWidth;
-            double newHeight = contentHeight * scaleX;
-
-            double maxPrintableHeight = pageLayout.getPrintableHeight();
-
-            if (newHeight <= maxPrintableHeight) {
-                Scale scaleTransform = new Scale(scaleX, scaleX);
-                tableView.getTransforms().add(scaleTransform);
-
-                boolean success = job.printPage(pageLayout, tableView);
-                if (success) {
-                    job.endJob();
-                }
-
-                tableView.getTransforms().remove(scaleTransform);
-            } else {
-                ObservableList<T> originalItems = FXCollections.observableArrayList(tableView.getItems());
-                int totalRows = originalItems.size();
-                int visibleRowsPerPage = (int) Math.floor(totalRows * (maxPrintableHeight / newHeight));
-                visibleRowsPerPage -= 2;
-
-                List<List<T>> pages = new ArrayList<>();
-                for (int i = 0; i < totalRows; i += visibleRowsPerPage) {
-                    pages.add(originalItems.subList(i, Math.min(i + visibleRowsPerPage, totalRows)));
-                }
-
-                for (List<T> pageItems : pages) {
-                    tableView.setItems(FXCollections.observableArrayList(pageItems));
-
-                    Scale scaleTransform = new Scale(scaleX, scaleX);
-                    tableView.getTransforms().add(scaleTransform);
-
-                    boolean success = job.printPage(pageLayout, tableView);
-                    tableView.getTransforms().remove(scaleTransform);
-
-                    if (!success) {
-                        break;
-                    }
-                }
-
-                tableView.setItems(originalItems);
-                job.endJob();
-            }
-        }
-    }
-
-    protected abstract AbstractMaintenanceTable<T> cloneTable();
 
     public VBox getTableContainer() {
         return tableContainer;
@@ -213,4 +146,6 @@ public abstract class AbstractMaintenanceTable<T> {
     }
 
     protected abstract void adjustColumnWidths(boolean hasAdditionalInfo);
+
+    protected abstract AbstractMaintenanceTable<T> cloneTable();
 }
