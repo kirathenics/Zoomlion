@@ -45,6 +45,7 @@ public abstract class AbstractMaintenanceTable<T> {
 
         printItem.setOnAction(e -> {
             AbstractMaintenanceTable<T> tableCopy = cloneTable();
+            VBox.setMargin(tableCopy.tableContainer, new Insets(500, 0, 0, 0));
             tableContainer.getChildren().add(tableCopy.getTableContainer());
             printTable(tableCopy.tableView);
             tableContainer.getChildren().remove(tableCopy.getTableContainer());
@@ -58,6 +59,7 @@ public abstract class AbstractMaintenanceTable<T> {
         tableContainer.getChildren().add(tableView);
     }
 
+    // TODO: как не менять масштаб таблицы, так как пользователь видит изменения размеров таблицы, а иначе уместить таблицу на листе на печать
     public void printTable(TableView<T> tableView) {
         PrinterJob job = PrinterJob.createPrinterJob();
 
@@ -71,8 +73,8 @@ public abstract class AbstractMaintenanceTable<T> {
             double contentWidth = tableView.getWidth();
             double contentHeight = tableView.getHeight();
 
-            System.out.println(tableView.getWidth());
-            System.out.println(tableView.getHeight());
+//            System.out.println(tableView.getWidth());
+//            System.out.println(tableView.getHeight());
 
             double scaleX = pageLayout.getPrintableWidth() / contentWidth;
             double newHeight = contentHeight * scaleX;
@@ -183,7 +185,6 @@ public abstract class AbstractMaintenanceTable<T> {
         Platform.runLater(() -> Platform.runLater(this::adjustTableSize));
     }
 
-    // Перегруженная версия updateTable, принимающая готовый список
     public void updateTable(List<T> items) {
         observableList.setAll(items);
 
