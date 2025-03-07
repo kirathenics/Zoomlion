@@ -174,7 +174,7 @@ public abstract class AbstractMaintenanceUI<T, L> {
 
     private void calculateNextMaintenanceAction(int maintenanceValue) {
         List<Integer> periodicMaintenanceList = mergedMaintenanceList.stream()
-                .filter(e -> e.isPeriodicProperty().getValue().equals(Boolean.TRUE))
+                .filter(e -> e.isPeriodicProperty() != null && e.isPeriodicProperty().getValue().equals(Boolean.TRUE))
                 .map(MaintenanceValue::getValue)
                 .toList();
 
