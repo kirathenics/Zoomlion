@@ -11,25 +11,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-//public class SqliteDatabaseConnector {
-//    private static String URL = "jdbc:sqlite:";
-//
-//    static {
-//        URL += Objects.requireNonNull(SqliteDatabaseConnector.class.getResource(Constants.PROJECT_PATH + "zoomlion_data.db")).toExternalForm();
-//    }
-//
-//    public static Connection getConnection() throws SQLException {
-//        return DriverManager.getConnection(URL);
-//    }
-//}
-
 public class SqliteDatabaseConnector {
-    private static String DB_FILE_NAME = "zoomlion_data.db"; // Название файла БД
-    private static String DB_PATH = System.getProperty("user.home") + File.separator + DB_FILE_NAME; // Где будет храниться база
-    private static String URL = "jdbc:sqlite:" + DB_PATH;
+    private static final String DB_FILE_NAME = "zoomlion_data.db";
+    private static final String DB_PATH = System.getProperty("user.home") + File.separator + DB_FILE_NAME;
+    private static final String URL = "jdbc:sqlite:" + DB_PATH;
 
     static {
-        extractDatabase(); // Копируем базу, если её нет
+        extractDatabase();
     }
 
     public static Connection getConnection() throws SQLException {
