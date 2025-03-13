@@ -7,7 +7,7 @@ import java.util.Objects;
 
 public class MaintenanceValue implements Comparable<MaintenanceValue> {
     private final SimpleIntegerProperty value;
-    private final Boolean isPeriodic; // Может быть null
+    private final Boolean isPeriodic;
 
     public MaintenanceValue(int value, Boolean isPeriodic) {
         this.value = new SimpleIntegerProperty(value);

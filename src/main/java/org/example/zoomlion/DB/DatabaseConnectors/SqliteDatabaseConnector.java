@@ -13,7 +13,11 @@ import java.sql.SQLException;
 
 public class SqliteDatabaseConnector {
     private static final String DB_FILE_NAME = "zoomlion_data.db";
-    private static final String DB_PATH = System.getProperty("user.home") + File.separator + DB_FILE_NAME;
+    private static final String DB_PATH = System.getProperty("user.home") +
+        File.separator +
+        "zoomlion" +
+        File.separator +
+        DB_FILE_NAME;
     private static final String URL = "jdbc:sqlite:" + DB_PATH;
 
     static {
@@ -39,4 +43,3 @@ public class SqliteDatabaseConnector {
         }
     }
 }
-
