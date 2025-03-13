@@ -3,6 +3,8 @@ package org.example.zoomlion.models;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 
+import java.util.Objects;
+
 public class MaintenanceValue implements Comparable<MaintenanceValue> {
     private final SimpleIntegerProperty value;
     private final Boolean isPeriodic; // Может быть null
@@ -39,5 +41,18 @@ public class MaintenanceValue implements Comparable<MaintenanceValue> {
     @Override
     public int compareTo(MaintenanceValue other) {
         return Integer.compare(this.getValue(), other.getValue());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MaintenanceValue that = (MaintenanceValue) o;
+        return Objects.equals(value.get(), that.value.get());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value.get());
     }
 }
